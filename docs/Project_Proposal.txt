@@ -1,0 +1,65 @@
+Mission Statement
+
+We plan to improve an existing app aimed at collecting and storing health information on individual refugees.  We will enable secure data sharing between devices such that patient information can be quickly and securely retrieved when provided a name and/or fingerprint scan. We hope this system will help doctors efficiently assist refugees. Additionally, our goal is to deter, prevent, and/or detect human trafficking by keeping a record of each refugee’s health data and movements from camp to camp.  
+
+Dean Karen Panetta of the Tufts’ Graduate School of Engineering will be our sponsor for this project.  Dr. Richard Mollika, the Director of the Harvard Program in Refugee Trauma (HPRT), approached Dean Panetta about this project, and we will work closely with him and his team at the Harvard Medical School.
+
+
+Problem
+
+When someone enters a refugee camp, they are asked questions about the trauma that they have endured so that the doctors in the camp can adequately provide the individual with the care that they need, using a series of questions called the 11 Point Questionnaire. However, these questions can often derail patients who have gone through extensive trauma from their path to recovery by resurfacing painful memories repeatedly. Since medical records are commonly kept in paper form at each refugee camp, there is no sharing of data - this means that doctors must often spend time and money diagnosing patients who have already been diagnosed in previous camps. 
+
+One major issue that arises within refugee camps is the practice of human trafficking. Women and children are often promised an escape from certain refugee camps, only to be sold into the practice of human trafficking.  These groups often travel from camp to camp on their way out of the country.  Sometimes when a refugee is being trafficked, a trafficker pretends to be a relative.  Without any way to know definitively whether the people are related, a doctor or other personnel will not know if the trafficker is lying and be unsure of whether or not they should intervene.
+
+
+Context
+
+Currently, there exists a rudimentary version of the system in which doctors are able to fill out the 11 Point Questionnaire on their phones using an app, from which the information is then emailed to them. This moves the information from paper to electronic records, but does not address the issue of sharing patient information between doctors and between camps. We believe that the system also does not link patient information to their fingerprints. Further, ambiguity related to language barriers or perceived safety has also not been addressed. The added features to the system we propose will address these issues to provide a much more seamless delivery of healthcare to refugees. 
+
+
+Customer
+
+We are working with Dean Karen Panetta in aiding Dr. Mollica from the Harvard Medical School on the technical aspect of his project.  Dr. Mollica is a specialist in refugee trauma, and has put together an 11 point questionnaire that doctors in refugee camps use to engage with refugees in the best possible manner.  Dr. Mollica wants his tool to reach as many refugees as he can to help them openly discuss health concerns with doctors in refugee camps. Further, Dr. Mollica speaks in front of the U.N., and wishes to be able to present hard statistical data on the wellbeing of people in particular camps or over larger regions to be able to form a stronger argument that more aid needs to be given to people in refugee camps.
+
+
+Challenges
+
+Security: If our system is not secure, we cannot deploy.
+Responsiveness: Doctors must be able to quickly retrieve/update patient information.
+Accessibility: All doctors need access to the app and the servers.
+Storage: Information should be small/compressible to effectively share data.
+
+Additionally, assuming that doctor’s are currently saving data locally with the app that was made by last year’s team, we need to figure out how we can save all existing information when migrating the database to a remote server.
+
+
+Expertise
+
+As a wide-spanning project, we will be in contact with many experts in various fields in order to maximize the utility of this project. We will have to learn more about the current state of affairs in many of these refugee camps and more about the nature of medical information to be stored - this information will be provided by Dr. Mollica. To learn more about the technical side of what has already been accomplished, we will speak with Dr. Panetta and the computer scientists that previously worked on this project. We will also have to learn more about how we can keep the information secure (expert = Ming Chow) and how to overcome intermittent network accessibility (expert = Fahad Dogar). We hope to work closely with these professors and doctors so that we have the necessary information to make this project as impactful as possible. 
+
+
+Risks
+
+Once our system is accepted and used by doctors in refugee camps, there is still a risk of security breaches. If our system is not as secure as we intend it to be, we may cause more problems. In such an event, we’d deny access to any devices from the servers and continue to use a localized data collection method. 
+
+We also need to make sure that all data is recoverable. If there were a power outage that spontaneously shut off the system, we need to ensure that the data does not disappear.
+
+Ethical questions
+
+One ethical issue we must closely analyze is security. We are working with highly sensitive medical data that must be kept secure so that patients feel safe to share sensitive information with doctors. We will mitigate this issue by keeping in close contact with the doctors to understand the nature of this information and speaking with experts in the field of security (aka Ming Chow). 
+
+We will likely also be using patient data to develop various models.  We need to make sure that we respect privacy by only using absolutely required information for the project and protecting identities as much as possible.
+
+
+Goal
+
+The desired result of this project is software that can identify individuals by their fingerprints and retrieve medical information in a secure fashion. Doctors should be able to access patient information for individuals in their geographical region, and be able to upload new information when connected to the internet. The data must be lightweight/compressed such that doctors in areas with poor internet connection can more easily download the data and they are able to store large amounts of patient information on their phones and/or laptops. This project will be used in the field, so a successful product would be indicated by an adoption of the system by doctors in refugee camps. In addition, the team hopes to use patient data to detect signs of human trafficking by finding any abnormalities in recorded refugee movements. These findings would be reported to local authorities to help mitigate this highly unethical practice. 
+
+
+Documents
+
+We will create a short video highlighting the capabilities and necessity of the app we put together.  This will be the public facing marketing product, and be available to be viewed anywhere through Youtube.  
+
+We also would like to prepare a more in depth presentation that we can deliver to a panel of doctors at the Harvard Medical School and potential to doctors in refugee camps at a conference.
+
+We plan to release updates on the development of the project every Friday that summarizes the work that has been done over the previous week.  We will either upload this on a website blog or on our github page.
+
