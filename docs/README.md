@@ -9,6 +9,6 @@ We also want to use this data to create models or look for patterns, and be able
 
 # Team and Sponsor Details
 
-Our names Scott Bettigole, Azmina Karukappadath, and Anthony Ong, and we are team Unmellow Yellow from the Tufts University Senior Capstone course.
+Our names are Scott Bettigole, Azmina Karukappadath, and Anthony Ong, and we are team Unmellow Yellow from the Tufts University Senior Capstone course.
 
 Our direct sponsor is Dr. Karen Panetta, the Dean of Graduate Education and School of Enginnering at Tufts University.  Together, we are working to aid Dr. Richard Mollika and his team from the Harvard Medical School.
