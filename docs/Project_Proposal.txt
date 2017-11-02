@@ -2,59 +2,162 @@ Comp 97 Senior Capstone Project Proposal
 
 Mission Statement
 
-We plan to improve an existing app aimed at collecting and storing health information on individual refugees.  We will enable secure data sharing between devices such that patient information can be quickly and securely retrieved when provided a name and/or fingerprint scan. We hope this system will help doctors efficiently assist refugees in the field.  We also will create a public database that provides statistical insight into the challenges that refugees in different regions face and what resources should be offered to give the most help.
-Dean Karen Panetta of the Tufts’ Graduate School of Engineering will be our sponsor for this project. Dr. Richard Mollica, the Director of the Harvard Program in Refugee Trauma (HPRT), approached Dean Panetta about this project, and we will work closely with him and his team at the Harvard Medical School.
+We plan to improve an existing app aimed at collecting and storing health inform
+ation on individual refugees.  We will enable secure data sharing between device
+s such that patient information can be quickly and securely retrieved when provi
+ded a name and/or fingerprint scan. We hope this system will help doctors effici
+ently assist refugees in the field.  We also will create a public database that 
+provides statistical insight into the challenges that refugees in different regi
+ons face and what resources should be offered to give the most help.
+Dean Karen Panetta of the Tufts’ Graduate School of Engineering will be our spon
+sor for this project. Dr. Richard Mollica, the Director of the Harvard Program i
+n Refugee Trauma (HPRT), approached Dean Panetta about this project, and we will
+ work closely with him and his team at the Harvard Medical School.
 
 Problem
 
-When someone enters a refugee camp, they are asked questions about the trauma that they have endured so that the doctors in the camp can adequately provide the individual with the care that they need, using a series of questions called the 11 Point Questionnaire. However, these questions can often derail patients who have gone through extensive trauma from their path to recovery by resurfacing painful memories repeatedly. Since medical records are commonly kept in paper form at each refugee camp, there is no sharing of data - this means that doctors must often spend time and money diagnosing patients who have already been diagnosed in previous camps. 
-Further, to our knowledge there does not exist any form of accurate statistical records of refugee health care.  As a result, there is no objective manner of determining what resources should be allocated to a particular area, and in what quantities.
+When someone enters a refugee camp, they are asked questions about the trauma th
+at they have endured so that the doctors in the camp can adequately provide the 
+individual with the care that they need, using a series of questions called the 
+11 Point Questionnaire. However, these questions can often derail patients who h
+ave gone through extensive trauma from their path to recovery by resurfacing pai
+nful memories repeatedly. Since medical records are commonly kept in paper form 
+at each refugee camp, there is no sharing of data - this means that doctors must
+ often spend time and money diagnosing patients who have already been diagnosed 
+in previous camps. 
+Further, to our knowledge there does not exist any form of accurate statistical 
+records of refugee health care.  As a result, there is no objective manner of de
+termining what resources should be allocated to a particular area, and in what q
+uantities.
 
-One major issue that arises within refugee camps is the practice of human trafficking. Women and children are often promised an escape from certain refugee camps, only to be sold into the practice of human trafficking.  These groups often travel from camp to camp on their way out of the country.  Sometimes when a refugee is being trafficked, a trafficker pretends to be a relative.  Without any way to know definitively whether the people are related, a doctor or other personnel will not know if the trafficker is lying and be unsure of whether or not they should intervene.
+One major issue that arises within refugee camps is the practice of human traffi
+cking. Women and children are often promised an escape from certain refugee camp
+s, only to be sold into the practice of human trafficking.  These groups often t
+ravel from camp to camp on their way out of the country.  Sometimes when a refug
+ee is being trafficked, a trafficker pretends to be a relative.  Without any way
+ to know definitively whether the people are related, a doctor or other personne
+l will not know if the trafficker is lying and be unsure of whether or not they 
+should intervene.
 
 Context
 
-Currently, there exists a rudimentary version of the system in which doctors are able to fill out the 11 Point Questionnaire on their phones using an app, from which the information is then emailed to them. This moves the information from paper to electronic records, but does not address the issue of sharing patient information between doctors and between camps. The system also does not link patient information to their fingerprints. Further, ambiguity related to language barriers or perceived safety has also not been addressed. The added features to the system we propose will address these issues to provide a much more seamless delivery of healthcare to refugees. 
-We also looked closely at the existing application, and we have decided that we will need to change the database to one that provides more stability and security than the one they currently use (MongoDB). We hope to speak to the doctors on the team soon, and learn more about what the doctors hope to gain from the database so that we can confirm this choice. 
+Currently, there exists a rudimentary version of the system in which doctors are
+ able to fill out the 11 Point Questionnaire on their phones using an app, from 
+which the information is then emailed to them. This moves the information from p
+aper to electronic records, but does not address the issue of sharing patient in
+formation between doctors and between camps. The system also does not link patie
+nt information to their fingerprints. Further, ambiguity related to language bar
+riers or perceived safety has also not been addressed. The added features to the
+ system we propose will address these issues to provide a much more seamless del
+ivery of healthcare to refugees. 
+We also looked closely at the existing application, and we have decided that we 
+will need to change the database to one that provides more stability and securit
+y than the one they currently use (MongoDB). We hope to speak to the doctors on 
+the team soon, and learn more about what the doctors hope to gain from the datab
+ase so that we can confirm this choice. 
 
 Customer
 
-We are working with Dean Karen Panetta in aiding Dr. Mollica from the Harvard Medical School on the technical aspect of his project.  Dr. Mollica is a specialist in refugee trauma, and has put together an 11 point questionnaire that doctors in refugee camps use to engage with refugees in the best possible manner.  Dr. Mollica wants his tool to reach as many refugees as he can to help them openly discuss health concerns with doctors in refugee camps. Further, Dr. Mollica speaks in front of the U.N., and wishes to be able to present hard statistical data on the wellbeing of people in particular camps or over larger regions to be able to form a stronger argument that more aid needs to be given to people in refugee camps.
+We are working with Dean Karen Panetta in aiding Dr. Mollica from the Harvard Me
+dical School on the technical aspect of his project.  Dr. Mollica is a specialis
+t in refugee trauma, and has put together an 11 point questionnaire that doctors
+ in refugee camps use to engage with refugees in the best possible manner.  Dr. 
+Mollica wants his tool to reach as many refugees as he can to help them openly d
+iscuss health concerns with doctors in refugee camps. Further, Dr. Mollica speak
+s in front of the U.N., and wishes to be able to present hard statistical data o
+n the wellbeing of people in particular camps or over larger regions to be able 
+to form a stronger argument that more aid needs to be given to people in refugee
+ camps.
 
 Challenges
 
 Security: If our system is not secure, we cannot deploy.
-Responsiveness: Doctors must be able to quickly retrieve/update patient information, and it must be light-weight enough to function given poor or infrequent network connectivity.
-Accessibility: All doctors need access to the app and patient information related to anyone who they may have to treat.
+Responsiveness: Doctors must be able to quickly retrieve/update patient informat
+ion, and it must be light-weight enough to function given poor or infrequent net
+work connectivity.
+Accessibility: All doctors need access to the app and patient information relate
+d to anyone who they may have to treat.
 Storage: Information should be small/compressible to effectively share data.
 
-We need to ensure that any personally identifiable data is not available in the public sphere, while also providing public statistical information on refugee camps as a whole.  This brings up a question of how to both develop a public database and protect the identity of those involved. We are not sure if HIPAA laws apply to American doctors that are not practicing in the states. This is something we would like to speak about with the doctors, so that we can understand the limitations that we have. 
+We need to ensure that any personally identifiable data is not available in the 
+public sphere, while also providing public statistical information on refugee ca
+mps as a whole.  This brings up a question of how to both develop a public datab
+ase and protect the identity of those involved. We are not sure if HIPAA laws ap
+ply to American doctors that are not practicing in the states. This is something
+ we would like to speak about with the doctors, so that we can understand the li
+mitations that we have. 
 
 Expertise
 
-As a wide-spanning project, we will be in contact with many experts in various fields in order to maximize the utility of this project. We will have to learn more about the current state of affairs in many of these refugee camps and more about the nature of medical information to be stored - this information will be provided by Dr. Mollica and his team. We have been meeting with Dr. Panetta and the team from last year to get up to speed quickly on the technical work developed over the past year.  We will also have to learn more about how we can keep the information secure, likely via Dr. Ming Chow, an expert in security, and how to overcome intermittent network accessibility with Dr. Fahad Dogar’s experience. We hope to work closely with these professors and doctors so that we have the necessary information to make this project as impactful as possible. 
+As a wide-spanning project, we will be in contact with many experts in various f
+ields in order to maximize the utility of this project. We will have to learn mo
+re about the current state of affairs in many of these refugee camps and more ab
+out the nature of medical information to be stored - this information will be pr
+ovided by Dr. Mollica and his team. We have been meeting with Dr. Panetta and th
+e team from last year to get up to speed quickly on the technical work developed
+ over the past year.  We will also have to learn more about how we can keep the 
+information secure, likely via Dr. Ming Chow, an expert in security, and how to 
+overcome intermittent network accessibility with Dr. Fahad Dogar’s experience. W
+e hope to work closely with these professors and doctors so that we have the nec
+essary information to make this project as impactful as possible. 
 
 
 Risks
 
-Once our system is accepted and used by doctors in refugee camps, there is still a risk of security breaches. If our system is not as secure as we intend it to be, we may cause more problems. In such an event, we’d deny access to any devices from the servers and continue to use a localized data collection method. 
-We also need to make sure that all data is recoverable. If there were a power outage that spontaneously shut off the system, we need to ensure that the data does not disappear.
-We further must ensure that personally identifiable information does not become public in any manner.
+Once our system is accepted and used by doctors in refugee camps, there is still
+ a risk of security breaches. If our system is not as secure as we intend it to 
+be, we may cause more problems. In such an event, we’d deny access to any device
+s from the servers and continue to use a localized data collection method. 
+We also need to make sure that all data is recoverable. If there were a power ou
+tage that spontaneously shut off the system, we need to ensure that the data doe
+s not disappear.
+We further must ensure that personally identifiable information does not become 
+public in any manner.
 
 Ethical questions
 
-One ethical issue we must closely analyze is security. We are working with highly sensitive medical data that must be kept secure so that patients feel safe to share sensitive information with doctors. We will mitigate this issue by keeping in close contact with the doctors to understand the nature of this information and speaking with experts in the field of security (aka Ming Chow). 
-We will likely also be using patient data to develop various models.  We need to make sure that we respect privacy by only using absolutely required information for the project and protecting identities completely.
+One ethical issue we must closely analyze is security. We are working with highl
+y sensitive medical data that must be kept secure so that patients feel safe to 
+share sensitive information with doctors. We will mitigate this issue by keeping
+ in close contact with the doctors to understand the nature of this information 
+and speaking with experts in the field of security (aka Ming Chow). 
+We will likely also be using patient data to develop various models.  We need to
+ make sure that we respect privacy by only using absolutely required information
+ for the project and protecting identities completely.
 
 Goal
 
-The desired result of this project is software that can identify individuals by their fingerprints and retrieve medical information in a secure fashion. Doctors should be able to access patient information for individuals in their geographical region, and be able to upload new information when connected to the internet. The data must be lightweight/compressed such that doctors in areas with poor internet connection can more easily download the data and they are able to store large amounts of patient information on their phones and/or laptops. This project will be used in the field, so a successful product would be indicated by an adoption of the system by doctors in refugee camps. 
-This app would also put together statistics to help illustrate the hardships that refugees undergo. This information will be a cumulative data representation of the information that is stored into the database. Using these statistics and information, we hope to help doctors gain a broader understanding of what experiences their patients have likely endured. These statistics can also be shared with the world to inspire humanitarian aid to affected regions. 
-In addition, the team hopes to use patient data to detect signs of human trafficking by finding any abnormalities in recorded refugee movements. These findings would be reported to local authorities to help mitigate this highly unethical practice. This is a reach goal - one to be attempted only if we are able to achieve every step before. 
+The desired result of this project is software that can identify individuals by 
+their fingerprints and retrieve medical information in a secure fashion. Doctors
+ should be able to access patient information for individuals in their geographi
+cal region, and be able to upload new information when connected to the internet
+. The data must be lightweight/compressed such that doctors in areas with poor i
+nternet connection can more easily download the data and they are able to store 
+large amounts of patient information on their phones and/or laptops. This projec
+t will be used in the field, so a successful product would be indicated by an ad
+option of the system by doctors in refugee camps. 
+This app would also put together statistics to help illustrate the hardships tha
+t refugees undergo. This information will be a cumulative data representation of
+ the information that is stored into the database. Using these statistics and in
+formation, we hope to help doctors gain a broader understanding of what experien
+ces their patients have likely endured. These statistics can also be shared with
+ the world to inspire humanitarian aid to affected regions. 
+In addition, the team hopes to use patient data to detect signs of human traffic
+king by finding any abnormalities in recorded refugee movements. These findings 
+would be reported to local authorities to help mitigate this highly unethical pr
+actice. This is a reach goal - one to be attempted only if we are able to achiev
+e every step before. 
 
 Documents
 
-We will create a short video highlighting the capabilities and necessity of the app we put together.  This will be the public facing marketing product, and be available to be viewed anywhere through Youtube.  
-We also would like to prepare a more in depth presentation that we can deliver to a panel of doctors at the Harvard Medical School and potentially to doctors in refugee camps at a conference.  We will likely need to vary the technical depth of the presentation based on the technical background of our audience.
-We plan to release updates on the development of the project every Friday that summarizes the work that has been done over the previous week.  We will either upload this on a website blog or on our github page.
+We will create a short video highlighting the capabilities and necessity of the 
+app we put together.  This will be the public facing marketing product, and be a
+vailable to be viewed anywhere through Youtube.  
+We also would like to prepare a more in depth presentation that we can deliver t
+o a panel of doctors at the Harvard Medical School and potentially to doctors in
+ refugee camps at a conference.  We will likely need to vary the technical depth
+ of the presentation based on the technical background of our audience.
+We plan to release updates on the development of the project every Friday that s
+ummarizes the work that has been done over the previous week.  We will either up
+load this on a website blog or on our github page.
 
