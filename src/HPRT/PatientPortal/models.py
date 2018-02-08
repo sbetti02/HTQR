@@ -42,7 +42,8 @@ class PatientInfo(models.Model):
     def __str__(self):
         return self.name
 
-
-
-
+class Relatives(models.Model):
+    person = models.ForeignKey(PatientInfo, related_name="person1", on_delete=models.CASCADE)
+    related_to = models.ForeignKey(PatientInfo, related_name="person2", on_delete=models.CASCADE)
+    relation = models.PositiveSmallIntegerField(null=True)
 
