@@ -1,0 +1,13 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1> Home </h1>
+		{% for patient in object_list %}
+				<div class = "patient-entry">
+						<h2><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></h2>
+						<p>{{ patient.DOB }}</p>
+				</div>
+		{% endfor %}
+{% endblock content %}
+
