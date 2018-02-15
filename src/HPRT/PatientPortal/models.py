@@ -30,7 +30,7 @@ class Doctors(models.Model):
     specialty = models.CharField(max_length=200)
     campsite = models.ForeignKey(Sites, on_delete = models.CASCADE, null=True)
     email = models.EmailField()
-    phone_number = PhoneNumberField()
+    # phone_number = PhoneNumberField()
     # profile_picture = models.ImageField() # TODO: height, width requirements
     # TODO: fingerprints
 
@@ -46,7 +46,7 @@ class Patient(models.Model):
     campsite = models.ForeignKey(Sites, on_delete = models.CASCADE, null=True)
     allergies = models.TextField(default='')
     current_medications = models.TextField(default='')
-    phone_number = PhoneNumberField()
+    # phone_number = PhoneNumberField()
     email = models.EmailField()
     doctor = models.ForeignKey(Doctors, on_delete = models.CASCADE, null=True) # How doctor instance finds all patients
     #picture = models.ImageField(upload_to="PatientPortal/profiles.py", 

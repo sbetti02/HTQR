@@ -17,13 +17,16 @@ class PatientCreateView(CreateView):
     model = Patient
     template_name = 'patient_new.html'
     fields = '__all__'
+    success_url = reverse_lazy('home')
 
-# class PatientUpdateView(UpdateView):
-#     model = Patient
-#     fields = '__all__'
-#     template_name = 'patient_edit.html'
+class PatientUpdateView(UpdateView):
+    model = Patient
+    fields = '__all__'
+    template_name = 'patient_edit.html'
+    success_url = ".."
 
 class PatientDeleteView(DeleteView):
     model = Patient
     template_name = 'patient_delete.html'
     success_url = reverse_lazy('home')
+

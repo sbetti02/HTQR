@@ -3,8 +3,11 @@
 
 {% block content %}
 		<h1> New Patient </h1>
-		<form action = "" method = "post">{% csrf_token %}
+		<form action = "" method = "post">
+		{% csrf_token %}
 				{{ form.as_p }}
 				<input type = "submit" value = "Save" />
 		</form>
+		<br>
+		<a href="/">Go Back</a>
 {% endblock %}
