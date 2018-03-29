@@ -56,6 +56,10 @@ class Patient(models.Model):
     def __str__(self):
         return self.name
 
+class DocPat(models.Model):
+    doctor = models.ForeignKey(Doctors, on_delete = models.CASCADE, null=True)
+    patient = models.ForeignKey(Patient, on_delete = models.CASCADE, null=True)
+
 # TODO: Does this still implicitly create an ID column? I don't want it to 
 class RelativeRelationships(models.Model):
     relationship_num = models.PositiveSmallIntegerField(primary_key=True)
