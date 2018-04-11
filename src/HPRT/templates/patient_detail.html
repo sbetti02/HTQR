@@ -5,8 +5,13 @@
     <div class = "patient-entry">
         <h2>{{ patient.name }}</h2>
         <p>DOB: {{ patient.DOB }}</p>
-        <p>Campsite: {{ patient.campsite }}</p>
-        <p>Doctor: {{ patient.doctor }}</p>
+        <p>Email: {{patient.email }}</p>
+        <p>Site: {{ patient.site }}</p>
+        <p>Blood Type: {{ patient.blood_type }}</p>
+        <p>Height: {{ patient.height }}</p>
+        <p>Weight: {{ patient.weight }}</p>
+        <p>Allergies: {{ patient.allergies }}</p>
+        <p>Current Medications: {{ patient.current_medications }}</p>
     </div>
     <p> <a href = "{% url 'patient_edit' patient.pk %}"> + Edit Patient Info</a></p> 
     <p> <a href = "{% url 'patient_delete' patient.pk %}"> + Delete Patient</a></p>
