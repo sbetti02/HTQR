@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from users.models import Doctor
 
 #########
 ## TODO: Many of these fields shouldn't have null=True in production!
@@ -8,34 +9,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 ## TODO: Write API that runs on top of this base model layer to be able to interact
 ##       with the models appropriately
 
-class Sites(models.Model):
-    name = models.CharField(max_length=200, null=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+class Site(models.Model):
+    name = models.CharField(max_length=200, null = True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null = True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null = True)
 
     def __str__(self):
         return self.name
 
-class Drug_Storage(models.Model):
-    drug_name = models.CharField(max_length=100)
-    concentration = models.CharField(max_length=10) # Like 88mcg
-    quantity = models.IntegerField(default=1)
-    campsite = models.ForeignKey(Sites, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.drug_name
-
-class Doctors(models.Model):
-    name = models.CharField(max_length=200)
-    specialty = models.CharField(max_length=200)
-    campsite = models.ForeignKey(Sites, on_delete = models.CASCADE, null=True)
-    email = models.EmailField()
-    # phone_number = PhoneNumberField()
-    # profile_picture = models.ImageField() # TODO: height, width requirements
-    # TODO: fingerprints
-
-    def __str__(self):
-        return self.name
 
 class Patient(models.Model):
     name = models.CharField(max_length=200)
@@ -43,12 +24,11 @@ class Patient(models.Model):
     blood_type = models.CharField(max_length = 10, null=True)
     height = models.DecimalField(max_digits = 4, decimal_places = 1, null=True) # In centimeters
     weight = models.DecimalField(max_digits = 4, decimal_places = 1, null=True) # In kg, max_digits non-inclusive
-    campsite = models.ForeignKey(Sites, on_delete = models.CASCADE, null=True)
-    allergies = models.TextField(default='')
-    current_medications = models.TextField(default='')
+    site = models.ForeignKey(Site, on_delete = models.CASCADE, null=True)
+    allergies = models.TextField(default='', blank = True, null = True)
+    current_medications = models.TextField(default='', blank = True, null = True)
     # phone_number = PhoneNumberField()
     email = models.EmailField()
-    doctor = models.ForeignKey(Doctors, on_delete = models.CASCADE, null=True) # How doctor instance finds all patients
     #picture = models.ImageField(upload_to="PatientPortal/profiles.py", 
     #                                     height_field=500, width_field=500, null=True)
     # TODO: fingerprints, picture
@@ -57,7 +37,7 @@ class Patient(models.Model):
         return self.name
 
 class DocPat(models.Model):
-    doctor = models.ForeignKey(Doctors, on_delete = models.CASCADE, null=True)
+    doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, null=True)
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, null=True)
 
 # TODO: Does this still implicitly create an ID column? I don't want it to 
@@ -79,19 +59,10 @@ class Relatives(models.Model):
         return self.person.name + " => " + self.related_to.name + ", " + self.relation.relationship_type
 
 
-# TODO: Probably should alter these fields to more appropriate values
-class DoctorAppointments(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE)
-    appointment_date = models.DateField()
-    systolic_blood_pressure = models.IntegerField(null=True)
-    diastolic_blood_pressure = models.IntegerField(null=True)
-    tempurature = models.DecimalField(max_digits=3, decimal_places=1, null=True)
-    doctor_notes = models.TextField(default='')
 
 class Questionnaire(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
-    doctor = models.ForeignKey(Doctors, on_delete = models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE)
     date = models.DateField()
     lack_of_shelter = models.BooleanField()
     lack_of_food_or_water = models.BooleanField()

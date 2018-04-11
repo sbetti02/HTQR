@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'users',
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.Doctor'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HTQR3',
+        'NAME': 'HTQR9',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',

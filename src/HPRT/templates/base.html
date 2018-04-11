@@ -16,15 +16,19 @@
 										<a href = "{% url 'patient_new' %}"> + New Patient</a>
 								</div>
 								<p>  <br\> </p>
-								{% if user.user_type == 'A' %}
+								{% if user.user_type == 'A' or user.is_superuser %}
 								<div class = "nav-right"> 
 										<a href = "{% url 'signup' %}"> + New User</a>
+								</div>
+								<div class = "nav-right"> 
+										<a href = "{% url 'site_new' %}"> + New Site</a>
 								</div>
 								{% endif %}
 						</header>
 						{% if user.is_authenticated %}
 								<p>Welcome, Dr. {{user.last_name}}!</p>
 								<p><a href = "{% url 'logout' %}">logout</a></p>
+								<p><a href = "{% url 'home' %}">home</a></p>
 						{% else %}
 								<p>You are not logged in.</p>
 								<a href = "{%url 'login' %}">login</a>

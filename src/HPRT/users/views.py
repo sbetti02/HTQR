@@ -2,14 +2,17 @@
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CustomUserCreationForm
+from PatientPortal.models import DocPat
+
+from .forms import DoctorCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class SignUp(UserPassesTestMixin, generic.CreateView):
     def test_func(self):
-        return self.request.user.user_type == 'A'
+        return self.request.user.user_type == 'A' or self.request.user.is_superuser
+
     login_url = 'home'
-    form_class = CustomUserCreationForm
+    form_class = DoctorCreationForm
     success_url = reverse_lazy('home')
     template_name = 'signup.html'
