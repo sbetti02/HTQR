@@ -1,0 +1,27 @@
+<!-- templates/toolkit_close.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>CLOSE and SCHEDULE follow-up visits</h1>
+
+		<p>Clinicians need a method for sensitively closing the interview, especially after a traumatic history has been revealed</p>
+
+		<p>It is important to create a relationship and continuous dialogue with the patient</p>
+
+		<p>Patients greatly value the PCP’s assurance that they will take up again the patient’s trauma story during the next visit</p>
+
+		<p>Schedule follow-up visits and add the diagnosis to the patient’s record (“problem list”)</p>
+
+		<p><i>“Thank you for telling me about these upsetting events. You have helped me to understand your situation better”</i></p>
+
+		<p><i>“How would you like me to help you?” </i>The answers of some patients may be very specific; others may have no idea what help they may need.</p>
+
+		<p>Make a plan with the patient that includes follow-up visits. Just having an additional conversation with the patient at a later date can do wonders for their mental strength.</p>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

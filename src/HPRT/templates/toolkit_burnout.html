@@ -1,0 +1,21 @@
+<!-- templates/toolkit_burnout.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>PREVENT BURNOUT: discuss with colleagues</h1>
+
+		<p>There is evidence that long-term involvement in care of survivors of mass violence and torture is extremely stressful to clinicians, leading to the state of chronic stress and fatigue known as “burnout”</p>
+
+		<p>Regularly discuss cases and your reactions with at least one colleague</p>
+
+		<p>In the same way a patient benefits from talking with you, you will gain strength from talking with others (e.g. Balint groups).</p>
+
+		<p>Also, remember that basic self-care techniques such as good sleep hygiene, diet, exercise, and stress reduction (e.g. meditation) should be integrated into a routine self-care protocol.</p>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

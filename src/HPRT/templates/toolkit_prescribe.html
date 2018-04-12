@@ -1,0 +1,23 @@
+<!-- templates/toolkit_prescribe.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>PRESCRIBE psychotropic drugs if necessary</h1>
+
+		<p>Prescribe medication when appropriate
+			<ul>
+				<li>Pay close attention to proper dose based on different ethnic groups.</li>
+				<li>Start low and gradually increase dose over time in order to prevent side effects that may make patients apprehensive to continue taking medication.</li>
+				<li>Closely monitor the effectiveness of medication.</li>
+			</ul></p>
+
+		<p>Use HPRT’s ethnopsychopharmacology pamphlet for simple, culturally appropriate guides about drugs most commonly used to treat generalized anxiety disorder, depression, PTSD, and insomnia</p>
+
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}
