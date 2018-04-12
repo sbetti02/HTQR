@@ -1,0 +1,30 @@
+<!-- templates/toolkit_culture.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>BE CULTURALLY ATTUNED to differences</h1>
+
+		<p>Different cultures have different views of trauma and different ideas about the causes of illness</p>
+
+		<p>Literal translation of your questions or diagnosis may be meaningless</p>
+
+		<p>HPRT’s website (hprt-cambridge.org) provides resources on the most common symptoms of emotional distress for different cultural groups</p>
+
+		<p>Culturally diverse patients have different reactions to doses and side effects</p>
+
+		<p>Consider ethnically influenced factors such as tolerance levels and body weight (see manual on Pharamacological Treatment of Depression and Posttraumatic Stress Disorders in Traumatized Patients in Toolkit)</p>
+
+		<p>Learn how to properly work with medical interpreters</p>
+
+		<p>The choice of medical interpreters is important – choose someone with both language and context skills</p>
+
+		<p>Be aware that evidence-based treatments, proven to be effective in mainstream Western populations, may not work or be accepted by patients from other cultures and linguistic groups.</p>
+
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

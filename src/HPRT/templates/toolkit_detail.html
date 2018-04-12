@@ -1,0 +1,84 @@
+<!-- templates/toolkit_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class = "toolkit">
+        <h2>{{ toolkit.docpat.patient.name }}</h2>
+        <p>1. Ask: {% if toolkit.ask %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_ask' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+        <p>2. Identify: {% if toolkit.identify %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_identify' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>3. Diagnose and Treat: {% if toolkit.diagnose_and_treat %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_diagtreat' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>4. Refer: {% if toolkit.refer %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_refer' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>5. Reinforce and Teach: {% if toolkit.reinforce_and_teach %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_reinteach' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>6. Recommend: {% if toolkit.recommend %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_recommend' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>7. Reduce High Risk Behavior: {% if toolkit.reduce_high_risk_behavior %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_reducerisk' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>8. Be Culturally Attuned: {% if toolkit.be_culturally_attuned %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_culture' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>9. Prescribe Medication: {% if toolkit.prescribe %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_prescribe' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>10. Close and Schedule Followup Appointments: {% if toolkit.close_and_schedule%}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_close' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+        <p>11. Prevent Burnout: {% if toolkit.prevent_burnout %}
+                    Complete!
+                    {% else %}
+                    <a href = "{%url 'toolkit_burnout' toolkit.pk %}">Incomplete</a>
+                    {% endif %}</p>
+
+    </div>
+    <p> <a href = "{% url 'patient_detail' toolkit.docpat.patient.pk %}">Back</a></p> 
+{% endblock content %}
+
+
+<!-- {% if user.is_authenticated %}
+                                <p>Welcome, Dr. {{user.last_name}}!</p>
+                                <p><a href = "{% url 'logout' %}">logout</a></p>
+                                <p><a href = "{% url 'home' %}">home</a></p>
+                        {% else %}
+                                <p>You are not logged in.</p>
+                                <a href = "{%url 'login' %}">login</a>
+                        {% endif %} -->

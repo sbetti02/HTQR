@@ -1,0 +1,29 @@
+<!-- templates/toolkit_identify.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>IDENTIFY concrete physical or mental effects</h1>
+
+		<p>Is the patient complaining of any physical symptoms? 
+		<ul>
+  		<li>Headaches?</li>
+  		<li>Stomach upset?</li>
+  		<li>Back pain?</li>
+  		<li>Fatigue?</li>
+  		<li>Weakness?</li>
+		</ul></p>
+
+		<p>Is the patient exhibiting feelings of grief, anxiety, depression, insomnia or PTSD?</p>
+
+		<p>Many patients somaticize their distress. By identifying the concrete physical and psychological effects of mass violence, the PCP can help the patient note these effects and be reassured that they are normal and usually temporary</p>
+
+		<p>Have medical or psychiatric disorders worsened?</p>
+		<p>Patients with pre-existing psychiatric disorders that worsen following trauma related to war or mass violence may need adjustment in medications and increased psychosocial support</p>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

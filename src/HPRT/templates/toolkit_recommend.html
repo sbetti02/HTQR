@@ -1,0 +1,36 @@
+<!-- templates/toolkit_recommend.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>RECOMMEND altruism, work and spiritual activities</h1>
+
+		<p>Scientific studies of survivors of mass violence have repeatedly revealed increased resilience associated with altruism, work and spiritual activities</p>
+
+		<p>Engaging in these activities and behaviors appears to prevent mental health problems and promote recovery from existing problems</p>
+
+		<p>PCPs should actively recommend these activities as a prescription</p>
+
+		<p><i>“I strongly recommend that you work and keep busy, try to help others, and consult with your clergy or engage in spiritual activities such as meditation or prayer.”</i></p>
+
+		<p><i>“Did you know that engaging in these activities and behaviors can prevent future mental health problems and help you feel better faster?”</i></p>
+
+		<p><b>You have the power to recommend a change in behavior!</b></p>
+
+		<p>Also consider adding to mainstream medicine other cultural healing techniques such as:
+		<ul>
+  		<li>Expressive Arts</li>
+  		<li>Yoga</li>
+  		<li>Mindfulness and Meditation</li>
+  		<li>Acupuncture</li>
+  		<li>Prayer</li>
+  		<li>Nature Therapy</li>
+  		<li>Agricultural Activities</li>
+		</ul>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

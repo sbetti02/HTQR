@@ -1,0 +1,35 @@
+<!-- templates/toolkit_reinteach.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>REINFORCE/TEACH positive coping behaviors</h1>
+
+		<p>Build on the patient’s self-healing response</p>
+
+		<p>You can help a patient by simply reinforcing positive behavior and teaching coping techniques</p>
+
+		<p>Patients usually hold their PCPs in very high regard. PCPs must take advantage of this positive regard to validate whatever coping strategies are already being used</p>
+
+		<p>Recommend coping strategies beginning with self-care</p>
+
+		<p><i>“I want you to keep up the good work! It is good for you and will help you cope.”</i></p>
+
+		<p><i>“I want you to build physical, spiritual, AND mental strength.”</i></p>
+
+		<p>Ask the patient the 4 following self-healing questions:
+		<ol type = "1">
+  		<li>What traumatic events have happened?</li>
+  		<li>How are your body and mind repairing the injuries sustained from those events?</li>
+  		<li>What have you done in your daily life to help yourself recover?</li>
+  		<li>What justice do you require from society to support your personal healing?</li>
+		</ol>
+		- From Healing Invisible Wounds, p. 243</p>
+
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}
