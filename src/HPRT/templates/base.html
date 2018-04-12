@@ -25,6 +25,7 @@
 				</div>
 				<div class = "col-sm-10" align="right">
 					<br>
+					<button type="button" class="btn btn-light border"><a href = "{% url 'patient_add_existing' %}"> + Add Existing Patient</a></button>
 					<button type="button" class="btn btn-light border"><a href = "{% url 'patient_new' %}"> + New Patient</a></button>
 					{% if user.user_type == 'A' or user.is_superuser %}
 					<button type="button" class="btn btn-light border"><a href = "{% url 'signup' %}"> + New User</a></button>

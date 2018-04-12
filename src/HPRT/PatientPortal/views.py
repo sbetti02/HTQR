@@ -27,6 +27,23 @@ class PatientDetailView(LoginRequiredMixin, DetailView):
         context['toolkit'] = Toolkit.objects.get(docpat = DocPat.objects.get(doctor = self.request.user, patient = self.object))
         return context
 
+class PatientAddExistingView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = DocPat
+    template_name = 'patient_add_existing.html'
+    fields = '__all__'
+    success_url = reverse_lazy('home')
+
+    """
+    def get_context_data(self, **kwargs):
+        context = super(PatientAddExistingView, self).get_context_data(**kwargs)
+        context['docpat'] = DocPat.objects.filter(doctor = self.request.user)
+        return context
+    """
+
+
+
 
 class PatientCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'

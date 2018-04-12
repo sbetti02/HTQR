@@ -19,4 +19,4 @@ class Doctor(AbstractUser):
 
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return "Dr. " + self.first_name + " " + self.last_name
