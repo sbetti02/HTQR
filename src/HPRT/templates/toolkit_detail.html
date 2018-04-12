@@ -2,72 +2,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h2>{{ toolkit.docpat.patient.name }}</h2>
+    <br>
     <div class = "toolkit">
-        <h2>{{ toolkit.docpat.patient.name }}</h2>
-        <p>1. Ask: {% if toolkit.ask %}
-                    Complete!
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Patient Info</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1. Ask:</td> <td> {% if toolkit.ask %}
+                    <a href = "{%url 'toolkit_ask' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_ask' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
-        <p>2. Identify: {% if toolkit.identify %}
-                    Complete!
+                    <a href = "{%url 'toolkit_ask' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
+                <tr><td>2. Identify:</td> <td> {% if toolkit.identify %}
+                    <a href = "{%url 'toolkit_identify' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_identify' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_identify' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>3. Diagnose and Treat: {% if toolkit.diagnose_and_treat %}
+                <tr><td>3. Diagnose and Treat:</td> <td> {% if toolkit.diagnose_and_treat %}
                     Complete!
+                    <a href = "{%url 'toolkit_diagtreat' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_diagtreat' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_diagtreat' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>4. Refer: {% if toolkit.refer %}
-                    Complete!
+                <tr><td>4. Refer:</td> <td> {% if toolkit.refer %}
+                    <a href = "{%url 'toolkit_refer' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_refer' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_refer' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>5. Reinforce and Teach: {% if toolkit.reinforce_and_teach %}
-                    Complete!
+                <tr><td>5. Reinforce and Teach:</td> <td> {% if toolkit.reinforce_and_teach %}
+                    <a href = "{%url 'toolkit_reinteach' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_reinteach' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_reinteach' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>6. Recommend: {% if toolkit.recommend %}
-                    Complete!
+                <tr><td>6. Recommend:</td> <td> {% if toolkit.recommend %}
+                    <a href = "{%url 'toolkit_recommend' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_recommend' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_recommend' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>7. Reduce High Risk Behavior: {% if toolkit.reduce_high_risk_behavior %}
-                    Complete!
+                <tr><td>7. Reduce High Risk Behavior:</td> <td> {% if toolkit.reduce_high_risk_behavior %}
+                    <a href = "{%url 'toolkit_reducerisk' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_reducerisk' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_reducerisk' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>8. Be Culturally Attuned: {% if toolkit.be_culturally_attuned %}
-                    Complete!
+                <tr><td>8. Be Culturally Attuned:</td> <td> {% if toolkit.be_culturally_attuned %}
+                    <a href = "{%url 'toolkit_culture' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_culture' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_culture' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>9. Prescribe Medication: {% if toolkit.prescribe %}
-                    Complete!
+                <tr><td>9. Prescribe Medication:</td> <td> {% if toolkit.prescribe %}
+                    <a href = "{%url 'toolkit_prescribe' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_prescribe' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_prescribe' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>10. Close and Schedule Followup Appointments: {% if toolkit.close_and_schedule%}
-                    Complete!
+                <tr><td>10. Close and Schedule Followup Appointments:</td> <td> {% if toolkit.close_and_schedule%}
+                    <a href = "{%url 'toolkit_close' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_close' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_close' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
 
-        <p>11. Prevent Burnout: {% if toolkit.prevent_burnout %}
-                    Complete!
+                <tr><td>11. Prevent Burnout:</td> <td> {% if toolkit.prevent_burnout %}
+                    <a href = "{%url 'toolkit_burnout' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
-                    <a href = "{%url 'toolkit_burnout' toolkit.pk %}">Incomplete</a>
-                    {% endif %}</p>
+                    <a href = "{%url 'toolkit_burnout' toolkit.pk %}" style="color:red">Incomplete</a>
+                    {% endif %}</td></tr>
+            </tbody>
+        </table>                
 
     </div>
     <p> <a href = "{% url 'patient_detail' toolkit.docpat.patient.pk %}">Back</a></p> 

@@ -1,10 +1,20 @@
 <!-- templates/analytics_home.html -->
 {% extends 'base.html' %}
 
-
 {% block content %}
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit Query" />
-    </form>
+	<div class="row">
+		<div class="col-xl-3">
+		    <form action="" method="post">{% csrf_token %}
+		        {{ form.as_p }}
+		        <input type="submit" value="Submit Query" />
+		    </form>
+		</div>
+		<div class="col-xl-9">
+			<center>
+				<img src="/static/img/sample_chart.png" class="img-responsive" style="max-width: 100%" alt="sample chart">
+			</center>
+		</div>
+	</div>
+
+
 {% endblock content %}

@@ -21,6 +21,7 @@
 		<div class = "container-fluid" style="min-height:95%">
 			<div class="row" style="border-bottom:1px solid gray">
 				<div class = "col-sm-2">
+					<br>
 					<h1> <a href = "/"> HPRT </a> </h1>
 				</div>
 				<div class = "col-sm-10" align="right">
@@ -32,6 +33,7 @@
 					<button type="button" class="btn btn-light border"><a href = "{% url 'site_new' %}"> + New Site</a></button>
 					{% endif %}
 				</div>
+				<br>
 			</div>
 			
 			<div class="row">
@@ -39,7 +41,8 @@
 				<div class="col-4" align="center">
 				<br>
 				{% if user.is_authenticated %}
-						<p>Welcome, Dr. {{user.last_name}}!</p>
+						<h5>Welcome, Dr. {{user.last_name}}!</h5>
+						<br>
 				</div>
 				<div class="col-4" align="right">
 						<button type="button" class="btn btn-light border"><a href = "{% url 'home' %}">Home</a></button>
