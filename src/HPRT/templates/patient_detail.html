@@ -4,15 +4,32 @@
 {% block content %}
     <div class = "patient-entry">
         <h2>{{ patient.name }}</h2>
-        <p>DOB: {{ patient.DOB }}</p>
-        <p>Email: {{patient.email }}</p>
-        <p>Site: {{ patient.site }}</p>
-        <p>Blood Type: {{ patient.blood_type }}</p>
-        <p>Height: {{ patient.height }}</p>
-        <p>Weight: {{ patient.weight }}</p>
-        <p>Allergies: {{ patient.allergies }}</p>
-        <p>Current Medications: {{ patient.current_medications }}</p>
+
+        <br>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Patient Info</th>
+                    <th><a href = "{% url 'patient_edit' patient.pk %}"> + Edit Patient Info</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>DOB:</td> <td>{{ patient.DOB }}</td></tr>
+                <tr><td>Email:</td> <td>{{patient.email }}</td></tr>
+                <tr><td>Site:</td> <td>{{ patient.site }}</td></tr>
+                <tr><td>Blood Type:</td> <td>{{ patient.blood_type }}</td></tr>
+                <tr><td>Height:</td> <td>{{ patient.height }} in.</td></tr>
+                <tr><td>Weight:</td> <td>{{ patient.weight }} lbs.</td></tr>
+                <tr><td>Allergies:</td> <td>{{ patient.allergies }}</td></tr>
+                <tr><td>Current Medications:</td> <td>{{ patient.current_medications }}</td></tr>
+                
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col" align="right">
+                <button type="button" class="btn btn-light border"><a href = "{% url 'patient_delete' patient.pk %}"> - Delete Patient</a></button>
+            </div>
+        </div>
     </div>
-    <p> <a href = "{% url 'patient_edit' patient.pk %}"> + Edit Patient Info</a></p> 
-    <p> <a href = "{% url 'patient_delete' patient.pk %}"> + Delete Patient</a></p>
+    <br>
 {% endblock content %}
