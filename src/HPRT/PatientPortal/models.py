@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from users.models import Doctor
+from datetime import date
 
 #########
 ## TODO: Many of these fields shouldn't have null=True in production!
@@ -35,6 +36,12 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.name
+
+    def age(self):
+        today = date.today()
+        return today.year - self.DOB.year - ((today.month, today.day) < (self.DOB.month, self.DOB.day))
+
+
 
 class DocPat(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, null=True)
