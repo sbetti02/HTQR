@@ -1,0 +1,23 @@
+<!-- templates/toolkit_reducerisk.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>REDUCE high-risk behaviors</h1>
+
+		<p>Patients often increase their use of cigarettes, drugs, and alcohol or become involved in risky sexual behavior during times of crisis. Clinicians must be alert for these unhealthy activities</p>
+
+		<p>Inquire about high-risk behaviors</p>
+
+		<p>If the response is positive, recommend steps to reduce these high-risk activities</p>
+
+		<p><i>“Have you started to use or increase your use of cigarettes, drugs, or alcohol? Are you having unprotected sex?”</i></p>
+
+		<p><i>“I want you to try to …”</i></p>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

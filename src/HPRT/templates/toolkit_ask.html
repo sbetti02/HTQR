@@ -1,0 +1,22 @@
+<!-- templates/toolkit_ask.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>ASK about the patient's trauma story</h1>
+
+		<p>Ask the question!</p>
+
+		<p>“Many of my patients have felt that experiences of trauma or torture have had a big effect on their health and well-being. Has this been the case for you?” (direct approach)</p>
+		<p>“You are my teacher. Can you tell me how you are dealing with the violent events you have experienced?” (indirect approach)</p>
+		<p> <b>Listen to the answer and acknowledge the patient’s trauma story. </b><p>
+
+		<p> Use words like, “I see,” or “I can appreciate how that would bother you…”</p>
+		<p><i>The trauma of extreme violence may occur in addition to other traumatic life experiences such as poverty, domestic violence, or child abuse. Sometimes an experience of extreme violence will prompt the patient to reveal prior traumatic experiences that he/she has been reluctant to share with the PCP</i></p>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

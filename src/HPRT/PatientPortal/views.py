@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from . models import Patient, DocPat, Site
 
+from toolkit.models import Toolkit
+
 
 class PatientListView(LoginRequiredMixin, ListView):
     login_url = 'login'
@@ -20,6 +22,10 @@ class PatientDetailView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super(PatientDetailView, self).get_context_data(**kwargs)
+        context['toolkit'] = Toolkit.objects.get(docpat = DocPat.objects.get(doctor = self.request.user, patient = self.object))
+        return context
 
 
 class PatientCreateView(LoginRequiredMixin, CreateView):
@@ -31,6 +37,8 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         temp = DocPat(doctor = self.request.user, patient = self.object)
         temp.save()
+        tk = Toolkit(docpat = temp)
+        tk.save()
         return reverse_lazy('patient_detail', kwargs={'pk' : self.object.pk})
 
 
@@ -58,4 +66,12 @@ class SiteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'site_new.html'
     fields = '__all__'
     success_url = reverse_lazy('home')
+
+# class ToolkitDetailView(LoginRequiredMixin, DetailView):
+#     login_url = 'login'
+#     redirect_field_name = 'redirect_to'
+#     model = Toolkit
+#     template_name = 'toolkit_detail.html'
+
+
 
