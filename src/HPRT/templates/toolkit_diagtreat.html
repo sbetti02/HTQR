@@ -1,0 +1,42 @@
+<!-- templates/toolkit_diagtreat.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>DIAGNOSE and TREAT most patients</h1>
+
+		<p>After a human-rights related trauma, almost everyone will experience some transient physical or psychological symptoms</p>
+
+		<p>85% of patients will not suffer from serious mental illness and will benefit from your counseling on the nature of their symptoms and coping techniques</p>
+
+		<p>15% will develop a specific psychiatric disorder including:
+		<ul>
+  		<li>grief reaction</li>
+  		<li>generalized anxiety disorder</li>
+  		<li>depression and PTSD</li>
+  		<li>chronic insomnia</li>
+		</ul></p>
+
+		<p>Focus on treatment not only on diagnosis but on specific symptoms (e.g. insomnia).</p>
+
+		<p>An integrated holistic approach can be very effective that uses counseling, medication, and traditional healing approaches. </p>
+
+ 		<p> <b>Never rely on only one treatment method.</b></p>
+
+		<p><b>Always monitor the impact of your care on a timely basis.</b></p>
+
+		<p>Depression and PTSD mask serious brain damage due to THI which will not respond to standard care.</p>
+
+		<p>If a patient is not recovering always assess for traumatic head injury (THI).</p>
+
+		<p>Use HPRT’s screening instruments to help you decide if serious mental illness is present.</p>
+
+		<p><i>See the Measuring Trauma Measuring Torture (red book) in your Toolkit</i></p>
+		<p><i>Visit www.hprt-cambridge.org for clinically validated screening instruments for depression and PTSD</i></p>
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

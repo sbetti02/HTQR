@@ -1,0 +1,26 @@
+<!-- templates/toolkit_identify.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+		<h1>REFER screened cases of serious mental illness</h1>
+
+		<p>Many trauma-related mental health conditions will recede with the help of the PCP’s reassurance and psychological support.</p>
+
+		<p>But some conditions will develop into true psychiatric disorders.</p>
+
+		<p>Consider screening and referral to a mental health professional in the following circumstances:
+		<ul>
+  		<li>Danger to self or others</li>
+  		<li>Complicated grief</li>
+  		<li>Severe forms of PTSD and/or depression</li>
+  		<li>Physical and social disability</li>
+		</ul></p>
+
+
+		<form action ="" method ="post">{% csrf_token %}
+				{{ form.as_p }}
+		<input type ="submit" value = "Update" />
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+
+</form>
+{% endblock %}

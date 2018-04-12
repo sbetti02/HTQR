@@ -1,4 +1,4 @@
-<!-- templates/post_detail.html -->
+<!-- templates/patient_detail.html -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -13,6 +13,7 @@
         <p>Allergies: {{ patient.allergies }}</p>
         <p>Current Medications: {{ patient.current_medications }}</p>
     </div>
+    <p><a href = "{% url 'toolkit_detail' toolkit.pk %}"> Open Patient Toolkit </a></p>
     <p> <a href = "{% url 'patient_edit' patient.pk %}"> + Edit Patient Info</a></p> 
     <p> <a href = "{% url 'patient_delete' patient.pk %}"> + Delete Patient</a></p>
 {% endblock content %}

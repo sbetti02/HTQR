@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'toolkit',
 ]
 
 AUTH_USER_MODEL = 'users.Doctor'
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HTQR9',
+        'NAME': 'HTQR11',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
