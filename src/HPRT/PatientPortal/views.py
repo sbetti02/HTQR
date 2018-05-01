@@ -4,9 +4,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from . models import Patient, DocPat, Site
+from . models import Patient, DocPat, Site, Doctor
 
 from toolkit.models import Toolkit
+
+from . forms import AddExistingPatientForm
 
 
 class PatientListView(LoginRequiredMixin, ListView):
@@ -32,30 +34,21 @@ class PatientAddExistingView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = DocPat
     template_name = 'patient_add_existing.html'
-    fields = '__all__'
-    #success_url = reverse_lazy('home')
-   
+    form_class = AddExistingPatientForm
+
     def get_success_url(self):
-        #temp = DocPat(doctor = self.request.user, patient = self.object)
         tk = Toolkit(docpat = self.object)
         tk.save()
         return reverse_lazy('patient_detail', kwargs={'pk' : self.object.patient.pk})
 
+    def get_form_kwargs(self):
+        kwargs = super(PatientAddExistingView, self).get_form_kwargs()
+        kwargs['doctor'] = self.request.user
+        return kwargs
 
-    
-    # def get_context_data(self, **kwargs):
-    #     context = super(PatientDetailView, self).get_context_data(**kwargs)
-    #     context['toolkit'] = Toolkit.objects.get(docpat = DocPat.objects.get(doctor = self.request.user, patient = self.object))
-    #     return context
-
-
-    """
-    def get_context_data(self, **kwargs):
-        context = super(PatientAddExistingView, self).get_context_data(**kwargs)
-        context['docpat'] = DocPat.objects.filter(doctor = self.request.user)
-        return context
-    """
-
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        return super(PatientAddExistingView, self).form_valid(form)
 
 
 

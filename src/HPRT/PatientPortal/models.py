@@ -48,8 +48,14 @@ class Patient(models.Model):
 
 
 class DocPat(models.Model):
+    class Meta:
+        unique_together = (('doctor', 'patient'),) # TODO: Just make doctor, patient the PK of DocPat
+
     doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, null=True)
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.doctor.__str__() + ": " + self.patient.name
 
 # class Toolkit(models.Model):
 #     def answer_default():

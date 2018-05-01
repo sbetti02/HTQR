@@ -2,9 +2,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class = "patient-entry">
+    <div class = "patient-entry" style="width: 80%; margin-left: 10%">
         <div class="row" style="margin-left: 5px;">
-            <h2 style="margin-right: 5px;"">{{ patient.name }}</h2>
+            <h2 style="margin-right: 5px;">{{ patient.name }}</h2>
             <button type="button" class="btn btn-light border"><a href = "{% url 'toolkit_detail' toolkit.pk %}"> Open Patient Toolkit </a></button>
         </div>
         <br>
