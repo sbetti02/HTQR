@@ -5,7 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from . models import Toolkit
+from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
+from PatientPortal.models import Patient
 
 
 class ToolkitDetailView(LoginRequiredMixin, DetailView):
@@ -113,5 +114,95 @@ class ToolkitUpdateBurnoutView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('toolkit_detail', kwargs={'pk' : self.object.pk})
 
+class ScreeningsListView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    template_name = 'screenings.html'
+    def get_context_data(self, **kwargs):
+        kwargs = super(ScreeningsListView, self).get_context_data(**kwargs)
+        kwargs.update({
+            'patient': self.kwargs['pk'],
+            'dsmv_list': DSMV.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
+            'th_list': TortureHistory.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
+            'hp1_list': HopkinsPart1.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
+            'hp2_list': HopkinsPart2.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
+        })
+        return kwargs
+
+class HTQCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    template_name = 'htq_new.html'
+    fields = '__all__'
+    def get_success_url(self):
+        return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+class DSMVCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = DSMV
+    template_name = 'dsmv_new.html'
+    fields = '__all__'
+    def get_success_url(self):
+        return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+class TortureHistoryCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = TortureHistory
+    template_name = 'th_new.html'
+    fields = '__all__'
+    def get_success_url(self):
+        return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+class HopkinsPart1CreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart1
+    template_name = 'hp1_new.html'
+    fields = '__all__'
+    def get_success_url(self):
+        return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart2
+    template_name = 'hp2_new.html'
+    fields = '__all__'
+    def get_success_url(self):
+        return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+class HTQDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    template_name = 'htq_detail.html'
+
+class DSMVDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = DSMV
+    template_name = 'dsmv_detail.html'
+
+class TortureHistoryDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = TortureHistory
+    template_name = 'th_detail.html'
+
+class HopkinsPart1DetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart1
+    template_name = 'hp1_detail.html'
+
+class HopkinsPart2DetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart2
+    template_name = 'hp2_detail.html'
 
 

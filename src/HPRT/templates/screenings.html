@@ -1,0 +1,86 @@
+<!-- templates/screenings.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>HTQ</h1> <a href = "{%url 'HTQ_new' patient %}"> - New HTQ</a>
+	<table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for q in object_list %}
+                <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td><a href = "{%url 'HTQ_detail' q.pk %}"> View</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+
+    <h1>DSM-V</h1> <a href = "{%url 'DSMV_new' patient %}"> - New DSM-V</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in dsmv_list %}
+                <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td>{{q.score}}</td> <td><a href = "{%url 'DSMV_detail' q.pk %}"> View</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+
+    <h1>Torture History</h1> <a href = "{%url 'TH_new' patient %}"> - New Torture History</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in th_list %}
+                <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td><a href = "{%url 'TH_detail' q.pk %}"> View</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+
+    <h1>Hopkins Part 1</h1> <a href = "{%url 'HP1_new' patient %}"> - New Hopkins Part 1</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in hp1_list %}
+                <tr><td>{{ q.date }}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP1_detail' q.pk %}"> View</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Hopkins Part 2</h1> <a href = "{%url 'HP2_new' patient %}"> - New Hopkins Part 2</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in hp2_list %}
+                <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP2_detail' q.pk %}"> View</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock content %}
+

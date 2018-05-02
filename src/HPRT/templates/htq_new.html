@@ -1,0 +1,20 @@
+<!-- templates/patient_new.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-10">
+			<h1> New HTQ </h1>
+			<br>
+		</div>
+		<div class="col-2" align="right">
+			<button type="button" class="btn btn-light border"><a href="../..">Go Back</a></button>
+		</div>
+	</div>
+	<form action = "" method = "post">
+	{% csrf_token %}
+			{{ form.as_p }}
+			<input type = "submit" value = "Save" />
+	</form>
+	<br>
+{% endblock %}
