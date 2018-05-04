@@ -3,9 +3,20 @@
 
 
 {% block content %}
-<p>hello</p>
-<!--    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit Query" />
-    </form> -->
+    <table class="table table-bordered table-striped" style="border:2px solid lightgray; ">
+        <thead>
+            <tr>
+                <th style="border-right: 2px solid lightgray">Patient Name</th>
+                <th>DOB</th>
+            </tr>
+        </thead>
+        <tbody style="border-top: 3px solid lightgray">
+            {% for patient in object_list %}
+            <tr>
+                <td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
+                <td>{{ patient.DOB }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}

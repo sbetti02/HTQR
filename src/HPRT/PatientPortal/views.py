@@ -56,7 +56,6 @@ class PatientAddExistingView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
-        #print(form)
         form.instance.doctor = self.request.user
         return super(PatientAddExistingView, self).form_valid(form)
 
