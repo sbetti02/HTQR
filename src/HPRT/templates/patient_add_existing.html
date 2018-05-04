@@ -3,11 +3,42 @@
 
 {% block content %}
 
-    <form action = "" method = "post">
+
+
+    <form class="add_existing_patient" action = "" method = "post">
     {% csrf_token %}
             {{ form.as_p }}
             <input type = "submit" value = "Save" />
+
     </form>
+
+{% block javascript %}
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<script>
+    $("#id_site").change(function () {
+        var site = $(this).val();
+        $.ajax({
+            url: '{% url "update_patients" %}',
+            data: {
+                'site': site,
+            },
+            success: function (response) {
+                var  new_options = response; 
+                $('#id_patient').empty();
+                $.each(new_options, function(key, value) {   
+                    $('#id_patient')
+                        .append($('<option>', { value : key })
+                        .text(value.name)); 
+                });
+            }
+        })
+    });
+</script>
+{% endblock %}
+
 
 
 {% endblock %}

@@ -7,10 +7,10 @@ class DoctorCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Doctor
-        fields = ('user_type', 'username', 'first_name', 'last_name', 'email')
+        fields = ('user_type', 'username', 'first_name', 'last_name', 'campsite', 'email')
 
 class DoctorChangeForm(UserChangeForm):
 
     class Meta:
         model = Doctor
-        fields = ('user_type', 'username', 'first_name', 'last_name', 'email')
+        fields = ('user_type', 'username', 'first_name', 'last_name', 'campsite', 'email')

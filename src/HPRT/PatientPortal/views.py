@@ -3,6 +3,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse
+
 
 from . models import Patient, DocPat, Site, Doctor
 
@@ -29,6 +31,13 @@ class PatientDetailView(LoginRequiredMixin, DetailView):
         context['toolkit'] = Toolkit.objects.get(docpat = DocPat.objects.get(doctor = self.request.user, patient = self.object))
         return context
 
+def update_patients(request):
+    site = request.GET.get('site', None)
+    doc_patients = DocPat.objects.values_list('patient', flat=True).filter(doctor=request.user)
+    patient_list = list(Patient.objects.filter(site=Site.objects.get(name=site)).exclude(pk__in=set(doc_patients)).values('name'))
+    return JsonResponse(patient_list, safe=False)
+
+
 class PatientAddExistingView(LoginRequiredMixin, CreateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
@@ -47,6 +56,7 @@ class PatientAddExistingView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
+        #print(form)
         form.instance.doctor = self.request.user
         return super(PatientAddExistingView, self).form_valid(form)
 

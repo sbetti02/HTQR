@@ -11,7 +11,7 @@ class Doctor(AbstractUser):
     first_name = models.CharField(max_length = 100)
     last_name = models.CharField(max_length = 100)
     specialty = models.CharField(max_length=200)
-    campsite = models.ForeignKey('PatientPortal.Site', on_delete = models.CASCADE, null=True)
+    campsite = models.ForeignKey('PatientPortal.Site', on_delete = models.CASCADE)
     email = models.EmailField()
     # phone_number = PhoneNumberField()
     # profile_picture = models.ImageField() # TODO: height, width requirements

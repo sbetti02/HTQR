@@ -23,6 +23,8 @@ class Site(models.Model):
         return self.name
 
 
+
+# TODO: Add Nationality as field, use for cultural awareness understanding
 class Patient(models.Model):
     name = models.CharField(max_length=200)
     DOB = models.DateField(null=True)

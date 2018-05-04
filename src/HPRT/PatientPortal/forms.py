@@ -1,14 +1,22 @@
 # PatientPortal/forms.py
 from django import forms
-from . models import Patient, DocPat, Doctor
+from . models import Patient, DocPat, Doctor, Site
+
 
 class AddExistingPatientForm(forms.ModelForm):
+
+    site = forms.ModelChoiceField(
+        queryset=Site.objects.all(),
+        to_field_name = "name",
+        )
+
     class Meta:
         model = DocPat
-        fields = ['patient']
+        fields = ['site', 'patient']
 
     def __init__(self, *args, **kwargs):
         doctor = kwargs.pop('doctor')
         super(AddExistingPatientForm, self).__init__(*args, **kwargs)
-        PatientList = DocPat.objects.values_list('patient', flat=True).filter(doctor=doctor)
-        self.fields['patient'].queryset = Patient.objects.exclude(pk__in=set(PatientList))
+        self.fields['site'].initial = doctor.campsite
+        patient_list = DocPat.objects.values_list('patient', flat=True).filter(doctor=doctor)
+        self.fields['patient'].queryset = Patient.objects.filter(site=doctor.campsite).exclude(pk__in=set(patient_list))
