@@ -3,13 +3,22 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 
+from twilio.twiml.messaging_response import MessagingResponse
+
+from django.views.generic import View
+from django.utils.decorators import method_decorator
+from twilio.rest import Client
+
+from django_twilio.decorators import twilio_view
+from django.views.decorators.csrf import csrf_exempt
 from . models import Patient, DocPat, Site, Doctor
 
 from toolkit.models import Toolkit
 
+from django.http import QueryDict
 from . forms import AddExistingPatientForm
 
 
@@ -66,8 +75,19 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient_new.html'
-    fields = '__all__'
+    fields = ['name', 'DOB', 'blood_type', 'height', 'weight', 'site', 'allergies', 'current_medications', 'phone_number', 'email']
     def get_success_url(self):
+        print(self.object.phone_number)
+        account_sid = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
+        auth_token = '05a2c0d38c131a9c50423ec576343dd5'
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+                                      body="Hi " + self.object.name + ", welcome to HPRT!",
+                                      from_= "+17743261027",
+                                      to= "+1" + self.object.phone_number
+
+                                  )
         temp = DocPat(doctor = self.request.user, patient = self.object)
         temp.save()
         tk = Toolkit(docpat = temp)
@@ -100,11 +120,54 @@ class SiteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     fields = '__all__'
     success_url = reverse_lazy('home')
 
-# class ToolkitDetailView(LoginRequiredMixin, DetailView):
-#     login_url = 'login'
-#     redirect_field_name = 'redirect_to'
-#     model = Toolkit
-#     template_name = 'toolkit_detail.html'
+@method_decorator(csrf_exempt, name='dispatch')
+class smsResponse(View):
+    @method_decorator(twilio_view)
+
+    def post(self, request):
+        body = QueryDict(request.body)['Body']
+        number = QueryDict(request.body)['From'][2:]
+        if "y" in body.lower():
+            patient = Patient.objects.filter(phone_number = number)[0]
+            patient.ask_story = True
+            patient.save(update_fields=["ask_story"]) 
+            r = MessagingResponse()
+            r.message('Thank you, your doctor will ask you about your trauma event when you are visiting.')
+            return r
+        elif "n" in body.lower():
+            patient = Patient.objects.filter(phone_number = number)[0]
+            patient.ask_story = False
+            patient.save(update_fields=["ask_story"])
+            r = MessagingResponse()
+            r.message('Thank you. Please feel free to text yes to this number whenever you are ready to tell your doctor your trauma story.')
+            return r
+        else:
+            r = MessagingResponse()
+            r.message('Response is not understood. Please text yes or no. Would you like to tell your doctor about your trauma story?')
+            return r
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class askStory(View):
+    model = Patient
+    @method_decorator(twilio_view)
+
+    def post(self, request, *args, **kwargs):
+        account_sid = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
+        auth_token = '05a2c0d38c131a9c50423ec576343dd5'
+        client = Client(account_sid, auth_token)
+
+        patient = Patient.objects.filter(pk=kwargs['pk'])[0]
+
+        message = client.messages.create(
+                                      body="Hi " + patient.name + ", you have an appointment coming up soon. Would you like to talk to your doctor about your trauma story?",
+                                      from_= "+17743261027",
+                                      to= "+1" + patient.phone_number
+
+                                  )
+        return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
+
+
 
 
 

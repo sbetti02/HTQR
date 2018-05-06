@@ -16,6 +16,7 @@
 			<tr>
 				<th style="border-right: 2px solid lightgray">Patient Name</th>
 				<th>DOB</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody style="border-top: 3px solid lightgray">
@@ -23,6 +24,9 @@
 			<tr>
 				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
 				<td>{{ patient.DOB }}</td>
+				<td>{% if patient.ask_story %}
+					<img src="/static/img/star.png" alt="Ask Story" height = "20">
+					{% endif %}</td>
 			</tr>
 			{% endfor %}
 		</tbody>

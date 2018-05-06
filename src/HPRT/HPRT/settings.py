@@ -25,7 +25,9 @@ SECRET_KEY = secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ffcbac04.ngrok.io',
+                    '127.0.0.1',
+]
 
 
 # Application definition
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'toolkit',
+    'django_twilio',
 ]
 
 AUTH_USER_MODEL = 'users.Doctor'
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HTQR11',
+        'NAME': 'HTQR14',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -121,6 +124,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+TWILIO_ACCOUNT_SID = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
+TWILIO_AUTH_TOKEN = '05a2c0d38c131a9c50423ec576343dd5'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
