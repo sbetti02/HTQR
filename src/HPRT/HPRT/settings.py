@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from HPRT.secrets import secret_key
+from HPRT.secrets import secret_key, twilio_sid, twilio_auth_token
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -125,8 +125,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-TWILIO_ACCOUNT_SID = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
-TWILIO_AUTH_TOKEN = '05a2c0d38c131a9c50423ec576343dd5'
+TWILIO_ACCOUNT_SID = twilio_sid
+TWILIO_AUTH_TOKEN = twilio_auth_token
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
