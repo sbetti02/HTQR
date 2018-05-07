@@ -129,15 +129,19 @@ class smsResponse(View):
         number = QueryDict(request.body)['From'][2:]
         if "y" in body.lower():
             patient = Patient.objects.filter(phone_number = number)[0]
-            patient.ask_story = True
-            patient.save(update_fields=["ask_story"]) 
+            while patient.ask_story == False:
+                patient.ask_story = True
+                patient.save(update_fields=["ask_story"])
+                patient = Patient.objects.filter(phone_number = number)[0]
             r = MessagingResponse()
             r.message('Thank you, your doctor will ask you about your trauma event when you are visiting.')
             return r
         elif "n" in body.lower():
             patient = Patient.objects.filter(phone_number = number)[0]
-            patient.ask_story = False
-            patient.save(update_fields=["ask_story"])
+            while patient.ask_story == True:
+                patient.ask_story = False
+                patient.save(update_fields=["ask_story"])
+                patient = Patient.objects.filter(phone_number = number)[0]
             r = MessagingResponse()
             r.message('Thank you. Please feel free to text yes to this number whenever you are ready to tell your doctor your trauma story.')
             return r

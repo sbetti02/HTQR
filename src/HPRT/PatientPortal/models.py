@@ -22,7 +22,19 @@ class Site(models.Model):
     def __str__(self):
         return self.name
 
+"""
+class PatientAgeManager(models.Manager):
 
+    #@staticmethod
+    #def age()
+
+    def get_queryset(self, min, max):
+        today = date.today()
+
+        return super(PatientAgeManager, self).get_queryset().filter(DOB__range=[today-date.year(max), today-date.year(min)])
+
+        #return super(PublishedLastWeekManager, self).get_queryset().filter(published_date__range=[start, now])
+"""
 
 # TODO: Add Nationality as field, use for cultural awareness understanding
 class Patient(models.Model):
