@@ -46,8 +46,9 @@ class Patient(models.Model):
     site = models.ForeignKey(Site, on_delete = models.CASCADE, null=True)
     allergies = models.TextField(default='', blank = True, null = True)
     current_medications = models.TextField(default='', blank = True, null = True)
-    # phone_number = PhoneNumberField()
+    phone_number = models.CharField(max_length = 10)
     email = models.EmailField()
+    ask_story = models.BooleanField(default = False)
     #picture = models.ImageField(upload_to="PatientPortal/profiles.py", 
     #                                     height_field=500, width_field=500, null=True)
     # TODO: fingerprints, picture

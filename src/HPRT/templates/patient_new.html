@@ -3,18 +3,17 @@
 
 {% block content %}
 	<div class="row">
-		<div class="col-10">
-			<h1> New Patient </h1>
-			<br>
-		</div>
-		<div class="col-2" align="right">
-			<button type="button" class="btn btn-light border"><a href="../..">Go Back</a></button>
-		</div>
+		<h2 style="margin-left: 5px; margin-right: 5px"> New Patient </h2>
+		<a href="../.." class="btn btn-light border" style="color:#007bff">Go Back</a>
 	</div>
+	<br>
 	<form action = "" method = "post">
 	{% csrf_token %}
-			{{ form.as_p }}
-			<input type = "submit" value = "Save" />
+		<table>
+			{{ form }}
+		</table>
+		<br>
+		<input type = "submit" value = "Save" />
 	</form>
 	<br>
 {% endblock %}

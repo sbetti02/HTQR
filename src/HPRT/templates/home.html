@@ -2,20 +2,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-10">
-			<h1> Patient List </h1>
-		</div>
-		<div class="col-2" align="right">
-			<button type="button" class="btn btn-light border"><a href= {%url 'analytics_home' %}>Perform Analytics</a></button>
-		</div>
+	<div class="row" style="margin-left: 5px;">
+		<h2 style="margin-right: 5px;"> Patient List </h2>
+		<a href="{%url 'analytics_home' %}" class="btn btn-light btn-lg border" style="color:#007bff">Perform Analytics</a>
+
 	</div>
 	<br>
 	<table class="table table-bordered table-striped" style="border:2px solid lightgray; ">
 		<thead>
 			<tr>
-				<th style="border-right: 2px solid lightgray">Patient Name</th>
-				<th>DOB</th>
+				<th style="width: 50%" style="border-right: 2px solid lightgray">Patient Name</th>
+				<th style="width: 33.33%%">DOB</th>
+				<th style="width: 16.66%">Trauma Story</th>
 			</tr>
 		</thead>
 		<tbody style="border-top: 3px solid lightgray">
@@ -23,9 +21,14 @@
 			<tr>
 				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
 				<td>{{ patient.DOB }}</td>
+				<td style="text-align: center">
+					{% if patient.ask_story %}
+						<img src="/static/img/star.png" alt="Ask Story" height = "20">
+					{% endif %}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+
 
 {% endblock content %}

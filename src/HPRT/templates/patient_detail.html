@@ -2,38 +2,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class = "patient-entry" style="width: 80%; margin-left: 10%">
-        <div class="row" style="margin-left: 5px;">
-            <h2 style="margin-right: 5px;">{{ patient.name }}</h2>
-            <button type="button" class="btn btn-light border"><a href = "{% url 'toolkit_detail' toolkit.pk %}"> Open Patient Toolkit </a></button>
-        </div>
-        <br>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Patient Info</th>
-                    <th><a href = "{% url 'patient_edit' patient.pk %}"> + Edit Patient Info</a></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>DOB:</td> <td>{{ patient.DOB }}</td></tr>
-                <tr><td>Email:</td> <td>{{patient.email }}</td></tr>
-                <tr><td>Site:</td> <td>{{ patient.site }}</td></tr>
-                <tr><td>Blood Type:</td> <td>{{ patient.blood_type }}</td></tr>
-                <tr><td>Height:</td> <td>{{ patient.height }} in.</td></tr>
-                <tr><td>Weight:</td> <td>{{ patient.weight }} lbs.</td></tr>
-                <tr><td>Allergies:</td> <td>{{ patient.allergies }}</td></tr>
-                <tr><td>Current Medications:</td> <td>{{ patient.current_medications }}</td></tr>
-                
-            </tbody>
-        </table>
-        <div class="row">
-            <div class="col" align="right">
-                <button type="button" class="btn btn-light border"><a href = "{% url 'patient_delete' patient.pk %}"> - Delete Patient</a></button>
-            </div>
+    <div class="row" style="margin-left: 5px;">
+        <h2 style="margin-right: 5px;">{{ patient.name }}</h2>
+        <a href="{% url 'toolkit_detail' toolkit.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Open Patient Toolkit</a>
+        {% if patient.ask_story %}
+          <img src="/static/img/star.png" alt="Ask Story" height = "40">
+        {% endif %}
+    </div>
+    <div>
+      <form action= "{% url 'ask_story' patient.pk %}" method="POST">
+          <input type="submit" value="Ask for Trauma Story" id="toggle1" />
+      </form>
+    <br>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Patient Info</th>
+                <th><a href = "{% url 'patient_edit' patient.pk %}">+ Edit Patient Info</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>DOB:</td> <td>{{ patient.DOB }}</td></tr>
+            <tr><td>Email:</td> <td>{{patient.email }}</td></tr>
+            <tr><td>Site:</td> <td>{{ patient.site }}</td></tr>
+            <tr><td>Blood Type:</td> <td>{{ patient.blood_type }}</td></tr>
+            <tr><td>Height:</td> <td>{{ patient.height }} in.</td></tr>
+            <tr><td>Weight:</td> <td>{{ patient.weight }} lbs.</td></tr>
+            <tr><td>Allergies:</td> <td>{{ patient.allergies }}</td></tr>
+            <tr><td>Current Medications:</td> <td>{{ patient.current_medications }}</td></tr>
+            
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col" align="right">
+            <a href="{% url 'patient_delete' patient.pk %}" class="btn btn-light border" style="color:#007bff">- Delete Patient</a>
         </div>
     </div>
-
     <br>
 
 {% endblock content %}

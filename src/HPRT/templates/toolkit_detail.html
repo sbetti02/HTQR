@@ -2,7 +2,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>{{ toolkit.docpat.patient.name }}</h2>
+    <div class="row">
+        <h2 style="margin-left: 5px; margin-right: 5px">{{ toolkit.docpat.patient.name }}</h2>
+        <a href = "{% url 'patient_detail' toolkit.docpat.patient.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Back</a>
+    </div>
     <br>
     <div class = "toolkit">
         <table class="table table-bordered table-striped">
@@ -28,7 +31,7 @@
                     <a href = "{%url 'toolkit_diagtreat' toolkit.pk %}" style="color:green">Complete!</a>
                     {% else %}
                     <a href = "{%url 'toolkit_diagtreat' toolkit.pk %}" style="color:red">Incomplete</a>
-                    {% endif %} <a href = "{%url 'screenings' toolkit.docpat.patient.pk %}" style="color:blue"> - View</a> </td></tr>
+                    {% endif %} <a href = "{%url 'screenings' toolkit.docpat.patient.pk %}" style="color:#007bff"> - View</a> </td></tr>
 
                 <tr><td>4. Refer:</td> <td> {% if toolkit.refer %}
                     <a href = "{%url 'toolkit_refer' toolkit.pk %}" style="color:green">Complete!</a>
@@ -79,9 +82,8 @@
                     {% endif %}</td></tr>
             </tbody>
         </table>                
-
     </div>
-    <p> <a href = "{% url 'patient_detail' toolkit.docpat.patient.pk %}">Back</a></p> 
+    <br>
 {% endblock content %}
 
 
