@@ -8,13 +8,14 @@
 			<br>
 		</div>
 		<div class="col-2" align="right">
-			<button type="button" class="btn btn-light border"><a href="../..">Go Back</a></button>
 		</div>
 	</div>
 	<form action = "" method = "post">
 	{% csrf_token %}
-			{{ form.as_p }}
-			<input type = "submit" value = "Save" />
+		<table>
+			{{ form }}
+		</table>
+		<input type = "submit" value = "Save" />
 	</form>
 	<br>
 {% endblock %}

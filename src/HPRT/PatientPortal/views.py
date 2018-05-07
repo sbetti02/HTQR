@@ -75,7 +75,7 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient_new.html'
-    fields = ['name', 'DOB', 'blood_type', 'height', 'weight', 'site', 'allergies', 'current_medications', 'phone_number', 'email']
+    fields = ['name', 'DOB', 'blood_type', 'height', 'weight', 'site', 'phone_number', 'email', 'allergies', 'current_medications']
     def get_success_url(self):
         print(self.object.phone_number)
         account_sid = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
