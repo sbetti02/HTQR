@@ -12,10 +12,24 @@
 	</div>
 	<form action = "" method = "post">
 	{% csrf_token %}
-		<table>
-			{{ form }}
+		<table border=1>
+			<thead>
+				<tr>
+					<th style="width: 75%">Question</th>
+					<th style="width: 25%">Answer</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for field in form %}
+				<tr>
+					<td class="htq">{{ field.label_tag }}</td>
+					<td>{{ field }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
 		</table>
 		<input type = "submit" value = "Save" />
 	</form>
 	<br>
+
 {% endblock %}

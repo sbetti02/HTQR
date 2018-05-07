@@ -5,8 +5,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+from . forms import HTQQuestionForm
 from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
 from PatientPortal.models import Patient
+import json, os
 
 
 class ToolkitDetailView(LoginRequiredMixin, DetailView):
@@ -135,7 +137,7 @@ class HTQCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = HTQ
     template_name = 'htq_new.html'
-    fields = '__all__'
+    form_class = HTQQuestionForm
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
