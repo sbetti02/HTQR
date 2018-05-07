@@ -25,7 +25,7 @@ SECRET_KEY = secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ffcbac04.ngrok.io',
+ALLOWED_HOSTS = ['971536ab.ngrok.io',
                     '127.0.0.1',
 ]
 
