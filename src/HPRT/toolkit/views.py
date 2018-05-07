@@ -119,6 +119,7 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'redirect_to'
     model = HTQ
     template_name = 'screenings.html'
+    
     def get_context_data(self, **kwargs):
         kwargs = super(ScreeningsListView, self).get_context_data(**kwargs)
         kwargs.update({
@@ -129,6 +130,9 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
             'hp2_list': HopkinsPart2.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
         })
         return kwargs
+
+    def get_queryset(self):
+        return HTQ.objects.filter(patient=Patient.objects.filter(pk=self.kwargs['pk'])[0])
 
 class HTQCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
