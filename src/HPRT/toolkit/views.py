@@ -143,6 +143,19 @@ class HTQCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
+class HTQDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    template_name = 'htq_detail.html'
+    """
+    def get_context_data(self, **kwargs):
+        context = super(HTQDetailView, self).get_context_data(**kwargs)
+        context['toolkit'] = Toolkit.objects.get(docpat = DocPat.objects.get(doctor = self.request.user, patient = self.object))
+        return context
+    """
+
+
 class DSMVCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
