@@ -2,19 +2,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-xl-3">
-		    <form action="" method="post">{% csrf_token %}
-		        {{ form.as_p }}
-		        <input type="submit" value="Submit Query" />
-		    </form>
+	<form action="" method="post">
+		<div class="row">
+	    	{% csrf_token %}
+			<div class="col">
+		    	<table>
+		    		<tbody>
+		    			<tr>
+		    				<td>{{ form.Group_1_Min_Age.label_tag }}</td>
+		    				<td>{{ form.Group_1_Min_Age }}</td>
+		    			</tr>
+		    			<tr>
+		    				<td>{{ form.Group_1_Max_Age.label_tag }}</td>
+		    				<td>{{ form.Group_1_Max_Age }}</td>
+		    			</tr>
+		    			<tr>
+		    				<td>{{ form.Group_1_Sites.label_tag }}</td>
+		    				<td>{{ form.Group_1_Sites }}</td>
+		    			</tr>
+		        	</tbody>
+		        </table>
+		    </div>
+		    <div class="col">
+		    	<table>
+		    		<tbody>
+		    			<tr>
+		    				<td>{{ form.Group_2_Min_Age.label_tag }}</td>
+		    				<td>{{ form.Group_2_Min_Age }}</td>
+		    			</tr>
+		    			<tr>
+		    				<td>{{ form.Group_2_Max_Age.label_tag }}</td>
+		    				<td>{{ form.Group_2_Max_Age }}</td>
+		    			</tr>
+		    			<tr>
+		    				<td>{{ form.Group_2_Sites.label_tag }}</td>
+		    				<td>{{ form.Group_2_Sites }}</td>
+		    			</tr>
+		        	</tbody>
+		        </table>
+		    </div>
 		</div>
-		<div class="col-xl-9">
-			<center>
-				<img src="/static/img/sample_chart.png" class="img-responsive" style="max-width: 100%" alt="sample chart">
-			</center>
-		</div>
-	</div>
+		<br>
+		<input type="submit" value="Submit Query" />
+	</form>
 
 
 {% endblock content %}
