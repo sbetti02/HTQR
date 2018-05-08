@@ -11,13 +11,13 @@ from PatientPortal.models import Patient
 import json, os
 from datetime import date  
 
-
+from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.platypus.tables import Table, TableStyle
-
+from reportlab.platypus import Paragraph
 
 class ToolkitDetailView(LoginRequiredMixin, DetailView):
     login_url = 'login'
@@ -340,16 +340,22 @@ def make_pdf(canvas, info, questions):
     textobject.textLines("")
     textobject.setFillColor(colors.black)
     textobject.textLines("Patient Name: " + info["patient"])
-    textobject.textLines("Doctor Administered: " + info["doctor"])
+    textobject.textLines("Doctor Administered: Dr. " + info["doctor"])
     textobject.textLines("Date Administered: " + info["date"])
+
+    para_questions = []
+    styles = getSampleStyleSheet()
+
+    for [question, answer] in questions:
+        para_questions.append([Paragraph(question, styles['Normal']), Paragraph(str(answer), styles['Normal'])])
 
     if "score" in info:
         scoretext = canvas.beginText()
-        scoretext.setTextOrigin(inch, (7*inch - (0.3*inch*len(questions))))
+        scoretext.setTextOrigin(inch, (7*inch - (0.4*inch*len(questions))))
         scoretext.setFillColor(colors.black)
         scoretext.textLines("Total Score: " + info["score"])
 
-    table = Table(questions, colWidths=3*inch, rowHeights=0.3*inch)
+    table = Table(para_questions, colWidths=3*inch, rowHeights=0.4*inch, repeatRows=0)
     table.setStyle(TableStyle([
          ('INNERGRID', (0,0), (-1,-1), 0.4, colors.black),
          ('BOX', (0,0), (-1,-1), 0.5, colors.black),
@@ -357,9 +363,10 @@ def make_pdf(canvas, info, questions):
 
     canvas.drawText(textobject)
     table.wrapOn(canvas, 8.5*inch, 11*inch)
-    table.drawOn(canvas, 1*inch, (8*inch - (0.3*inch*len(questions))))
+    table.drawOn(canvas, 1*inch, (8*inch - (0.4*inch*len(questions))))
     if "score" in info:
         canvas.drawText(scoretext)
+
 
 
 class HTQPDF(LoginRequiredMixin, DetailView):
@@ -373,7 +380,7 @@ class HTQPDF(LoginRequiredMixin, DetailView):
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
         obj = HTQ.objects.get(pk=pk)
-        info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date)}
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.first_name + obj.doctor.last_name, "date": str(obj.date)}
         labels = obj.get_labels()
         questions = []
         for field, val in obj:
