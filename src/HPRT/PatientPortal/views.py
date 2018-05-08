@@ -7,13 +7,13 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 
 
-from twilio.twiml.messaging_response import MessagingResponse
+#from twilio.twiml.messaging_response import MessagingResponse
 
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from twilio.rest import Client
+# from twilio.rest import Client
 
-from django_twilio.decorators import twilio_view
+# from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
 from . models import Patient, DocPat, Site, Doctor
 
@@ -163,7 +163,7 @@ class searchListView(LoginRequiredMixin, ListView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class smsResponse(View):
-    @method_decorator(twilio_view)
+    # @method_decorator(twilio_view)
 
     def post(self, request):
         body = QueryDict(request.body)['Body']
@@ -191,7 +191,7 @@ class smsResponse(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class askStory(View):
     model = Patient
-    @method_decorator(twilio_view)
+    # @method_decorator(twilio_view)
 
     def post(self, request, *args, **kwargs):
         account_sid = 'ACc98959cdcde7e6833b8bc683e5fca5c3'

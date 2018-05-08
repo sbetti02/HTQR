@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 	<div class="row">
 		<div class="col-10">
 			<h1> New DSM-V </h1>
@@ -11,6 +12,22 @@
 		</div>
 	</div>
 	<form action = "" method = "post">
+	{% if form.errors %}
+	<!-- Error messaging -->
+	<div id="errors">
+		<div class="inner">
+			<p>There were some errors in the information you entered. Please correct the following:</p>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<!-- /Error messaging -->
+{% endif %}
+
 	{% csrf_token %}
 		<table border=1 class="table table-bordered table-striped">
 			<thead>
@@ -21,10 +38,10 @@
 			</thead>
 			<tbody>
 				{% for field in form %}
-				<tr>
-					<td>{{ field.label_tag }}</td>
-					<td>{{ field }}</td>
-				</tr>
+					<tr>
+						<td>{{ field.label_tag }}</td>
+						<td>{{ field }}</td>
+					</tr>
 				{% endfor %}
 			</tbody>
 		</table>

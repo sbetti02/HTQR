@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'toolkit',
-    'django_twilio',
+#    'django_twilio',
 ]
 
 AUTH_USER_MODEL = 'users.Doctor'
