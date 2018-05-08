@@ -21,12 +21,11 @@
                         <tr>
                             <th>Date</th>
                             <th>Doctor</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for q in object_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td><a href = "{%url 'HTQ_detail' q.pk %}"> View</a></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -53,7 +52,7 @@
                     </thead>
                     <tbody>
                         {% for q in dsmv_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td>{{q.score}}</td> <td><a href = "{%url 'DSMV_detail' q.pk %}"> View</a></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td>{{q.score}}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table> 
@@ -79,7 +78,7 @@
                     </thead>
                     <tbody>
                         {% for q in th_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td><a href = "{%url 'TH_detail' q.pk %}"> View</a></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -133,7 +132,7 @@
                     </thead>
                     <tbody>
                         {% for q in hp2_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP2_detail' q.pk %}"> View</a></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
