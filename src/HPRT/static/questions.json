@@ -372,6 +372,7 @@
                 }
         ]
 },
+
 {
         "name": "Trauma Symptoms General",
         "type": "scale",
@@ -498,6 +499,115 @@
                 }
         ]
 },
+
+{
+        "name": "Trauma Symptoms DSM-V",
+        "type": "scale",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "d1",
+                        "body" : "Recurrent thoughts or memories of the most hurtful or terrifying events"
+                },
+                {
+                        "id" : "d2",
+                        "body" : "Feeling as though the event is happening again"
+                },
+                {
+                        "id" : "d3",
+                        "body" : "Recurrent nightmares"
+                },
+                {
+                        "id" : "d4",
+                        "body" : "Feeling detached or withdrawn from people"
+                },
+                {
+                        "id" : "d5",
+                        "body" : "Unable to feel emotions"
+                },
+                {
+                        "id" : "d6",
+                        "body" : "Feeling jumpy, easily startled"
+                },
+                {
+                        "id" : "d7",
+                        "body" : "Difficulty concentrating"
+                },
+                {
+                        "id" : "d8",
+                        "body" : "Trouble sleeping"
+                },
+                {
+                        "id" : "d9",
+                        "body" : "Feeling on guard"
+                },
+                {
+                        "id" : "d10",
+                        "body" : "Feeling irritable or having outbursts of anger"
+                },
+                {
+                        "id" : "d11",
+                        "body" : "Avoiding activities that remind you of the traumatic or hurtful event"
+                },
+                {
+                        "id" : "d12",
+                        "body" : "Inability to remember parts of the most hurtful or traumatic events"
+                },
+                {
+                        "id" : "d13",
+                        "body" : "Less interest in daily activities"
+                },
+                {
+                        "id" : "d14",
+                        "body" : "Feeling as if you don’t have a future"
+                },
+                {
+                        "id" : "d15",
+                        "body" : "Avoiding thoughts or feelings associated with the traumatic or hurtful events"
+                },
+                {
+                        "id" : "d16",
+                        "body" : "Sudden emotional or physical reaction when reminded of the most hurtful or traumatic events"
+                },
+                {
+                        "id" : "d17",
+                        "body" : "Feeling that the world is a very dangerous place"
+                },
+                {
+                        "id" : "d18",
+                        "body" : "Feeling that you are a bad person"
+                },
+                {
+                        "id" : "d19",
+                        "body" : "Blaming yourself for the traumatic event"
+                },
+                                {
+                        "id" : "d20",
+                        "body" : "Strong feeling of fear, horror, anger, guilt or shame when thinking about the traumatic event"
+                },
+                                {
+                        "id" : "d21",
+                        "body" : "Difficulty feeling love or happiness"
+                },
+                                {
+                        "id" : "d22",
+                        "body" : "Taking risks that may harm yourself or others"
+                },
+                                {
+                        "id" : "d23",
+                        "body" : "Feeling like you have been damaged as a person by the traumatic event"
+                },
+                                {
+                        "id" : "d24",
+                        "body" : "Feeling as if something reminds you of the trauma but it feels like a dream, that it is not happening to you, and/or that it is not real"
+                },
+                                {
+                        "id" : "d25",
+                        "body" : "Feeling people or objects around you are not real or strange"
+                }
+        ]
+},
+
 {
         "name": "Torture History",
         "type": "bool",
@@ -623,52 +733,52 @@
         "dropdown": false,
         "questions": [
                 {
-                        "id" : "hs1",
+                        "id" : "hp1",
                         "body" : "Suddenly scared for no reason"
                 },
 
                 {
-                        "id" : "hs2",
+                        "id" : "hp2",
                         "body" : "Feeling fearful"
                 },
 
                 {
-                        "id" : "hs3",
+                        "id" : "hp3",
                         "body" : "Faintness, dizziness, or weakness"
                 },
 
                 {
-                        "id" : "hs4",
+                        "id" : "hp4",
                         "body" : "Nervousness or shakiness inside"
                 },
 
                 {
-                        "id" : "hs5",
+                        "id" : "hp5",
                         "body" : "Heart pounding or racing"
                 },						
 
                 {
-                        "id" : "hs6",
+                        "id" : "hp6",
                         "body" : "Trembling"
                 },
 
                 {
-                        "id" : "hs7",
+                        "id" : "hp7",
                         "body" : "Feeling tense or keyed up"
                 },
 
                 {
-                        "id" : "hs8",
+                        "id" : "hp8",
                         "body" : "Headaches"
                 },
 
                 {
-                        "id" : "hs9",
+                        "id" : "hp9",
                         "body" : "Spell of terror or panic"
                 },
 
                 {
-                        "id" : "hs10",
+                        "id" : "hp10",
                         "body" : "Feeling restless or can't sit still"
                 }
 
@@ -680,75 +790,77 @@
         "dropdown": false,
         "questions": [
                 {
-                        "id" : "hs11",
+                        "id" : "hp11",
                         "body" : "Feeling low in energy, slowed down"
                 },
 
                 {
-                        "id" : "hs12",
+                        "id" : "hp12",
                         "body" : "Blaming yourself for things"
                 },
 
                 {
-                        "id" : "hs13",
+                        "id" : "h13",
                         "body" : "Crying easily"
                 },
 
                 {
-                        "id" : "hs14",
+                        "id" : "hp14",
                         "body" : "Loss of sexual interest or pleasure"
                 },
 
                 {
-                        "id" : "hs15",
+                        "id" : "hp15",
                         "body" : "Poor appetite"
                 },
+
                 {
-                        "id" : "hs16",
+                        "id" : "hp16",
                         "body" : "Difficulty falling asleep, staying asleep"
                 },
 
                 {
-                        "id" : "hs17",
+                        "id" : "hp17",
                         "body" : "Feeling hopeless about future"
                 },
 
                 {
-                        "id" : "hs18",
+                        "id" : "hp18",
                         "body" : "Feeling blue"
                 },
 
                 {
-                        "id" : "hs19",
+                        "id" : "hp19",
                         "body" : "Feeling lonely"
                 },
 
                 {
-                        "id" : "hs20",
+                        "id" : "hp20",
                         "body" : "Thought of ending your life"
                 },
+
                 {
-                        "id" : "hs21",
+                        "id" : "hp21",
                         "body" : "Feeling of being trapped or caught"
                 },
 
                 {
-                        "id" : "hs22",
+                        "id" : "hp22",
                         "body" : "Worry too much about things"
                 },
 
                 {
-                        "id" : "hs23",
+                        "id" : "hp23",
                         "body" : "Feeling no interest in things"
                 },
 
                 {
-                        "id" : "hs24",
+                        "id" : "hp24",
                         "body" : "Feeling everything is an effort"
                 },
 
                 {
-                        "id" : "hs25",
+                        "id" : "hp25",
                         "body" : "Feeling of worthlessness"
                 }
         ]
