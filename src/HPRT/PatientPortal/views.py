@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 
 
 from twilio.twiml.messaging_response import MessagingResponse
@@ -22,6 +23,12 @@ from django.http import QueryDict
 from . forms import AddExistingPatientForm
 
 
+def update_patients(request):
+    site = request.GET.get('site', None)
+    doc_patients = DocPat.objects.values_list('patient', flat=True).filter(doctor=request.user)
+    patient_list = list(Patient.objects.filter(site=Site.objects.get(name=site)).exclude(pk__in=set(doc_patients)).values('name'))
+    return JsonResponse(patient_list, safe=False)
+
 class PatientListView(LoginRequiredMixin, ListView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
@@ -37,15 +44,12 @@ class PatientDetailView(LoginRequiredMixin, DetailView):
     template_name = 'patient_detail.html'
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
-        context['toolkit'] = Toolkit.objects.get(docpat = DocPat.objects.get(doctor = self.request.user, patient = self.object))
+        docpats = DocPat.objects.filter(doctor = self.request.user, patient = self.object)
+        if docpats.count() > 0:
+            context['toolkit'] = Toolkit.objects.get(docpat = docpats[0])
+        else:
+            context['toolkit'] = None
         return context
-
-def update_patients(request):
-    site = request.GET.get('site', None)
-    doc_patients = DocPat.objects.values_list('patient', flat=True).filter(doctor=request.user)
-    patient_list = list(Patient.objects.filter(site=Site.objects.get(name=site)).exclude(pk__in=set(doc_patients)).values('name'))
-    return JsonResponse(patient_list, safe=False)
-
 
 class PatientAddExistingView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -120,6 +124,43 @@ class SiteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     fields = '__all__'
     success_url = reverse_lazy('home')
 
+
+class patientAdd(LoginRequiredMixin, View):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = Patient
+    def post(self, request, *args, **kwargs):
+        temp = DocPat(doctor = self.request.user, patient = Patient.objects.get(pk=kwargs['pk']))
+        temp.save()
+        tk = Toolkit(docpat = temp)
+        tk.save()
+        return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
+
+class patientRemove(LoginRequiredMixin, View):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = Patient
+    def post(self, request, *args, **kwargs):
+        temp = DocPat.objects.filter(doctor = self.request.user, patient = Patient.objects.get(pk=kwargs['pk'])).delete()
+        return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
+
+class searchListView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = Patient
+    template_name = 'search_results.html'
+    def get_queryset(self):
+        all_patients = super(searchListView, self).get_queryset()
+        result = super(searchListView, self).get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            result = result.filter(name__contains=query)
+            query_list = query.split(" ")
+            for q in query_list:
+                result = result.union(all_patients.filter(name__contains = q))
+        return result
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class smsResponse(View):
     @method_decorator(twilio_view)
@@ -127,28 +168,24 @@ class smsResponse(View):
     def post(self, request):
         body = QueryDict(request.body)['Body']
         number = QueryDict(request.body)['From'][2:]
+        r = MessagingResponse()
         if "y" in body.lower():
             patient = Patient.objects.filter(phone_number = number)[0]
             while patient.ask_story == False:
                 patient.ask_story = True
                 patient.save(update_fields=["ask_story"])
                 patient = Patient.objects.filter(phone_number = number)[0]
-            r = MessagingResponse()
             r.message('Thank you, your doctor will ask you about your trauma event when you are visiting.')
-            return r
         elif "n" in body.lower():
             patient = Patient.objects.filter(phone_number = number)[0]
             while patient.ask_story == True:
                 patient.ask_story = False
                 patient.save(update_fields=["ask_story"])
                 patient = Patient.objects.filter(phone_number = number)[0]
-            r = MessagingResponse()
             r.message('Thank you. Please feel free to text yes to this number whenever you are ready to tell your doctor your trauma story.')
-            return r
         else:
-            r = MessagingResponse()
             r.message('Response is not understood. Please text yes or no. Would you like to tell your doctor about your trauma story?')
-            return r
+        return r
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -170,6 +207,7 @@ class askStory(View):
 
                                   )
         return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
+
 
 
 

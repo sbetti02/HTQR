@@ -13,5 +13,8 @@ urlpatterns = [
     path('site/new/', views.SiteCreateView.as_view(), name = 'site_new'),
     path('ajax/update_patients/', views.update_patients, name='update_patients'),
     path('sms/', views.smsResponse.as_view(), name = 'sms'),
-    path('askstory/<int:pk>/', views.askStory.as_view(), name = 'ask_story')
+    path('askstory/<int:pk>/', views.askStory.as_view(), name = 'ask_story'),
+    path('patient/remove/<int:pk>/', views.patientRemove.as_view(), name = 'patient_remove'),
+    path('patient/add/<int:pk>/', views.patientAdd.as_view(), name = 'patient_add'),
+    path('search/results/', views.searchListView.as_view(), name = 'search_list'),
 ]
