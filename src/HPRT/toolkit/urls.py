@@ -27,5 +27,5 @@ urlpatterns = [
     path('th/<int:pk>', views.TortureHistoryDetailView.as_view(), name = 'TH_detail'),
     path('hp1/<int:pk>', views.HopkinsPart1DetailView.as_view(), name = 'HP1_detail'),
     path('hp2/<int:pk>', views.HopkinsPart2DetailView.as_view(), name = 'HP2_detail'),
-
+    path('htq/<int:pk>/pdf', views.HTQPDF.as_view(), name = 'HTQ_pdf'),
 ]

@@ -19,11 +19,12 @@
                             <th>Date</th>
                             <th>Doctor</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for q in object_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td><a href = "{%url 'HTQ_detail' q.pk %}"> View</a></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td><a href = "{%url 'HTQ_detail' q.pk %}"> View</a></td> <td><a href = "{%url 'HTQ_pdf' q.pk %}"> Download PDF</a></td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -99,11 +100,12 @@
                             <th>Date</th>
                             <th>Doctor</th>
                             <th>Score</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for q in hp1_list %}
-                            <tr><td>{{ q.date }}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP1_detail' q.pk %}">View</a></td></tr>
+                            <tr><td>{{ q.date }}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP1_detail' q.pk %}">View</a></td><td><a href = "{%url 'HTQ_pdf' q.pk %}"> Download PDF</a></td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

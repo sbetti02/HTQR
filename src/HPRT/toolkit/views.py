@@ -10,6 +10,9 @@ from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPa
 from PatientPortal.models import Patient
 import json, os
 
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
 
 class ToolkitDetailView(LoginRequiredMixin, DetailView):
     login_url = 'login'
@@ -210,5 +213,27 @@ class HopkinsPart2DetailView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'redirect_to'
     model = HopkinsPart2
     template_name = 'hp2_detail.html'
+
+class HTQPDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        p = canvas.Canvas(response)
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        p.drawString(0, 0, "Hello world.")
+
+        # Close the PDF object cleanly, and we're done.
+        p.showPage()
+        p.save()
+        return response
+
+
 
 
