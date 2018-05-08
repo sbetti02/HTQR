@@ -27,5 +27,9 @@ urlpatterns = [
     path('th/<int:pk>', views.TortureHistoryDetailView.as_view(), name = 'TH_detail'),
     path('hp1/<int:pk>', views.HopkinsPart1DetailView.as_view(), name = 'HP1_detail'),
     path('hp2/<int:pk>', views.HopkinsPart2DetailView.as_view(), name = 'HP2_detail'),
-
+    path('htq/<int:pk>/pdf', views.HTQPDF.as_view(), name = 'HTQ_pdf'),
+    path('dsmv/<int:pk>/pdf', views.DSMVPDF.as_view(), name = 'DSMV_pdf'),
+    path('th/<int:pk>/pdf', views.THPDF.as_view(), name = 'TH_pdf'),
+    path('hp1/<int:pk>/pdf', views.HP1PDF.as_view(), name = 'HP1_pdf'),
+    path('hp2/<int:pk>/pdf', views.HP2PDF.as_view(), name = 'HP2_pdf'),
 ]

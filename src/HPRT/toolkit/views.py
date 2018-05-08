@@ -11,7 +11,13 @@ from PatientPortal.models import Patient
 import json, os
 from datetime import date  
 
-
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from reportlab.platypus.tables import Table, TableStyle
+from reportlab.platypus import Paragraph
 
 class ToolkitDetailView(LoginRequiredMixin, DetailView):
     login_url = 'login'
@@ -322,5 +328,181 @@ class HopkinsPart2DetailView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'redirect_to'
     model = HopkinsPart2
     template_name = 'hp2_detail.html'
+
+
+def make_pdf(canvas, info, questions):
+    textobject = canvas.beginText()
+    textobject.setTextOrigin(inch, 10*inch)
+    textobject.setFillColorRGB(0.4,0,1)
+    textobject.setFont("Helvetica-Oblique", 60)
+    textobject.textLines("HPRT")
+    textobject.setFont("Times-Bold", 13)
+    textobject.textLines("")
+    textobject.setFillColor(colors.black)
+    textobject.textLines("Patient Name: " + info["patient"])
+    textobject.textLines("Doctor Administered: Dr. " + info["doctor"])
+    textobject.textLines("Date Administered: " + info["date"])
+
+    para_questions = []
+    styles = getSampleStyleSheet()
+
+    for [question, answer] in questions:
+        para_questions.append([Paragraph(question, styles['Normal']), Paragraph(str(answer), styles['Normal'])])
+
+    if "score" in info:
+        scoretext = canvas.beginText()
+        scoretext.setTextOrigin(inch, (7*inch - (0.4*inch*len(questions))))
+        scoretext.setFillColor(colors.black)
+        scoretext.textLines("Total Score: " + info["score"])
+
+    table = Table(para_questions, colWidths=3*inch, rowHeights=0.4*inch, repeatRows=0)
+    table.setStyle(TableStyle([
+         ('INNERGRID', (0,0), (-1,-1), 0.4, colors.black),
+         ('BOX', (0,0), (-1,-1), 0.5, colors.black),
+         ]))
+
+    canvas.drawText(textobject)
+    table.wrapOn(canvas, 8.5*inch, 11*inch)
+    table.drawOn(canvas, 1*inch, (8*inch - (0.4*inch*len(questions))))
+    if "score" in info:
+        canvas.drawText(scoretext)
+
+
+
+class HTQPDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        c = canvas.Canvas(response)
+        obj = HTQ.objects.get(pk=pk)
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.first_name + obj.doctor.last_name, "date": str(obj.date)}
+        labels = obj.get_labels()
+        questions = []
+        for field, val in obj:
+            if field in labels:
+                questions.append([labels[field], val])
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        make_pdf(c, info, questions)
+
+        # Close the PDF object cleanly, and we're done.
+        c.showPage()
+        c.save()
+        return response
+
+class DSMVPDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = DSMV
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        c = canvas.Canvas(response)
+        obj = DSMV.objects.get(pk=pk)
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
+        labels = obj.get_labels()
+        questions = []
+        for field, val in obj:
+            if field in labels:
+                questions.append([labels[field], val])
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        make_pdf(c, info, questions)
+
+        # Close the PDF object cleanly, and we're done.
+        c.showPage()
+        c.save()
+        return response
+
+class THPDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = TortureHistory
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        c = canvas.Canvas(response)
+        obj = TortureHistory.objects.get(pk=pk)
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date)}
+        labels = obj.get_labels()
+        questions = []
+        for field, val in obj:
+            if field in labels:
+                questions.append([labels[field], val])
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        make_pdf(c, info, questions)
+
+        # Close the PDF object cleanly, and we're done.
+        c.showPage()
+        c.save()
+        return response
+
+
+class HP1PDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart1
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        c = canvas.Canvas(response)
+        obj = HopkinsPart1.objects.get(pk=pk)
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
+        labels = obj.get_labels()
+        questions = []
+        for field, val in obj:
+            if field in labels:
+                questions.append([labels[field], val])
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        make_pdf(c, info, questions)
+
+        # Close the PDF object cleanly, and we're done.
+        c.showPage()
+        c.save()
+        return response
+
+class HP2PDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart2
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        c = canvas.Canvas(response)
+        obj = HopkinsPart2.objects.get(pk=pk)
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
+        labels = obj.get_labels()
+        questions = []
+        for field, val in obj:
+            if field in labels:
+                questions.append([labels[field], val])
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        make_pdf(c, info, questions)
+
+        # Close the PDF object cleanly, and we're done.
+        c.showPage()
+        c.save()
+        return response
 
 
