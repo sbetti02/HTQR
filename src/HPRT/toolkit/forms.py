@@ -8,7 +8,8 @@ class HTQForm(forms.ModelForm):
 
     class Meta:
         model = HTQ
-        fields = '__all__'
+        exclude = ('patient', 'doctor', 'date')
+
         labels = {}
 
         json_data = open(os.path.join('static', "questions.json"), 'r')
@@ -47,7 +48,7 @@ class DSMVForm(forms.ModelForm):
 
     class Meta:
         model = DSMV
-        fields = '__all__'
+        exclude = ('patient', 'doctor', 'date', 'score')
         labels = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         dsmv_list = json.load(json_data)[5]['questions']
@@ -61,7 +62,7 @@ class TortureHistoryForm(forms.ModelForm):
 
     class Meta:
         model = TortureHistory
-        fields = '__all__'
+        exclude = ('patient', 'doctor', 'date')
         labels = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         th_list = json.load(json_data)[6]['questions']
@@ -75,7 +76,7 @@ class HopkinsPart1Form(forms.ModelForm):
 
     class Meta:
         model = HopkinsPart1
-        fields = '__all__'
+        exclude = ('patient', 'doctor', 'date', 'score')
         labels = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         hp1_list = json.load(json_data)[7]['questions']
@@ -85,12 +86,11 @@ class HopkinsPart1Form(forms.ModelForm):
             i+=1
         json_data.close()
 
-
 class HopkinsPart2Form(forms.ModelForm):
 
     class Meta:
         model = HopkinsPart2
-        fields = '__all__'
+        exclude = ('patient', 'doctor', 'date', 'score')
         labels = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         hp2_list = json.load(json_data)[8]['questions']

@@ -9,6 +9,8 @@ from . forms import HTQForm, DSMVForm, TortureHistoryForm, HopkinsPart1Form, Hop
 from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
 from PatientPortal.models import Patient
 import json, os
+from datetime import date  
+
 
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
@@ -148,8 +150,72 @@ class HTQCreateView(LoginRequiredMixin, CreateView):
     model = HTQ
     template_name = 'htq_new.html'
     form_class = HTQForm
+
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        form.instance.date = date.today()
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        return super(HTQCreateView, self).form_valid(form)
+
+
+class HTQDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HTQ
+    template_name = 'htq_detail.html'
+
+    def get_context_data(self, **kwargs):
+        print("HERE")
+        kwargs = super(HTQDetailView, self).get_context_data(**kwargs)
+        """
+        labels = {}
+
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        htq_list = json.load(json_data)[0]['questions']
+        i = 1
+        for index in htq_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        pd = json.load(json_data)[1]['questions']
+        i = 1
+        for index in pd:
+            labels[index['id']] = 'Personal Description ' + str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        hi = json.load(json_data)[2]['questions']
+        i = 1
+        for index in hi:
+            labels[index['id']] = 'Injury ' + str(i) + '. ' + index['body']
+            j = 1 
+            for part in index['dropdown']:
+                if i == 5:
+                    key = index['id'][:-1] + '_' + chr(96 + j)
+                else:
+                    key = index['id'] + '_' + chr(96 + j)
+                labels[key] = chr(96 + j) + '. ' + part['body']
+                j+=1 
+            i+=1
+        json_data.close()
+        print(self.object)
+        print(labels)
+        """
+        """
+        kwargs.update({
+            zipped_label_res =  zip(labels, self.object)
+            'labels': labels,
+        })
+        """
+
+        return kwargs
+
 
 class DSMVCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -157,8 +223,22 @@ class DSMVCreateView(LoginRequiredMixin, CreateView):
     model = DSMV
     template_name = 'dsmv_new.html'
     form_class = DSMVForm   
+
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        form.instance.date = date.today()
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        total_score = 0
+        len(form.cleaned_data)
+        for label in form.cleaned_data:
+            total_score += form.cleaned_data[label]
+        form.instance.score = float(total_score)/len(form.cleaned_data)
+        return super(DSMVCreateView, self).form_valid(form)
+
+
 
 class TortureHistoryCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -166,8 +246,16 @@ class TortureHistoryCreateView(LoginRequiredMixin, CreateView):
     model = TortureHistory
     template_name = 'th_new.html'
     form_class = TortureHistoryForm
+
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        form.instance.date = date.today()
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        return super(TortureHistoryCreateView, self).form_valid(form)
+
 
 class HopkinsPart1CreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -175,8 +263,20 @@ class HopkinsPart1CreateView(LoginRequiredMixin, CreateView):
     model = HopkinsPart1
     template_name = 'hp1_new.html'
     form_class = HopkinsPart1Form
+
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        form.instance.date = date.today()
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        total_score = 0
+        for label in form.cleaned_data:
+            total_score += form.cleaned_data[label]
+        form.instance.score = float(total_score)/len(form.cleaned_data)
+        return super(HopkinsPart1CreateView, self).form_valid(form)
+
 
 class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -184,8 +284,20 @@ class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
     model = HopkinsPart2
     template_name = 'hp2_new.html'
     form_class = HopkinsPart2Form
+
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        form.instance.date = date.today()
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        total_score = 0
+        for label in form.cleaned_data:
+            total_score += form.cleaned_data[label]
+        form.instance.score = float(total_score)/len(form.cleaned_data)
+        return super(HopkinsPart2CreateView, self).form_valid(form)
+
 
 class HTQDetailView(LoginRequiredMixin, DetailView):
     login_url = 'login'
