@@ -1,0 +1,28 @@
+<!-- templates/search_results.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row" style="margin-left: 5px;">
+		<h2 style="margin-right: 5px;"> Search Results </h2>
+
+	</div>
+	<br>
+	<table class="table table-bordered table-striped" style="border:2px solid lightgray; ">
+		<thead>
+			<tr>
+				<th style="width: 50%" style="border-right: 2px solid lightgray">Patient Name</th>
+				<th style="width: 33.33%%">DOB</th>
+			</tr>
+		</thead>
+		<tbody style="border-top: 3px solid lightgray">
+			{% for patient in object_list %}
+			<tr>
+				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
+				<td>{{ patient.DOB }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+{% endblock content %}

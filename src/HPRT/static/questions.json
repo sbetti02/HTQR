@@ -1,0 +1,756 @@
+[{
+        "name": "Trauma Events",
+        "type": "bool",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "te1" ,
+                        "body" : "Lack of Shelter"
+                },
+
+                {
+                        "id" : "te2",
+                        "body" : "Lack of Food or Water"
+                },
+
+                {
+                        "id" : "te3",
+                        "body" : "Ill health without access to medical care"
+                },	
+
+                {
+                        "id" : "te4",
+                        "body" : "Confiscation or destruction of personal property"
+                },
+
+                {
+                        "id" : "te5",
+                        "body" : "Combat situation (e.g. shelling and grenade attacks)"
+                },
+
+                {
+                        "id" : "te6",
+                        "body" : "Forced evacuation under dangerous conditions"
+                },
+
+                {
+                        "id" : "te7",
+                        "body" : "Beating to the body"
+                },
+
+                {
+                        "id" : "te8",
+                        "body" : "Rape"
+                },
+
+                {
+                        "id" : "te9",
+                        "body" : "Other types of sexual abuse or sexual humiliation"
+                },
+
+                {
+                        "id" : "te10",
+                        "body" : "Knifing or axing"
+                },
+
+                {
+                        "id" : "te11",
+                        "body" : "Torture (deliberate and systematic infliction of physical or mental suffering)"
+                },	
+
+                {
+                        "id" : "te12" ,
+                        "body" : "Serious physical injury from combat situation or landmine"
+                },
+                {
+                        "id" : "te13",
+                        "body" : "Imprisonment"
+                },
+                {
+                        "id" : "te14",
+                        "body" : "Forced labor (like animal or slave)"
+                },
+
+                {
+                        "id" : "te15",
+                        "body" : "Extortion or robbery"
+                },
+                {
+                        "id" : "te16",
+                        "body" : "Brainwashing"
+                },
+                {
+                        "id" : "te17",
+                        "body" : "Forced to hide"
+                },
+                {
+                        "id" : "te18",
+                        "body" : "Kidnapped"
+                },
+                {
+                        "id" : "te19",
+                        "body" : "Other forced separation from family members"
+                },
+                {
+                        "id" : "te20",
+                        "body" : "Forced to find and bury bodies"
+                },
+                {
+                        "id" : "te21",
+                        "body" : "Enforced isolation from others"
+                },																	
+
+                {
+                        "id" : "te22",
+                        "body" : "Someone was forced to betray you and place you at risk of death or injury"
+                },
+                {
+                        "id" : "te23",
+                        "body" : "Prevented from burying someone"
+                },
+
+                {
+                        "id" : "te24",
+                        "body" : "Forced to desecrate or destroy the bodies or graves of deceased persons"
+                },
+                {
+                        "id" : "te25",
+                        "body" : "Forced to physically harm family member or friend"
+                },
+                {
+                        "id" : "te26",
+                        "body" : "Forced to physically harm someone who is not family or friend"		
+                },
+                {
+                        "id" : "te27",
+                        "body" : "Forced to destroy someone else's property or possessions"
+                },
+                {
+                        "id" : "te28",
+                        "body" : "Forced to betray family member or friend, placing them at risk of death or injury"
+                },
+                {
+                        "id" : "te29",
+                        "body" : "Forced to betray someone who is not family or friend, placing them at risk of death or injury"
+                },
+                {
+                        "id" : "te30",
+                        "body" : "Murder, or death due to violence, of spouse"
+                },
+                {
+                        "id" : "te31",
+                        "body" : "Murder, or death due to violence, of child"
+                },
+
+                {
+                        "id" : "te32" ,
+                        "body" : "Murder, or death due to violence, of other family member or friend"
+                },
+                {
+                        "id" : "te33",
+                        "body" : "Disappearance or kidnapping of spouse"
+                },
+                {
+                        "id" : "te34",
+                        "body" : "Disappearance or kidnapping of child"
+                },
+
+                {
+                        "id" : "te35",
+                        "body" : "Disappearance or kidnapping of other family member or friend"
+                },
+                {
+                        "id" : "te36",
+                        "body" : "Serious physical injury of family member or friend due to combat situation or landmine"
+                },
+                {
+                        "id" : "te37",
+                        "body" : "Witness beatings to head or body"
+                },
+                {
+                        "id" : "te38",
+                        "body" : "Witness torture"
+                },
+                {
+                        "id" : "te39",
+                        "body" : "Witness killing/murder"
+                },
+                {
+                        "id" : "te40",
+                        "body" : "Witness rape or sexual abuse"
+                },
+                {
+                        "id" : "te41",
+                        "body" : "Another situation that was very frightening or in which you felt your life was in danger, specify in comments"
+                }	
+        ]
+},
+{
+        "name": "Personal Description",
+        "type": "paragraph",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "pd1",
+                        "body" : "Please indicate what you consider to be the most hurtful or terrifying events you have experienced, if any. Please specify where and when these events occurred."
+                },
+
+                {
+                        "id" : "pd2",
+                        "body" : "Under your current living situation (i.e. refugee camp, country of resettlement, returned from exile, etc.) what is the worst event that has happened to you, if different from above. Please specify where and when these events occurred."
+                }
+        ]
+},
+{
+        "name": "Head Injury",
+        "type": "bool",
+        "dropdown": true,
+        "questions": [
+                {
+                        "id": "hi1",
+                        "body": "Beatings to the head",
+                        "dropdown" : [
+                                {
+                                        "type" : "bool" ,
+                                        "body" : "Loss of consciousness?"
+                                },	
+                                {
+                                        "type" : "time",
+                                        "body" : "If yes, for how long?"
+                                }
+                        ]
+                },
+
+                {
+                        "id": "hi2",
+                        "body": "Suffocation or strangulation",
+                        "dropdown" : [
+                                {
+                                        "type" : "bool" ,
+                                        "body" : "Loss of consciousness?"
+                                },	
+                                {
+                                        "type" : "time",
+                                        "body" : "If yes, for how long?"
+                                }
+                        ]
+                },
+
+                {
+                        "id": "hi3",
+                        "body": "Near drowning",
+                        "dropdown" : [
+                                {
+                                        "type" : "bool" ,
+                                        "body" : "Loss of consciousness?"
+                                },	
+                                {
+                                        "type" : "time",
+                                        "body" : "If yes, for how long?"
+                                }
+                        ]			
+                },
+
+                {
+                        "id": "hi4",
+                        "body": "Other types of injury to the head (e.g. shrapnel, burns, etc.)",
+                        "dropdown" : [
+                                {
+                                        "type" : "bool" ,
+                                        "body" : "Loss of consciousness?"
+                                },	
+                                {
+                                        "type" : "time",
+                                        "body" : "If yes, for how long?"
+                                }
+                        ]
+                },
+                {
+                        "id": "hi5",
+                        "body": "Starvation",
+                        "dropdown" : [
+                                {
+                                        "type" : "numerical" ,
+                                        "body" : "Normal weight"
+                                },	
+                                {
+                                        "type" : "numerical",
+                                        "body" : "Starvation weight"
+                                },
+                                {
+                                        "type" : "bool",
+                                        "body" : "Were you near death due to starvation?"
+                                }					
+                        ]			
+                }
+        ]
+
+},
+{
+        "name": "Trauma Symptoms DSM-IV",
+        "type": "scale",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "ts1",
+                        "body" : "Recurrent thoughts or memories of the most hurtful or terrifying events"
+                },
+
+                {
+                        "id" : "ts2",
+                        "body" : "Feeling as though the event is happening again "
+                },
+
+                {
+                        "id" : "ts3",
+                        "body" : "Recurrent nightmares"
+                },
+
+                {
+                        "id" : "ts4",
+                        "body" : "Feeling detached or withdrawn from people"
+                },
+
+                {
+                        "id" : "ts5",
+                        "body" : "Unable to feel emotions"
+                },
+
+                {
+                        "id" : "ts6",
+                        "body" : "Feeling jumpy, easily startled"
+                },
+
+                {
+                        "id" : "ts7",
+                        "body" : "Difficulty concentrating"
+                },
+
+                {
+                        "id" : "ts8",
+                        "body" : "Trouble sleeping "
+                },
+
+                {
+                        "id" : "ts9",
+                        "body" : "Feeling on guard"
+                },
+
+                {
+                        "id" : "ts10",
+                        "body" : "Feeling irritable or having outbursts of anger"
+                },
+
+                {
+                        "id" : "ts11",
+                        "body" : "Avoiding activities that remind you of the traumatic or hurtful event "
+                },
+
+                {
+                        "id" : "ts12",
+                        "body" : "Inability to remember parts of the most hurtful or traumatic events "
+                },
+
+                {
+                        "id" : "ts13",
+                        "body" : "Less interest in daily activities"
+                },
+
+                {
+                        "id" : "ts14",
+                        "body" : "Feeling as if you don’t have a future"
+                },
+
+                {
+                        "id" : "ts15",
+                        "body" : "Avoiding thoughts or feelings associated with the traumatic or hurtful events "
+                },
+
+                {
+                        "id" : "ts16",
+                        "body" : "Sudden emotional or physical reaction when reminded of the most hurtful or traumatic events"
+                }
+        ]
+},
+{
+        "name": "Trauma Symptoms General",
+        "type": "scale",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "ts17",
+                        "body" : "Feeling that you have less skills than you had before"
+                },
+
+                {
+                        "id" : "ts18",
+                        "body" : "Having difficulty dealing with new situations"
+                },
+
+                {
+                        "id" : "ts19",
+                        "body" : "Feeling exhausted "
+                },
+
+                {
+                        "id" : "ts20",
+                        "body" : "Bodily pain"
+                },
+
+                {
+                        "id" : "ts21",
+                        "body" : "Troubled by physical problem(s)"
+                },
+
+                {
+                        "id" : "ts22",
+                        "body" : "Poor memory"
+                },
+
+                {
+                        "id" : "ts23",
+                        "body" : "Finding out or being told by other people that you have done something that you cannot remember"
+                },
+
+                {
+                        "id" : "ts24",
+                        "body" : "Difficulty paying attention"
+                },
+
+                {
+                        "id" : "ts25",
+                        "body" : "Feeling as if you are split into two people and one of you is watching what the other is doing"
+                },
+
+                {
+                        "id" : "ts26",
+                        "body" : "Feeling unable to make daily plans"
+                },
+
+                {
+                        "id" : "ts27",
+                        "body" : "Blaming yourself for things that have happened"
+                },
+
+                {
+                        "id" : "ts28",
+                        "body" : "Feeling guilty for having survived"
+                },
+
+                {
+                        "id" : "ts29",
+                        "body" : "Hopelessness"
+                },
+
+                {
+                        "id" : "ts30",
+                        "body" : "Feeling ashamed of the hurtful or traumatic events that have happened to you"
+                },
+
+                {
+                        "id" : "ts31",
+                        "body" : "Feeling that people do not understand what happened to you "
+                },
+
+                {
+                        "id" : "ts32",
+                        "body" : "Feeling others are hostile to you "
+                },
+
+                {
+                        "id" : "ts33",
+                        "body" : "Feeling that you have no one to rely upon"
+                },
+
+                {
+                        "id" : "ts34",
+                        "body" : "Feeling that someone you trusted betrayed you"
+                },
+
+                {
+                        "id" : "ts35",
+                        "body" : "Feeling humiliated by your experience"
+                },
+
+                {
+                        "id" : "ts36",
+                        "body" : "Feeling no trust in others"
+                },
+
+                {
+                        "id" : "ts37",
+                        "body" : "Feeling powerless to help others"
+                },
+
+                {
+                        "id" : "ts38",
+                        "body" : "Spending time thinking why these events happened to you"
+                },
+
+                {
+                        "id" : "ts39",
+                        "body" : "Feeling that you are the only one that suffered these events"
+                },
+
+                {
+                        "id" : "ts40",
+                        "body" : "Feeling a need for revenge"
+                }
+        ]
+},
+{
+        "name": "Torture History",
+        "type": "bool",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "th1",
+                        "body" : "Beating, kicking, striking with objects"
+                },
+                {
+                        "id" : "th2",
+                        "body" : "Threats, humiliation"
+                },
+                {
+                        "id" : "th3",
+                        "body" : "Being chained or tied to others"
+                },
+                {
+                        "id" : "th4",
+                        "body" : "Exposed to heat, sun, strong light"
+                },
+                {
+                        "id" : "th5",
+                        "body" : "Exposed to rain, body immersion, cold"
+                },	
+                {
+                        "id" : "th6",
+                        "body" : "Placed in a sack, box, or very small space"
+                },
+                {
+                        "id" : "th7",
+                        "body" : "Drowning, submersion of head in water"
+                },
+                {
+                        "id" : "th8",
+                        "body" : "Suffocation"
+                },
+                {
+                        "id" : "th9",
+                        "body" : "Overexertion, hard labor"
+                },
+                {
+                        "id" : "th10",
+                        "body" : "Exposed to unhygienic conditions conducive to infections or other diseases"
+                },		
+                {
+                        "id" : "th11",
+                        "body" : "Blindfolding"
+                },
+                {
+                        "id" : "th12",
+                        "body" : "Isolation, solitary confinement, specify how long in comments"
+                },
+                {
+                        "id" : "th13",
+                        "body" : "Mock execution"
+                },
+                {
+                        "id" : "th14",
+                        "body" : "Made to witness others being tortured"
+                },
+                {
+                        "id" : "th15",
+                        "body" : "Starvation"
+                },	
+                {
+                        "id" : "th16",
+                        "body" : "Sleep deprivation"
+                },
+                {
+                        "id" : "th17",
+                        "body" : "Suspension from a rod by hands and feet"
+                },
+                {
+                        "id" : "th18",
+                        "body" : "Rape, mutilation of genitalia"
+                },
+                {
+                        "id" : "th19",
+                        "body" : "Burning"
+                },
+                {
+                        "id" : "th20",
+                        "body" : "Beating the soles of the feet with rods"
+                },	
+                {
+                        "id" : "th21",
+                        "body" : "Blows to ears"
+                },
+                {
+                        "id" : "th22",
+                        "body" : "Forced standing"
+                },
+                {
+                        "id" : "th23",
+                        "body" : "Throwing urine or feces at victims or being made to throw it at other prisoners"
+                },
+                {
+                        "id" : "th24",
+                        "body" : "Medicine administration (non-therapeutic)"
+                },
+                {
+                        "id" : "th25",
+                        "body" : "Needles under toes or fingernails"
+                },
+                {
+                        "id" : "th26",
+                        "body" : "Writing confessions numerous times"
+                },
+                {
+                        "id" : "th27",
+                        "body" : "Shocked repeatedly by electric instrument"
+                },
+                {
+                        "id" : "th28",
+                        "body" : "Other (specify in comments)"
+                }
+        ]
+},
+{
+        "name": "Hopkins Symptom Checklist Part1",
+        "type": "scale",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "hs1",
+                        "body" : "Suddenly scared for no reason"
+                },
+
+                {
+                        "id" : "hs2",
+                        "body" : "Feeling fearful"
+                },
+
+                {
+                        "id" : "hs3",
+                        "body" : "Faintness, dizziness, or weakness"
+                },
+
+                {
+                        "id" : "hs4",
+                        "body" : "Nervousness or shakiness inside"
+                },
+
+                {
+                        "id" : "hs5",
+                        "body" : "Heart pounding or racing"
+                },						
+
+                {
+                        "id" : "hs6",
+                        "body" : "Trembling"
+                },
+
+                {
+                        "id" : "hs7",
+                        "body" : "Feeling tense or keyed up"
+                },
+
+                {
+                        "id" : "hs8",
+                        "body" : "Headaches"
+                },
+
+                {
+                        "id" : "hs9",
+                        "body" : "Spell of terror or panic"
+                },
+
+                {
+                        "id" : "hs10",
+                        "body" : "Feeling restless or can't sit still"
+                }
+
+        ]
+},
+{
+        "name": "Hopkins Symptom Checklist Part2",
+        "type": "scale",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "hs11",
+                        "body" : "Feeling low in energy, slowed down"
+                },
+
+                {
+                        "id" : "hs12",
+                        "body" : "Blaming yourself for things"
+                },
+
+                {
+                        "id" : "hs13",
+                        "body" : "Crying easily"
+                },
+
+                {
+                        "id" : "hs14",
+                        "body" : "Loss of sexual interest or pleasure"
+                },
+
+                {
+                        "id" : "hs15",
+                        "body" : "Poor appetite"
+                },
+                {
+                        "id" : "hs16",
+                        "body" : "Difficulty falling asleep, staying asleep"
+                },
+
+                {
+                        "id" : "hs17",
+                        "body" : "Feeling hopeless about future"
+                },
+
+                {
+                        "id" : "hs18",
+                        "body" : "Feeling blue"
+                },
+
+                {
+                        "id" : "hs19",
+                        "body" : "Feeling lonely"
+                },
+
+                {
+                        "id" : "hs20",
+                        "body" : "Thought of ending your life"
+                },
+                {
+                        "id" : "hs21",
+                        "body" : "Feeling of being trapped or caught"
+                },
+
+                {
+                        "id" : "hs22",
+                        "body" : "Worry too much about things"
+                },
+
+                {
+                        "id" : "hs23",
+                        "body" : "Feeling no interest in things"
+                },
+
+                {
+                        "id" : "hs24",
+                        "body" : "Feeling everything is an effort"
+                },
+
+                {
+                        "id" : "hs25",
+                        "body" : "Feeling of worthlessness"
+                }
+        ]
+}
+]
