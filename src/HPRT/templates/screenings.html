@@ -103,7 +103,7 @@
                     </thead>
                     <tbody>
                         {% for q in hp1_list %}
-                            <tr><td>{{ q.date }}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP1_detail' q.pk %}"> View</a></td></tr>
+                            <tr><td>{{ q.date }}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP1_detail' q.pk %}">View</a></td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

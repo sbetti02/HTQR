@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from . forms import HTQQuestionForm
+from . forms import HTQForm, DSMVForm, TortureHistoryForm, HopkinsPart1Form, HopkinsPart2Form
 from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
 from PatientPortal.models import Patient
 import json, os
@@ -141,7 +141,7 @@ class HTQCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = HTQ
     template_name = 'htq_new.html'
-    form_class = HTQQuestionForm
+    form_class = HTQForm
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
@@ -150,7 +150,7 @@ class DSMVCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = DSMV
     template_name = 'dsmv_new.html'
-    fields = '__all__'
+    form_class = DSMVForm   
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
@@ -159,7 +159,7 @@ class TortureHistoryCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = TortureHistory
     template_name = 'th_new.html'
-    fields = '__all__'
+    form_class = TortureHistoryForm
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
@@ -168,7 +168,7 @@ class HopkinsPart1CreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = HopkinsPart1
     template_name = 'hp1_new.html'
-    fields = '__all__'
+    form_class = HopkinsPart1Form
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
@@ -177,7 +177,7 @@ class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = HopkinsPart2
     template_name = 'hp2_new.html'
-    fields = '__all__'
+    form_class = HopkinsPart2Form
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
