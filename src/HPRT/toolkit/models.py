@@ -1,5 +1,6 @@
 from django.db import models
 from PatientPortal.models import DocPat, Patient, Doctor
+import json, os
 
 
 ################################################
@@ -26,6 +27,11 @@ class Toolkit(models.Model):
     prescribe = models.BooleanField(default=answer_default)
     close_and_schedule = models.BooleanField(default=answer_default)
     prevent_burnout = models.BooleanField(default=answer_default)
+
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
 
 
 class HTQ(models.Model):
@@ -94,6 +100,47 @@ class HTQ(models.Model):
     hi_b = models.DecimalField(max_digits = 4, decimal_places = 1, null=True)
     hi_c = models.BooleanField()
 
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
+
+    def get_labels(self):
+        labels = {}
+
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        htq_list = json.load(json_data)[0]['questions']
+        i = 1
+        for index in htq_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        pd = json.load(json_data)[1]['questions']
+        i = 1
+        for index in pd:
+            labels[index['id']] = 'Personal Description ' + str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        hi = json.load(json_data)[2]['questions']
+        i = 1
+        for index in hi:
+            labels[index['id']] = 'Injury ' + str(i) + '. ' + index['body']
+            j = 1 
+            for part in index['dropdown']:
+                if i == 5:
+                    key = index['id'][:-1] + '_' + chr(96 + j)
+                else:
+                    key = index['id'] + '_' + chr(96 + j)
+                labels[key] = chr(96 + j) + '. ' + part['body']
+                j+=1 
+            i+=1
+        json_data.close()
+        return labels
+
 
 class DSMV(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
@@ -125,6 +172,24 @@ class DSMV(models.Model):
     d24 = models.IntegerField()
     d25 = models.IntegerField()
     score = models.DecimalField(max_digits = 3, decimal_places = 1)
+
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
+
+    def get_labels(self):
+        labels = {}
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        dsmv_list = json.load(json_data)[5]['questions']
+        i = 1
+        for index in dsmv_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+        return labels
+
+
 
 class TortureHistory(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
@@ -159,6 +224,23 @@ class TortureHistory(models.Model):
     th27 = models.BooleanField()
     th28 = models.TextField(default = '')
 
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
+
+    def get_labels(self):
+        labels = {}
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        th_list = json.load(json_data)[6]['questions']
+        i = 1
+        for index in th_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+        return labels
+
+
 class HopkinsPart1(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE)
@@ -174,6 +256,24 @@ class HopkinsPart1(models.Model):
     hp9 = models.IntegerField()
     hp10 = models.IntegerField()
     score = models.DecimalField(max_digits = 3, decimal_places = 1)
+
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
+
+    def get_labels(self):
+        labels = {}
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        hp1_list = json.load(json_data)[7]['questions']
+        i = 1
+        for index in hp1_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+        return labels
+
+
 
 class HopkinsPart2(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
@@ -196,7 +296,21 @@ class HopkinsPart2(models.Model):
     hp25 = models.IntegerField()
     score = models.DecimalField(max_digits = 3, decimal_places = 1)
 
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
 
+    def get_labels(self):
+        labels = {}
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        hp2_list = json.load(json_data)[8]['questions']
+        i = 11
+        for index in hp2_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+        return labels
 
 
         
