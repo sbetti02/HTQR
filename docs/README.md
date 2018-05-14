@@ -4,6 +4,8 @@ __Implemented__
 
 We created an electronic version of a set of diagnostic tools used to train/guide doctors on how to communicate with and diagnose patients, refugees, suffering from trauma. Doctors can keep an a checklist (the 11-Point Toolkit) on a patient's progress. Doctors can create patient profiles which consist of some basic info (i.e. name, DOB, height, blood type, allergies, medication, phone number) and most importantly the 11-Point Toolkit. When a doctor sees a patient's profile, he/she can access the 11-Point Toolkit specific to that doctor-patient relationship. One of the most important elements of the toolkit is the screening tools found under "Diagnose" which aid in communicating a patient's circumstances and overall improving the care a doctor can provide to the patient. Any doctor can keep track of his/her progress with a patient, and in any new doctor-patient relationship, the doctor must go through all the steps in the 11-Point Toolkit. This ensure doctors ar guided throught the process every time in order to get a better understanding of each patient's circumstances. There is also a feature which allows a doctor to ask for a patient's trauma story through text once the patient's number is verified. Patient's are able to share their trauma story if they wish and add it to their patient profile. 
 
+Sofware Requirements: django, Python 3, Bootstrap 4, postgresql, twilio
+
 __Future Work__
 
 In the future, we hope to have a completed analytics component which will allow a user to query the database of patients in order to observe any underlying trends among the patients. We also have plans to take our system and use it in refugee camps. 
