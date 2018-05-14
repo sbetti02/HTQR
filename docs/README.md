@@ -7,12 +7,17 @@ We created an electronic version of a set of diagnostic tools used to train/guid
 Sofware Requirements: django 2, Python 3, Bootstrap 4, postgresql, twilio
 
 To run:
+
 Download files
 Go into file directory ./src/HPRT/
 Then run
+
 >python manage.py makemigrations
+
 >python manage.py migrate
+
 >python manage.py runserver
+
 "Starting development server at http://127.0.0.1:8000/"
 
 __Future Work__
