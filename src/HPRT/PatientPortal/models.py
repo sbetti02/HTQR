@@ -60,6 +60,7 @@ class Patient(models.Model):
         today = date.today()
         return today.year - self.DOB.year - ((today.month, today.day) < (self.DOB.month, self.DOB.day))
 
+    # TODO: phone_number.str()?
 
 
 class DocPat(models.Model):

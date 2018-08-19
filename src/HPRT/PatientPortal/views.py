@@ -20,7 +20,7 @@ from . models import Patient, DocPat, Site, Doctor
 from toolkit.models import Toolkit
 
 from django.http import QueryDict
-from . forms import AddExistingPatientForm
+from . forms import AddExistingPatientForm, CreateNewPatientForm
 
 import threading
 import time
@@ -120,7 +120,7 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient_new.html'
-    fields = ['name', 'DOB', 'blood_type', 'height', 'weight', 'site', 'phone_number', 'email', 'allergies', 'current_medications']
+    form_class = CreateNewPatientForm
 
     def get_success_url(self):
         # print(self.object.phone_number)
