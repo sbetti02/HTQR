@@ -3,17 +3,17 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 
 
-#from twilio.twiml.messaging_response import MessagingResponse
+from twilio.twiml.messaging_response import MessagingResponse
 
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-# from twilio.rest import Client
+from twilio.rest import Client
 
-# from django_twilio.decorators import twilio_view
+from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
 from . models import Patient, DocPat, Site, Doctor
 
@@ -21,6 +21,10 @@ from toolkit.models import Toolkit
 
 from django.http import QueryDict
 from . forms import AddExistingPatientForm
+
+import threading
+import time
+from HPRT.secrets import twilio_sid, twilio_auth_token, ngrok_host
 
 
 def update_patients(request):
@@ -72,6 +76,43 @@ class PatientAddExistingView(LoginRequiredMixin, CreateView):
         form.instance.doctor = self.request.user
         return super(PatientAddExistingView, self).form_valid(form)
 
+# def twilio_validate_and_confirm(twilio_client, name, phone_number):
+#     validation_request = None
+#     validation_request = twilio_client.validation_requests.create(
+#                                   friendly_name=name,
+#                                   phone_number=phone_number
+#                                   )
+#     while not validation_request:
+#         time.sleep(1)
+
+#     message = twilio_client.messages.create(
+#                                   body="Hi " + name + ", welcome to HPRT!",
+#                                   from_= "+17743261027",
+#                                   to= "+1" + phone_number
+#                               )
+
+@twilio_view
+def phone_number_confirmation(request):
+    """ 
+    Callback function to confirm/deny phone number validation.
+    Only expected request type is POST (from Twilio server)
+    """
+    print("\n\n\najafdkj\n\n")
+    if request.method == 'POST':
+        if request.VerificationStatus == 'success':
+            message = twilio_client.messages.create(
+                                  body="Hi " + name + ", welcome to HPRT!",
+                                  from_= "+17743261027",
+                                  to= "+1" + phone_number
+                              )
+        else:
+            print("Failed to verify phone number.") # TODO: Update so appears as alert statement in GUI
+
+    else:
+        print("here")
+
+    return HttpResponse("This is a simple response !")
+
 
 
 class PatientCreateView(LoginRequiredMixin, CreateView):
@@ -80,18 +121,21 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     model = Patient
     template_name = 'patient_new.html'
     fields = ['name', 'DOB', 'blood_type', 'height', 'weight', 'site', 'phone_number', 'email', 'allergies', 'current_medications']
+
     def get_success_url(self):
-        print(self.object.phone_number)
-        account_sid = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
-        auth_token = '05a2c0d38c131a9c50423ec576343dd5'
-        client = Client(account_sid, auth_token)
+        # print(self.object.phone_number)
+        # client = Client(twilio_sid, twilio_auth_token)
 
-        message = client.messages.create(
-                                      body="Hi " + self.object.name + ", welcome to HPRT!",
-                                      from_= "+17743261027",
-                                      to= "+1" + self.object.phone_number
+        # t = Thread(target=twilio_validate_and_confirm, 
+        #            args=(twilio_client, self.object.name, self.object.phone_number))
+        # t.start()
 
-                                  )
+        # validation_request = client.validation_requests.create(
+        #                               friendly_name=self.object.name,
+        #                               phone_number=self.object.phone_number,
+        #                               status_callback='http://'+ngrok_host+'/phone_verification'
+        #                               )
+
         temp = DocPat(doctor = self.request.user, patient = self.object)
         temp.save()
         tk = Toolkit(docpat = temp)
@@ -163,7 +207,7 @@ class searchListView(LoginRequiredMixin, ListView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class smsResponse(View):
-    # @method_decorator(twilio_view)
+    @method_decorator(twilio_view)
 
     def post(self, request):
         body = QueryDict(request.body)['Body']
@@ -191,12 +235,10 @@ class smsResponse(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class askStory(View):
     model = Patient
-    # @method_decorator(twilio_view)
+    @method_decorator(twilio_view)
 
     def post(self, request, *args, **kwargs):
-        account_sid = 'ACc98959cdcde7e6833b8bc683e5fca5c3'
-        auth_token = '05a2c0d38c131a9c50423ec576343dd5'
-        client = Client(account_sid, auth_token)
+        client = Client(twilio_sid, twilio_auth_token)
 
         patient = Patient.objects.filter(pk=kwargs['pk'])[0]
 

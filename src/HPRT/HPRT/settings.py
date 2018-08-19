@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from HPRT.secrets import secret_key, twilio_sid, twilio_auth_token
+from HPRT.secrets import secret_key, twilio_sid, twilio_auth_token, ngrok_host
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +25,8 @@ SECRET_KEY = secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['971536ab.ngrok.io',
-                    '127.0.0.1',
+ALLOWED_HOSTS = [ngrok_host,
+                 '127.0.0.1',
 ]
 
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'toolkit',
-#    'django_twilio',
+    'django_twilio',
 ]
 
 AUTH_USER_MODEL = 'users.Doctor'

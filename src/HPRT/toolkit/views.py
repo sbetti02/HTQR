@@ -10,10 +10,10 @@ from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPa
 from PatientPortal.models import Patient
 import json, os
 from datetime import date  
+from django.http import HttpResponse
 
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.pdfgen import canvas
-from django.http import HttpResponse
 from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.platypus.tables import Table, TableStyle
@@ -375,11 +375,11 @@ class HTQPDF(LoginRequiredMixin, DetailView):
     model = HTQ
     def get(self, request, pk):
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+        obj = HTQ.objects.get(pk=pk)
+        response['Content-Disposition'] = 'attachment; filename=HTQ_'+ str(obj.patient.name) + '_' + str(obj.date)
 
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
-        obj = HTQ.objects.get(pk=pk)
         info = {"patient": obj.patient.name, "doctor": obj.doctor.first_name + obj.doctor.last_name, "date": str(obj.date)}
         labels = obj.get_labels()
         questions = []
@@ -402,11 +402,11 @@ class DSMVPDF(LoginRequiredMixin, DetailView):
     model = DSMV
     def get(self, request, pk):
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+        obj = DSMV.objects.get(pk=pk)
+        response['Content-Disposition'] = 'attachment; filename=DSMV_'+ str(obj.patient.name) + '_' + str(obj.date)
 
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
-        obj = DSMV.objects.get(pk=pk)
         info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
         labels = obj.get_labels()
         questions = []
@@ -429,11 +429,11 @@ class THPDF(LoginRequiredMixin, DetailView):
     model = TortureHistory
     def get(self, request, pk):
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+        obj = TortureHistory.objects.get(pk=pk)
+        response['Content-Disposition'] = 'attachment; filename=TH_'+ str(obj.patient.name) + '_' + str(obj.date)
 
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
-        obj = TortureHistory.objects.get(pk=pk)
         info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date)}
         labels = obj.get_labels()
         questions = []
@@ -457,11 +457,11 @@ class HP1PDF(LoginRequiredMixin, DetailView):
     model = HopkinsPart1
     def get(self, request, pk):
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+        obj = HopkinsPart1.objects.get(pk=pk)
+        response['Content-Disposition'] = 'attachment; filename=HP1_'+ str(obj.patient.name) + '_' + str(obj.date)
 
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
-        obj = HopkinsPart1.objects.get(pk=pk)
         info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
         labels = obj.get_labels()
         questions = []
@@ -484,11 +484,11 @@ class HP2PDF(LoginRequiredMixin, DetailView):
     model = HopkinsPart2
     def get(self, request, pk):
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
+        obj = HopkinsPart2.objects.get(pk=pk)
+        response['Content-Disposition'] = 'attachment; filename=HP2_'+ str(obj.patient.name) + '_' + str(obj.date)
 
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
-        obj = HopkinsPart2.objects.get(pk=pk)
         info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
         labels = obj.get_labels()
         questions = []
