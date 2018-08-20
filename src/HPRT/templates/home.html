@@ -12,21 +12,24 @@
 		<thead>
 			<tr>
 				<th style="width: 50%" style="border-right: 2px solid lightgray">Patient Name</th>
-				<th style="width: 33.33%%">DOB</th>
+				<th style="width:33.33%">Next Appointment</th>
 				<th style="width: 16.66%">Trauma Story</th>
 			</tr>
 		</thead>
 		<tbody style="border-top: 3px solid lightgray">
-			{% for patient in object_list %}
+			{% for patient, appt in patients_and_appts %}
 			<tr>
 				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
-				<td>{{ patient.DOB }}</td>
+				<td>{{appt.appt_time}}</td>
 				<td style="text-align: center">
 					{% if patient.ask_story %}
 						<img src="/static/img/star.png" alt="Ask Story" height = "20">
-					{% endif %}</td>
+					{% endif %}
+				</td>
+
 			</tr>
 			{% endfor %}
+
 		</tbody>
 	</table>
 

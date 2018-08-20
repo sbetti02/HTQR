@@ -50,7 +50,9 @@ class PatientListView(LoginRequiredMixin, ListView):
             all_appts = Appointment.objects.filter(patient__pk=patient.pk)
             if all_appts.exists:
                 filtered_next_appts.append(all_appts.last()) # Grab most recent one
-        context['next_appts'] = filtered_next_appts
+            else:
+                filtered_next_appts.append(None)
+        context['patients_and_appts'] = zip(filtered_patients, filtered_next_appts)
         return context
 
 class PatientDetailView(LoginRequiredMixin, DetailView):
