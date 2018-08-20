@@ -1,0 +1,21 @@
+<!-- templates/patient_new.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		<h2 style="margin-left: 5px; margin-right: 5px"> Schedule Next Appointment for {{ patient.name }}</h2>
+	</div>
+	<br>
+	<form action = "" method = "post">
+	{% csrf_token %}
+		<table>
+			{{ form }}
+		</table>
+		<br>
+		<input type = "submit" value = "Save" />
+	</form>
+	<br>
+	<a href="{% url 'patient_detail' patient.pk %}" class="btn btn-light border" style="color:#007bff">Go Back</a>
+
+	<br>
+{% endblock %}

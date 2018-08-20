@@ -15,12 +15,12 @@ from twilio.rest import Client
 
 from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
-from . models import Patient, DocPat, Site, Doctor
+from . models import Patient, DocPat, Site, Doctor, Appointment
 
 from toolkit.models import Toolkit
 
 from django.http import QueryDict
-from . forms import AddExistingPatientForm, CreateNewPatientForm
+from . forms import AddExistingPatientForm, CreateNewPatientForm#, NewApptForm
 
 import threading
 import time
@@ -38,14 +38,27 @@ class PatientListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'home.html'
+
     def get_queryset(self):
         return Patient.objects.filter(docpat__doctor__pk = self.request.user.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientListView, self).get_context_data(**kwargs)
+        filtered_patients = Patient.objects.filter(docpat__doctor__pk = self.request.user.pk)
+        filtered_next_appts = []
+        for patient in filtered_patients:
+            all_appts = Appointment.objects.filter(patient__pk=patient.pk)
+            if all_appts.exists:
+                filtered_next_appts.append(all_appts.last()) # Grab most recent one
+        context['next_appts'] = filtered_next_appts
+        return context
 
 class PatientDetailView(LoginRequiredMixin, DetailView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient_detail.html'
+
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
         docpats = DocPat.objects.filter(doctor = self.request.user, patient = self.object)
@@ -76,44 +89,24 @@ class PatientAddExistingView(LoginRequiredMixin, CreateView):
         form.instance.doctor = self.request.user
         return super(PatientAddExistingView, self).form_valid(form)
 
-# def twilio_validate_and_confirm(twilio_client, name, phone_number):
-#     validation_request = None
-#     validation_request = twilio_client.validation_requests.create(
-#                                   friendly_name=name,
-#                                   phone_number=phone_number
-#                                   )
-#     while not validation_request:
-#         time.sleep(1)
+class CreateApptView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = Appointment
+    template_name = 'new_appt.html'
+    fields = ['appt_time']
 
-#     message = twilio_client.messages.create(
-#                                   body="Hi " + name + ", welcome to HPRT!",
-#                                   from_= "+17743261027",
-#                                   to= "+1" + phone_number
-#                               )
+    def get_context_data(self, **kwargs):
+        context = super(CreateApptView, self).get_context_data(**kwargs)
+        context['patient'] = Patient.objects.get(pk=self.kwargs['pk'])
+        return context
 
-@twilio_view
-def phone_number_confirmation(request):
-    """ 
-    Callback function to confirm/deny phone number validation.
-    Only expected request type is POST (from Twilio server)
-    """
-    print("\n\n\najafdkj\n\n")
-    if request.method == 'POST':
-        if request.VerificationStatus == 'success':
-            message = twilio_client.messages.create(
-                                  body="Hi " + name + ", welcome to HPRT!",
-                                  from_= "+17743261027",
-                                  to= "+1" + phone_number
-                              )
-        else:
-            print("Failed to verify phone number.") # TODO: Update so appears as alert statement in GUI
+    def form_valid(self, form):
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        return super(CreateApptView, self).form_valid(form)
 
-    else:
-        print("here")
-
-    return HttpResponse("This is a simple response !")
-
-
+    def get_success_url(self):
+        return reverse_lazy('patient_detail', kwargs={'pk' : self.object.patient.pk})
 
 class PatientCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -251,6 +244,42 @@ class askStory(View):
         return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
 
 
+# def twilio_validate_and_confirm(twilio_client, name, phone_number):
+#     validation_request = None
+#     validation_request = twilio_client.validation_requests.create(
+#                                   friendly_name=name,
+#                                   phone_number=phone_number
+#                                   )
+#     while not validation_request:
+#         time.sleep(1)
+
+#     message = twilio_client.messages.create(
+#                                   body="Hi " + name + ", welcome to HPRT!",
+#                                   from_= "+17743261027",
+#                                   to= "+1" + phone_number
+#                               )
+
+@twilio_view
+def phone_number_confirmation(request):
+    """ 
+    Callback function to confirm/deny phone number validation.
+    Only expected request type is POST (from Twilio server)
+    """
+    print("\n\n\najafdkj\n\n")
+    if request.method == 'POST':
+        if request.VerificationStatus == 'success':
+            message = twilio_client.messages.create(
+                                  body="Hi " + name + ", welcome to HPRT!",
+                                  from_= "+17743261027",
+                                  to= "+1" + phone_number
+                              )
+        else:
+            print("Failed to verify phone number.") # TODO: Update so appears as alert statement in GUI
+
+    else:
+        print("here")
+
+    return HttpResponse("This is a simple response !")
 
 
 

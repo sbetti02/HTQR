@@ -62,6 +62,20 @@ class Patient(models.Model):
 
     # TODO: phone_number.str()?
 
+"""
+appt_id | patient_id | appt_time 
+        |            |           
+        |            |           
+        |            |           
+"""
+
+class Appointment(models.Model):
+    class Meta:
+        unique_together = (('patient', 'appt_time'),) # TODO: Just make patient, appt_time the PK
+
+    patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
+    appt_time = models.DateTimeField()
+    # TODO: Maintain list of all patients' next appointment
 
 class DocPat(models.Model):
     class Meta:

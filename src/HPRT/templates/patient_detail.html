@@ -6,6 +6,7 @@
         <h2 style="margin-right: 5px;">{{ patient.name }}</h2>
         {% if toolkit %}
             <a href="{% url 'toolkit_detail' toolkit.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Open Patient Toolkit</a>
+            <a href="{% url 'schedule_appt' patient.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Schedule Next Appointment</a>
             {% if patient.ask_story %}
               <img src="/static/img/star.png" alt="Ask Story" height = "40">
             {% endif %}
