@@ -7,9 +7,6 @@
         {% if toolkit %}
             <a href="{% url 'toolkit_detail' toolkit.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Open Patient Toolkit</a>
             <a href="{% url 'schedule_appt' patient.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Schedule Next Appointment</a>
-            {% if patient.ask_story %}
-              <img src="/static/img/star.png" alt="Ask Story" height = "40">
-            {% endif %}
             </div>
             <div>
               <form action= "{% url 'ask_story' patient.pk %}" method="POST">
@@ -18,6 +15,13 @@
             <br>
             </div>
         {% endif %}
+    {% if stories %}
+        <h5>Before the next appointment, {{ patient.name }} would like to tell that...</h5>
+    {% endif %}
+    {% for story in stories %}
+        <li>{{ story.comments }}</li>
+    {% endfor %}
+
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -30,8 +34,8 @@
             <tr><td>Email</td> <td>{{patient.email }}</td></tr>
             <tr><td>Site</td> <td>{{ patient.site }}</td></tr>
             <tr><td>Blood Type</td> <td>{{ patient.blood_type }}</td></tr>
-            <tr><td>Height</td> <td>{{ patient.height }} in.</td></tr>
-            <tr><td>Weight</td> <td>{{ patient.weight }} lbs.</td></tr>
+            <tr><td>Height</td> <td>{{ patient.height }} cm</td></tr>
+            <tr><td>Weight</td> <td>{{ patient.weight }} Kg</td></tr>
             <tr><td>Allergies</td> <td>{{ patient.allergies }}</td></tr>
             <tr><td>Current Medications</td> <td>{{ patient.current_medications }}</td></tr>
             <tr><td>Phone Number</td> <td>{{ patient.phone_number }}</td></tr>

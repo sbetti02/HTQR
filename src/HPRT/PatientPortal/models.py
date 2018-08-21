@@ -48,7 +48,6 @@ class Patient(models.Model):
     current_medications = models.TextField(default='', blank = True, null = True)
     phone_number = models.CharField(max_length = 10)
     email = models.EmailField()
-    ask_story = models.BooleanField(default = False)
     #picture = models.ImageField(upload_to="PatientPortal/profiles.py", 
     #                                     height_field=500, width_field=500, null=True)
     # TODO: fingerprints, picture
@@ -61,6 +60,12 @@ class Patient(models.Model):
         return today.year - self.DOB.year - ((today.month, today.day) < (self.DOB.month, self.DOB.day))
 
     # TODO: phone_number.str()?
+
+class Story(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    comments = models.TextField(default='')
+    date = models.DateField()
+
 
 """
 appt_id | patient_id | appt_time 

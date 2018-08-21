@@ -15,7 +15,7 @@ from twilio.rest import Client
 
 from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
-from . models import Patient, DocPat, Site, Doctor, Appointment
+from . models import Patient, DocPat, Site, Doctor, Appointment, Story
 
 from toolkit.models import Toolkit
 
@@ -24,6 +24,7 @@ from . forms import AddExistingPatientForm, CreateNewPatientForm#, NewApptForm
 
 import threading
 import time
+import datetime
 from HPRT.secrets import twilio_sid, twilio_auth_token, ngrok_host
 
 
@@ -46,13 +47,16 @@ class PatientListView(LoginRequiredMixin, ListView):
         context = super(PatientListView, self).get_context_data(**kwargs)
         filtered_patients = Patient.objects.filter(docpat__doctor__pk = self.request.user.pk)
         filtered_next_appts = []
+        filtered_story_existance = []
         for patient in filtered_patients:
             all_appts = Appointment.objects.filter(patient__pk=patient.pk)
+            patient_stories = Story.objects.filter(patient__pk=patient.pk)
             if all_appts.exists:
                 filtered_next_appts.append(all_appts.last()) # Grab most recent one
             else:
                 filtered_next_appts.append(None)
-        context['patients_and_appts'] = zip(filtered_patients, filtered_next_appts)
+            filtered_story_existance.append(patient_stories.exists)
+        context['zipped_row_information'] = zip(filtered_patients, filtered_next_appts, filtered_story_existance)
         return context
 
 class PatientDetailView(LoginRequiredMixin, DetailView):
@@ -64,10 +68,15 @@ class PatientDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
         docpats = DocPat.objects.filter(doctor = self.request.user, patient = self.object)
+        stories = Story.objects.filter(patient=self.object) # TODO: Filter since last appt
         if docpats.count() > 0:
             context['toolkit'] = Toolkit.objects.get(docpat = docpats[0])
         else:
             context['toolkit'] = None
+        if stories.exists:
+            context['stories'] = stories
+        else:
+            context['stories'] = None
         return context
 
 class PatientAddExistingView(LoginRequiredMixin, CreateView):
@@ -109,6 +118,7 @@ class CreateApptView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('patient_detail', kwargs={'pk' : self.object.patient.pk})
+        # return HttpResponseRedirect(reverse_lazy('ask_story', kwargs={'pk' : self.object.patient.pk}))
 
 class PatientCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -199,7 +209,6 @@ class searchListView(LoginRequiredMixin, ListView):
                 result = result.union(all_patients.filter(name__contains = q))
         return result
 
-
 @method_decorator(csrf_exempt, name='dispatch')
 class smsResponse(View):
     @method_decorator(twilio_view)
@@ -208,22 +217,13 @@ class smsResponse(View):
         body = QueryDict(request.body)['Body']
         number = QueryDict(request.body)['From'][2:]
         r = MessagingResponse()
-        if "y" in body.lower():
-            patient = Patient.objects.filter(phone_number = number)[0]
-            while patient.ask_story == False:
-                patient.ask_story = True
-                patient.save(update_fields=["ask_story"])
-                patient = Patient.objects.filter(phone_number = number)[0]
-            r.message('Thank you, your doctor will ask you about your trauma event when you are visiting.')
-        elif "n" in body.lower():
-            patient = Patient.objects.filter(phone_number = number)[0]
-            while patient.ask_story == True:
-                patient.ask_story = False
-                patient.save(update_fields=["ask_story"])
-                patient = Patient.objects.filter(phone_number = number)[0]
-            r.message('Thank you. Please feel free to text yes to this number whenever you are ready to tell your doctor your trauma story.')
-        else:
-            r.message('Response is not understood. Please text yes or no. Would you like to tell your doctor about your trauma story?')
+        patient = Patient.objects.filter(phone_number=number)[0]
+        story = Story()
+        story.patient = patient
+        story.comments = body
+        story.date = datetime.date.today()
+        story.save()
+        r.message('Thank you for your submission.  Please feel free to message this number again if you would like to send more comments to your doctor before your next appointment.')
         return r
 
 
@@ -238,7 +238,7 @@ class askStory(View):
         patient = Patient.objects.filter(pk=kwargs['pk'])[0]
 
         message = client.messages.create(
-                                      body="Hi " + patient.name + ", you have an appointment coming up soon. Would you like to talk to your doctor about your trauma story?",
+                                      body="Hi " + patient.name + ", you have an appointment coming up soon. If there is anything in particular you would like to speak with your doctor about before your next appointment, you can send comments to your doctor by responding to this text.",
                                       from_= "+17743261027",
                                       to= "+1" + patient.phone_number
 

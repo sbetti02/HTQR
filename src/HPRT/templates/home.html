@@ -17,12 +17,12 @@
 			</tr>
 		</thead>
 		<tbody style="border-top: 3px solid lightgray">
-			{% for patient, appt in patients_and_appts %}
+			{% for patient, appt, story_existance in zipped_row_information %}
 			<tr>
 				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
 				<td>{{appt.appt_time}}</td>
 				<td style="text-align: center">
-					{% if patient.ask_story %}
+					{% if story_existance %}
 						<img src="/static/img/star.png" alt="Ask Story" height = "20">
 					{% endif %}
 				</td>
