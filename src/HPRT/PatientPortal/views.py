@@ -20,7 +20,7 @@ from . models import Patient, DocPat, Site, Doctor, Appointment, Story
 from toolkit.models import Toolkit
 
 from django.http import QueryDict
-from . forms import AddExistingPatientForm, CreateNewPatientForm#, NewApptForm
+from . forms import AddExistingPatientForm, CreateNewPatientForm, AppointmentForm
 
 import threading
 import time
@@ -105,7 +105,7 @@ class CreateApptView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     model = Appointment
     template_name = 'new_appt.html'
-    fields = ['appt_time']
+    form_class = AppointmentForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateApptView, self).get_context_data(**kwargs)
