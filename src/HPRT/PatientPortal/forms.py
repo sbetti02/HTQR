@@ -33,6 +33,7 @@ class CreateNewPatientForm(forms.ModelForm):
         # self.fields['DOB'].widget.attrs['class'] = 'datepicker'
         self.fields['height'].widget.attrs['placeholder'] = 'Enter in cm'
         self.fields['weight'].widget.attrs['placeholder'] = 'Enter in kg'
+        self.fields['DOB'].label = "Date of Birth (mm/dd/yyyy)"
 
 class AppointmentForm(forms.ModelForm):
 
