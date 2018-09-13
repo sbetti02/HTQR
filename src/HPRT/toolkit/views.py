@@ -355,7 +355,7 @@ def make_pdf(canvas, info, questions):
         scoretext.setFillColor(colors.black)
         scoretext.textLines("Total Score: " + info["score"])
 
-    table = Table(para_questions, colWidths=3*inch, rowHeights=0.4*inch, repeatRows=0)
+    table = Table(para_questions, colWidths=3*inch, rowHeights=None, repeatRows=0)
     table.setStyle(TableStyle([
          ('INNERGRID', (0,0), (-1,-1), 0.4, colors.black),
          ('BOX', (0,0), (-1,-1), 0.5, colors.black),
