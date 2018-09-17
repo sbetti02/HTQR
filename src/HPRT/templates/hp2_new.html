@@ -29,11 +29,29 @@
 	{% endif %}
 
 	{% csrf_token %}
+		<style>
+            ul {
+                margin: 0px;
+                padding-left: 0px;
+                float: left;
+            }
+            ul li {
+                float: left;
+                display: inline;
+                padding-left: 10px;
+            }
+        </style>
 		<table border=1 class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th style="width: 75%">Question</th>
-					<th style="width: 25%">Answer</th>
+					<th style="width: 75%; vertical-align: top; margin-left: 10px"><h3>Question</h3></th>
+					<th style="width: 25%; vertical-align: top; margin-left: 10px">
+						<h3>Answer</h3>
+						1=Not at all<br>
+						2=A little<br>
+						3=Quite a bit<br>
+						4=Extremely
+					</th>
 				</tr>
 			</thead>
 			<tbody>
