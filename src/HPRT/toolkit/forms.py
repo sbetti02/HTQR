@@ -3,7 +3,6 @@ from django import forms
 from . models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
 import json, os
 
-
 class HTQForm(forms.ModelForm):
 
     class Meta:
@@ -45,15 +44,16 @@ class HTQForm(forms.ModelForm):
         json_data.close()
 
 class DSMVForm(forms.ModelForm):
-
     class Meta:
         model = DSMV
         exclude = ('patient', 'doctor', 'date', 'score')
         labels = {}
+        widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         dsmv_list = json.load(json_data)[5]['questions']
         i = 1
         for index in dsmv_list:
+            widgets[index['id']] = forms.RadioSelect()
             labels[index['id']] = str(i) + '. ' + index['body']
             i+=1
         json_data.close()
@@ -78,10 +78,12 @@ class HopkinsPart1Form(forms.ModelForm):
         model = HopkinsPart1
         exclude = ('patient', 'doctor', 'date', 'score')
         labels = {}
+        widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         hp1_list = json.load(json_data)[7]['questions']
         i = 1
         for index in hp1_list:
+            widgets[index['id']] = forms.RadioSelect()
             labels[index['id']] = str(i) + '. ' + index['body']
             i+=1
         json_data.close()
@@ -92,10 +94,12 @@ class HopkinsPart2Form(forms.ModelForm):
         model = HopkinsPart2
         exclude = ('patient', 'doctor', 'date', 'score')
         labels = {}
+        widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         hp2_list = json.load(json_data)[8]['questions']
         i = 11
         for index in hp2_list:
+            widgets[index['id']] = forms.RadioSelect()
             labels[index['id']] = str(i) + '. ' + index['body']
             i+=1
         json_data.close()
