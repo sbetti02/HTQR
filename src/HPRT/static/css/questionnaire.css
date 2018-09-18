@@ -1,0 +1,10 @@
+ul {
+    margin: 0px;
+    padding-left: 0px;
+    float: left;
+}
+ul li {
+    float: left;
+    display: inline;
+    padding-left: 10px;
+}
