@@ -11,28 +11,36 @@
 		</div>
 	</div>
 	<form action = "" method = "post">
-	{% if form.errors %}
-	<!-- Error messaging -->
-	<div id="errors">
-		<div class="inner">
-			<p>There were some errors in the information you entered. Please correct the following:</p>
-			{{ form.non_field_errors }}
-			<ul>
-				{% for field in form %}
-					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-				{% endfor %}
-			</ul>
+		{% if form.errors %}
+		<!-- Error messaging -->
+		<div id="errors">
+			<div class="inner">
+				<p>There were some errors in the information you entered. Please correct the following:</p>
+				{{ form.non_field_errors }}
+				<ul>
+					{% for field in form %}
+						{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
-	</div>
-	<!-- /Error messaging -->
-	{% endif %}
+		<!-- /Error messaging -->
+		{% endif %}
 
-	{% csrf_token %}
+		{% csrf_token %}
+		{% load staticfiles %}
+		<link rel='stylesheet' href="{% static 'css/questionnaire.css' %}" type='text/css'/>
 		<table border=1 class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th style="width: 75%">Question</th>
-					<th style="width: 25%">Answer</th>
+					<th style="width: 75%; vertical-align: top; margin-left: 10px"><h3>Question</h3></th>
+					<th style="width: 25%; vertical-align: top; margin-left: 10px">
+						<h3>Answer</h3>
+						1=Not at all<br>
+						2=A little<br>
+						3=Quite a bit<br>
+						4=Extremely
+					</th>
 				</tr>
 			</thead>
 			<tbody>
