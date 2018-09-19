@@ -8,13 +8,13 @@ Sofware Requirements: django 2, Python 3, Bootstrap 4, postgresql, twilio
 
 To run:
 
-Download files
+Clone the repository to a local machine
 
-Go into file directory ./src/HPRT/
+Obtain the secrets.py file from one of the other contributors if you already don't have it 
+  (will be updated in the future to remove this requirement)
+
 
 Then run
-
->python manage.py makemigrations
 
 >python manage.py migrate
 
