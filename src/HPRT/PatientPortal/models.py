@@ -39,6 +39,7 @@ class PatientAgeManager(models.Manager):
 # TODO: Add Nationality as field, use for cultural awareness understanding
 class Patient(models.Model):
     name = models.CharField(max_length=200)
+    gender = models.CharField(max_length=6, default=None, choices=[('Male','Male'),('Female','Female'),('Other','Other')])
     DOB = models.DateField(null=True)
     blood_type = models.CharField(max_length = 10, null=True)
     height = models.DecimalField(max_digits = 4, decimal_places = 1, null=True) # In centimeters
