@@ -57,7 +57,7 @@
                     </thead>
                     <tbody>
                         {% for q in dsmv_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td>{{q.score}}</td><td><td><a href = "{%url 'DSMV_pdf' q.pk %}"> Download PDF</a></td></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td>{{q.score}}</td><td><a href = "{%url 'DSMV_pdf' q.pk %}"> Download PDF</a></td></tr>
                         {% endfor %}
                     </tbody>
                 </table> 
@@ -140,10 +140,38 @@
                     </thead>
                     <tbody>
                         {% for q in hp2_list %}
-                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><td><a href = "{%url 'HP2_pdf' q.pk %}"> Download PDF</a></td></td></tr>
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td><td>{{q.score}}</td><td><a href = "{%url 'HP2_pdf' q.pk %}"> Download PDF</a></td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card m-b-0">
+        <div class="card-header btn btn-light collapsed" data-toggle="collapse" href="#collapseSix" aria-expanded="true" data-patent="#accordion">
+            <a class="card-title">
+                <span style="font-weight:bold; float:left">General Health/Physical Functioning</span>
+            </a>
+        </div>
+        <div id="collapseSix" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <a href = "{%url 'GH_new' patient %}" class="btn btn-primary border">New General Health/Physical Functioning</a>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Score</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for q in gh_list %}
+                            <tr><td>{{q.date}}</td> <td> {{q.doctor}}</td> <td>{{q.score}}</td><td><a href = "{%url 'GH_pdf' q.pk %}"> Download PDF</a></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table> 
             </div>
         </div>
     </div>
