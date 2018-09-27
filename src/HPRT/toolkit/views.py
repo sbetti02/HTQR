@@ -5,8 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from . forms import HTQForm, DSMVForm, TortureHistoryForm, HopkinsPart1Form, HopkinsPart2Form
-from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
+from . forms import HTQForm, DSMVForm, TortureHistoryForm, HopkinsPart1Form, HopkinsPart2Form, GeneralHealthForm
+from . models import Toolkit, HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2, GeneralHealth
 from PatientPortal.models import Patient
 import json, os
 from datetime import date  
@@ -139,6 +139,7 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
             'th_list': TortureHistory.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
             'hp1_list': HopkinsPart1.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
             'hp2_list': HopkinsPart2.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
+            'gh_list': GeneralHealth.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0] ),
         })
         return kwargs
 
@@ -160,62 +161,6 @@ class HTQCreateView(LoginRequiredMixin, CreateView):
         form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
         return super(HTQCreateView, self).form_valid(form)
-
-
-class HTQDetailView(LoginRequiredMixin, DetailView):
-    login_url = 'login'
-    redirect_field_name = 'redirect_to'
-    model = HTQ
-    template_name = 'htq_detail.html'
-
-    def get_context_data(self, **kwargs):
-        print("HERE")
-        kwargs = super(HTQDetailView, self).get_context_data(**kwargs)
-        """
-        labels = {}
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        htq_list = json.load(json_data)[0]['questions']
-        i = 1
-        for index in htq_list:
-            labels[index['id']] = str(i) + '. ' + index['body']
-            i+=1
-        json_data.close()
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        pd = json.load(json_data)[1]['questions']
-        i = 1
-        for index in pd:
-            labels[index['id']] = 'Personal Description ' + str(i) + '. ' + index['body']
-            i+=1
-        json_data.close()
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        hi = json.load(json_data)[2]['questions']
-        i = 1
-        for index in hi:
-            labels[index['id']] = 'Injury ' + str(i) + '. ' + index['body']
-            j = 1 
-            for part in index['dropdown']:
-                if i == 5:
-                    key = index['id'][:-1] + '_' + chr(96 + j)
-                else:
-                    key = index['id'] + '_' + chr(96 + j)
-                labels[key] = chr(96 + j) + '. ' + part['body']
-                j+=1 
-            i+=1
-        json_data.close()
-        print(self.object)
-        print(labels)
-        """
-        """
-        kwargs.update({
-            zipped_label_res =  zip(labels, self.object)
-            'labels': labels,
-        })
-        """
-
-        return kwargs
 
 
 class DSMVCreateView(LoginRequiredMixin, CreateView):
@@ -300,6 +245,27 @@ class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
         return super(HopkinsPart2CreateView, self).form_valid(form)
 
 
+class GeneralHealthCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = HopkinsPart2
+    template_name = 'gh_new.html'
+    form_class = GeneralHealthForm
+
+    def get_success_url(self):
+        return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
+
+    def form_valid(self, form):
+        form.instance.doctor = self.request.user
+        form.instance.date = date.today()
+        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
+        total_score = 0
+        for label in form.cleaned_data:
+            total_score += form.cleaned_data[label]
+        form.instance.score = float(total_score)
+        return super(GeneralHealthCreateView, self).form_valid(form)
+
+
 class HTQDetailView(LoginRequiredMixin, DetailView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
@@ -329,6 +295,7 @@ class HopkinsPart2DetailView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'redirect_to'
     model = HopkinsPart2
     template_name = 'hp2_detail.html'
+
 
 # Purpose: creates PDF with arguments provided
 # Arguments: HTTP response, info gathered from questionnaire and questions from questionnaire
@@ -365,7 +332,10 @@ def make_pdf(response, info, questions):
     # If the questionnaire was scored, score will be added
     if "score" in info:
         parts.append(Spacer(1, 0.2 * inch))
-        parts.append(Paragraph("Total Score: " + info["score"], info_style))
+        parts.append(Paragraph("Total Score (1-4): " + info["score"], info_style))
+    if "score12-51" in info:
+        parts.append(Spacer(1, 0.2 * inch))
+        parts.append(Paragraph("Total Score (Lowest/Worst=12, Highest/Best=51): " + info["score12-51"], info_style))
     # Finally, builds pdf
     doc.build(parts)
 
@@ -384,6 +354,8 @@ class HTQPDF(LoginRequiredMixin, DetailView):
         questions = []
         for field, val in obj:
             if field in labels:
+                if not val:
+                    val = "Unknown"
                 questions.append([labels[field], val])
 
         # Draw things on the PDF. Here's where the PDF generation happens.
@@ -469,6 +441,28 @@ class HP2PDF(LoginRequiredMixin, DetailView):
         response['Content-Disposition'] = 'attachment; filename=HP2_'+ str(obj.patient.name) + '_' + str(obj.date)
 
         info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score": str(obj.score)}
+        labels = obj.get_labels()
+        questions = []
+        for field, val in obj:
+            if field in labels:
+                questions.append([labels[field], val])
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        make_pdf(response, info, questions)
+
+        return response
+
+class GHPDF(LoginRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    model = GeneralHealth
+    def get(self, request, pk):
+        response = HttpResponse(content_type='application/pdf')
+        obj = GeneralHealth.objects.get(pk=pk)
+        response['Content-Disposition'] = 'attachment; filename=GH_'+ str(obj.patient.name) + '_' + str(obj.date)
+
+        info = {"patient": obj.patient.name, "doctor": obj.doctor.last_name, "date": str(obj.date), "score12-51": str(obj.score)}
         labels = obj.get_labels()
         questions = []
         for field, val in obj:

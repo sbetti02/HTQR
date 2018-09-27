@@ -1,6 +1,6 @@
 # Toolkit/forms.py
 from django import forms
-from . models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
+from . models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2, GeneralHealth
 import json, os
 
 class HTQForm(forms.ModelForm):
@@ -12,25 +12,20 @@ class HTQForm(forms.ModelForm):
         labels = {}
 
         json_data = open(os.path.join('static', "questions.json"), 'r')
-        htq_list = json.load(json_data)[0]['questions']
+        htq_list = json.load(json_data)[0:3]
+        # HTQ questions
         i = 1
-        for index in htq_list:
+        for index in htq_list[0]['questions']:
             labels[index['id']] = str(i) + '. ' + index['body']
             i+=1
-        json_data.close()
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        pd = json.load(json_data)[1]['questions']
+        # Personal Description questions
         i = 1
-        for index in pd:
+        for index in htq_list[1]['questions']:
             labels[index['id']] = 'Personal Description ' + str(i) + '. ' + index['body']
             i+=1
-        json_data.close()
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        hi = json.load(json_data)[2]['questions']
+        # Injury questions
         i = 1
-        for index in hi:
+        for index in htq_list[2]['questions']:
             labels[index['id']] = 'Injury ' + str(i) + '. ' + index['body']
             j = 1 
             for part in index['dropdown']:
@@ -100,6 +95,22 @@ class HopkinsPart2Form(forms.ModelForm):
         i = 11
         for index in hp2_list:
             widgets[index['id']] = forms.RadioSelect()
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+
+class GeneralHealthForm(forms.ModelForm):
+
+    class Meta:
+        model = GeneralHealth
+        exclude = ('patient', 'doctor', 'date', 'score')
+        labels = {}
+        widgets = {}
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        gh_list = json.load(json_data)[9]['questions']
+        i = 1
+        for index in gh_list:
+            # widgets[index['id']] = forms.RadioSelect() ### for use with Selection Grid format if preferred
             labels[index['id']] = str(i) + '. ' + index['body']
             i+=1
         json_data.close()

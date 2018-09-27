@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms.widgets import CheckboxInput
 from PatientPortal.models import DocPat, Patient, Doctor
 from django.core.validators import MaxValueValidator, MinValueValidator
 import json, os
@@ -112,25 +111,20 @@ class HTQ(models.Model):
         labels = {}
 
         json_data = open(os.path.join('static', "questions.json"), 'r')
-        htq_list = json.load(json_data)[0]['questions']
+        htq_list = json.load(json_data)[0:3]
+        # HTQ questions
         i = 1
-        for index in htq_list:
+        for index in htq_list[0]['questions']:
             labels[index['id']] = str(i) + '. ' + index['body']
             i+=1
-        json_data.close()
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        pd = json.load(json_data)[1]['questions']
+        # Personal Description questions
         i = 1
-        for index in pd:
+        for index in htq_list[1]['questions']:
             labels[index['id']] = 'Personal Description ' + str(i) + '. ' + index['body']
             i+=1
-        json_data.close()
-
-        json_data = open(os.path.join('static', "questions.json"), 'r')
-        hi = json.load(json_data)[2]['questions']
+        # Injury questions
         i = 1
-        for index in hi:
+        for index in htq_list[2]['questions']:
             labels[index['id']] = 'Injury ' + str(i) + '. ' + index['body']
             j = 1 
             for part in index['dropdown']:
@@ -316,4 +310,36 @@ class HopkinsPart2(models.Model):
         return labels
 
 
-        
+class GeneralHealth(models.Model):
+    patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE)
+    date = models.DateField()
+    gh1 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Poor"),(2,"2 = Fair"),(3,"3 = Good"),(4,"4 = Very Good"),(5,"5 = Excellent")])
+    gh2 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = None"),(2,"2 = A Little"),(3,"3 = Some"),(4,"4 = Quite A Lot"),(5,"5 = Very Much")])
+    gh3 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Extremely"),(2,"2 = Quite A Lot"),(3,"3 = Moderately"),(4,"4 = Slightly"),(5,"5 = Not At All")])
+    gh4 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Seven"),(2,"2 = Five to Seven"),(3,"3 = Three to Five"),(4,"4 = One to Three"),(5,"5 = Zero")])
+    gh5 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = None"),(2,"2 = Less than Four"),(3,"3 = Four to Five"),(4,"4 = Five to Seven"),(5,"5 = More than Seven")])
+    gh6 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Daily"),(2,"2 = Weekly"),(3,"3 = Monthly"),(4,"4 = Yearly"),(5,"5 = No")])
+    gh7 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Zero"),(2,"2 = One to Three"),(3,"3 = Three to Five"),(4,"4 = Five to Seven"),(5,"5 = More than Seven")])
+    gh8 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Zero"),(2,"2 = One to Three"),(3,"3 = Three to Five"),(4,"4 = Five to Seven"),(5,"5 = More than Seven")])
+    gh9 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = No"),(2,"2 = Yes")])
+    gh10 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = No"),(2,"2 = No, but trying to obtain work"),(3,"3 = Yes")])
+    gh11 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Yes"),(2,"2 = Yes and has been referred"),(3,"3 = No")])
+    gh12 = models.IntegerField(null=True, choices=[('',"Choose one"),(1,"1 = Yes"),(2,"2 = Yes and has been referred"),(3,"3 = No")])
+    score = models.DecimalField(max_digits=3, decimal_places=1)
+
+    def __iter__(self):
+        for field_name in [f.name for f in self._meta.get_fields()]:
+            value = getattr(self, field_name, None)
+            yield (field_name, value)
+
+    def get_labels(self):
+        labels = {}
+        json_data = open(os.path.join('static', "questions.json"), 'r')
+        gh_list = json.load(json_data)[9]['questions']
+        i = 1
+        for index in gh_list:
+            labels[index['id']] = str(i) + '. ' + index['body']
+            i+=1
+        json_data.close()
+        return labels
