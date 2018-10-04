@@ -246,6 +246,7 @@ class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
 
 
 class GeneralHealthCreateView(LoginRequiredMixin, CreateView):
+    """ Abstract model for new General Health/Physical Functioning view. """
     login_url = 'login'
     redirect_field_name = 'redirect_to'
     model = HopkinsPart2
@@ -253,9 +254,11 @@ class GeneralHealthCreateView(LoginRequiredMixin, CreateView):
     form_class = GeneralHealthForm
 
     def get_success_url(self):
+        """ Return to screenings view after succesfully completing questionnaire. """
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
     def form_valid(self, form):
+        """ Validate form and calculate and add final score """
         form.instance.doctor = self.request.user
         form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
@@ -297,46 +300,53 @@ class HopkinsPart2DetailView(LoginRequiredMixin, DetailView):
     template_name = 'hp2_detail.html'
 
 
-# Purpose: creates PDF with arguments provided
-# Arguments: HTTP response, info gathered from questionnaire and questions from questionnaire
-# 
 def make_pdf(response, info, questions):
+    """ 
+    Create PDF. 
+
+    Parameters
+    ----------
+    response - HTTP response
+    info - dictionary of patient, doctor and date information 
+    questions - list of tuples containing (question, answer)
+    """
+
     doc = SimpleDocTemplate(response, pagesize=letter)
     styles = getSampleStyleSheet()
     info_style = ParagraphStyle(name='Normal', fontName='Times-Bold', fontSize=13,)
 
     parts = [] # holds interable parts of document used in build()
-    # Header
+    # Add Header
     parts.append(Paragraph(
             "HPRT", 
             ParagraphStyle(name='Normal', fontName='Helvetica-Oblique', fontSize=20,)
             ))
     parts.append(Spacer(1, 0.2 * inch))
-    # Patient, Doctor and Date
+    # Add Patient, Doctor and Date info.
     parts.append(Paragraph("Patient Name: " + info["patient"], info_style))
     parts.append(Paragraph("Doctor Administered: Dr. " + info["doctor"], info_style))
     parts.append(Paragraph("Date Administered: " + info["date"], info_style))
     parts.append(Spacer(1, 0.2 * inch))
-    # Formatting questions and answers
+    # Format questions and answers.
     para_questions = []
     for [question, answer] in questions:
         para_questions.append([Paragraph(question, styles['Normal']), Paragraph(str(answer), styles['Normal'])])
-    # Populating and formatting table
+    # Populate and format table.
     t = Table(para_questions, colWidths=3*inch)
     t.setStyle(TableStyle([
             ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
             ('BOX', (0,0), (-1,-1), 0.25, colors.black),
             ]))
-    # Adding finished table to parts
+    # Add finished table to parts.
     parts.append(t)
-    # If the questionnaire was scored, score will be added
+    # If the questionnaire was scored, add score.
     if "score" in info:
         parts.append(Spacer(1, 0.2 * inch))
         parts.append(Paragraph("Total Score (1-4): " + info["score"], info_style))
     if "score12-51" in info:
         parts.append(Spacer(1, 0.2 * inch))
         parts.append(Paragraph("Total Score (Lowest/Worst=12, Highest/Best=51): " + info["score12-51"], info_style))
-    # Finally, builds pdf
+    # Finally, build PDF.
     doc.build(parts)
 
 
@@ -454,10 +464,12 @@ class HP2PDF(LoginRequiredMixin, DetailView):
         return response
 
 class GHPDF(LoginRequiredMixin, DetailView):
+    """ Abstract model for creation of General Health/Physical Functioning PDF. """
     login_url = 'login'
     redirect_field_name = 'redirect_to'
     model = GeneralHealth
     def get(self, request, pk):
+        """ Get PDF view of object. """
         response = HttpResponse(content_type='application/pdf')
         obj = GeneralHealth.objects.get(pk=pk)
         response['Content-Disposition'] = 'attachment; filename=GH_'+ str(obj.patient.name) + '_' + str(obj.date)
