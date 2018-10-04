@@ -864,5 +864,59 @@
                         "body" : "Feeling of worthlessness"
                 }
         ]
-}
-]
+},
+{
+        "name": "General Health/Physical Functioning",
+        "type": "scale",
+        "dropdown": false,
+        "questions": [
+                {
+                        "id" : "gh1",
+                        "body" : "Self-perception of health rating: In general, how would you rate your health?"
+                },
+                {
+                        "id" : "gh2",
+                        "body" : "Energy rating: In general, how much energy do you feel you have?"
+                },
+                {
+                        "id" : "gh3",
+                        "body" : "Bodily pain rating: Last week, how much did pain interfere with your normal work?"
+                },
+                {
+                        "id" : "gh4",
+                        "body" : "Social functioning: How many days out of the past week were you totally unable to work or carry out your normal activities because of your health?"
+                },
+                {
+                        "id" : "gh5",
+                        "body" : "Quality of Sleep: On average, how many hours per night do you sleep?"
+                },
+                {
+                        "id" : "gh6",
+                        "body" : "Nightmares: Do you suffer from recurring nightmares?"
+                },
+                {
+                        "id" : "gh7",
+                        "body" : "Exercise/activity level: How many hours per week do you engage in exercise (e.g. walking)?"
+                },
+                {
+                        "id" : "gh8",
+                        "body" : "Relaxation/meditation: How many hours per week do you engage in relaxation, meditation, or breathing exercises?"
+                },
+                {
+                        "id" : "gh9",
+                        "body" : "Availability of food/nutrition: Do you and your family have enough food to eat on a daily basis?"
+                },
+                {
+                        "id" : "gh10",
+                        "body" : "Employment Status: Are you employed?"
+                },
+                {
+                        "id" : "gh11",
+                        "body" : "Need for social services:"
+                },
+                {
+                        "id" : "gh12",
+                        "body" : "Need for legal services:"
+                }
+        ]
+}]
