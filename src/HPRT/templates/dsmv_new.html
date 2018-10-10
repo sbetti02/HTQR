@@ -31,6 +31,7 @@
 		{% csrf_token %}
 		{% load staticfiles %}
 		<link rel='stylesheet' href="{% static 'css/questionnaire.css' %}" type='text/css'/>
+		<h4>{{ form.date.label_tag }} {{ form.date }}</h4>
 		<table border=1 class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -46,10 +47,12 @@
 			</thead>
 			<tbody >
 				{% for field in form %}
+					{% ifnotequal field.name 'date' %}
 					<tr>
 						<td>{{ field.label_tag }}</td>
 						<td>{{ field }}</td>
 					</tr>
+					{% endifnotequal %}
 				{% endfor %}
 			</tbody>
 		</table>

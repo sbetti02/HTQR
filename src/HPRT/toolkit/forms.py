@@ -46,8 +46,9 @@ class HTQForm(forms.ModelForm):
 class DSMVForm(forms.ModelForm):
     class Meta:
         model = DSMV
-        exclude = ('patient', 'doctor', 'date', 'score')
+        exclude = ('patient', 'doctor', 'score')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         dsmv_list = json.load(json_data)[5]['questions']
