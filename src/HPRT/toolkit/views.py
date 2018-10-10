@@ -155,9 +155,18 @@ class HTQCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
+    def get_initial(self):
+        """
+        Return the initial values of the form as a dict
+
+        Used for overwriting any default values that need to be modified
+        """
+        initial = super(HTQCreateView, self).get_initial()
+        initial['date'] = date.today()
+        return initial
+
     def form_valid(self, form):
         form.instance.doctor = self.request.user
-        form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
         return super(HTQCreateView, self).form_valid(form)
 
@@ -258,9 +267,18 @@ class TortureHistoryCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
+    def get_initial(self):
+        """
+        Return the initial values of the form as a dict
+
+        Used for overwriting any default values that need to be modified
+        """
+        initial = super(TortureHistoryCreateView, self).get_initial()
+        initial['date'] = date.today()
+        return initial
+
     def form_valid(self, form):
         form.instance.doctor = self.request.user
-        form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
         return super(TortureHistoryCreateView, self).form_valid(form)
 
@@ -275,14 +293,24 @@ class HopkinsPart1CreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
+    def get_initial(self):
+        """
+        Return the initial values of the form as a dict
+
+        Used for overwriting any default values that need to be modified
+        """
+        initial = super(HopkinsPart1CreateView, self).get_initial()
+        initial['date'] = date.today()
+        return initial
+
     def form_valid(self, form):
         form.instance.doctor = self.request.user
-        form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
         total_score = 0
         for label in form.cleaned_data:
-            total_score += form.cleaned_data[label]
-        form.instance.score = float(total_score)/len(form.cleaned_data)
+            if label != 'date':
+                total_score += form.cleaned_data[label]
+        form.instance.score = float(total_score)/(len(form.cleaned_data)-1)
         return super(HopkinsPart1CreateView, self).form_valid(form)
 
 
@@ -296,14 +324,24 @@ class HopkinsPart2CreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
+    def get_initial(self):
+        """
+        Return the initial values of the form as a dict
+
+        Used for overwriting any default values that need to be modified
+        """
+        initial = super(HopkinsPart2CreateView, self).get_initial()
+        initial['date'] = date.today()
+        return initial
+
     def form_valid(self, form):
         form.instance.doctor = self.request.user
-        form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
         total_score = 0
         for label in form.cleaned_data:
-            total_score += form.cleaned_data[label]
-        form.instance.score = float(total_score)/len(form.cleaned_data)
+            if label != 'date':
+                total_score += form.cleaned_data[label]
+        form.instance.score = float(total_score)/(len(form.cleaned_data)-1)
         return super(HopkinsPart2CreateView, self).form_valid(form)
 
 
