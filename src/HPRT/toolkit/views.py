@@ -302,15 +302,25 @@ class GeneralHealthCreateView(LoginRequiredMixin, CreateView):
         """ Return to screenings view after succesfully completing questionnaire. """
         return reverse_lazy('screenings', kwargs={'pk' : self.object.patient.pk})
 
+    def get_initial(self):
+        """
+        Return the initial values of the form as a dict
+
+        Used for overwriting any default values that need to be modified
+        """
+        initial = super(GeneralHealthCreateView, self).get_initial()
+        initial['date'] = date.today()
+        return initial
+
     def form_valid(self, form):
         """ Validate form and calculate and add final score """
         form.instance.doctor = self.request.user
-        form.instance.date = date.today()
         form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
         total_score = 0
         for label in form.cleaned_data:
-            total_score += form.cleaned_data[label]
-        form.instance.score = float(total_score)
+            if label != 'date':
+                total_score += form.cleaned_data[label]
+        form.instance.score = total_score
         return super(GeneralHealthCreateView, self).form_valid(form)
 
 

@@ -93,8 +93,9 @@ class GeneralHealthForm(forms.ModelForm):
     class Meta:
         """ Information passed into the process of creating object """
         model = GeneralHealth
-        exclude = ('patient', 'doctor', 'date', 'score')
+        exclude = ('patient', 'doctor', 'score')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         gh_list = json.load(json_data)[9]['questions']
