@@ -7,9 +7,10 @@ class HTQForm(forms.ModelForm):
 
     class Meta:
         model = HTQ
-        exclude = ('patient', 'doctor', 'date')
+        exclude = ('patient', 'doctor')
 
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
 
         json_data = open(os.path.join('static', "questions.json"), 'r')
         htq_list = json.load(json_data)[0:3]
@@ -33,8 +34,9 @@ class HTQForm(forms.ModelForm):
 class DSMVForm(forms.ModelForm):
     class Meta:
         model = DSMV
-        exclude = ('patient', 'doctor', 'date', 'score')
+        exclude = ('patient', 'doctor', 'score')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         dsmv_list = json.load(json_data)[5]['questions']
@@ -47,8 +49,9 @@ class TortureHistoryForm(forms.ModelForm):
 
     class Meta:
         model = TortureHistory
-        exclude = ('patient', 'doctor', 'date')
+        exclude = ('patient', 'doctor')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         json_data = open(os.path.join('static', "questions.json"), 'r')
         th_list = json.load(json_data)[6]['questions']
         for i, index in enumerate(th_list, start=1):
@@ -59,8 +62,9 @@ class HopkinsPart1Form(forms.ModelForm):
 
     class Meta:
         model = HopkinsPart1
-        exclude = ('patient', 'doctor', 'date', 'score')
+        exclude = ('patient', 'doctor', 'score')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         hp1_list = json.load(json_data)[7]['questions']
@@ -73,8 +77,9 @@ class HopkinsPart2Form(forms.ModelForm):
 
     class Meta:
         model = HopkinsPart2
-        exclude = ('patient', 'doctor', 'date', 'score')
+        exclude = ('patient', 'doctor', 'score')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         hp2_list = json.load(json_data)[8]['questions']
@@ -88,8 +93,9 @@ class GeneralHealthForm(forms.ModelForm):
     class Meta:
         """ Information passed into the process of creating object """
         model = GeneralHealth
-        exclude = ('patient', 'doctor', 'date', 'score')
+        exclude = ('patient', 'doctor', 'score')
         labels = {}
+        labels['date'] = 'Date (YYYY-MM-DD)'
         widgets = {}
         json_data = open(os.path.join('static', "questions.json"), 'r')
         gh_list = json.load(json_data)[9]['questions']
