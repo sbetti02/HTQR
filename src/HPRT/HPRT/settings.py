@@ -11,7 +11,21 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from HPRT.secrets import secret_key, twilio_sid, twilio_auth_token, ngrok_host
+import sys
+
+try:
+    secret_key = os.environ['secret_key']
+    twilio_sid = os.environ['twilio_sid']
+    twilio_auth_token = os.environ['twilio_auth_token']
+    ngrok_host = os.environ['ngrok_host']
+    twilio_authy_key = os.environ['twilio_authy_key']
+except KeyError:
+    print("Make sure your environment vars are set for all of the following:")
+    env_vars = ['secret_key','twilio_sid','twilio_auth_token','ngrok_host','twilio_authy_key']
+    for env_var in env_vars:
+        print(env_var)
+    sys.exit(1)
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -81,10 +95,11 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+db_name = 'HTQR' if not os.environ.get('db_name') else os.environ['db_name']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HTQR14',
+        'NAME': db_name,
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
