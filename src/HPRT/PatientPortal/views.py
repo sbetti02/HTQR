@@ -25,7 +25,7 @@ from . forms import AddExistingPatientForm, CreateNewPatientForm, AppointmentFor
 import threading
 import time
 import datetime
-from HPRT.secrets import twilio_sid, twilio_auth_token, ngrok_host
+from HPRT.settings import twilio_sid, twilio_auth_token, ngrok_host
 
 
 def update_patients(request):
