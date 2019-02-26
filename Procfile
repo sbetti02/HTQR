@@ -1,1 +1,1 @@
-web: gunicorn HTQR.wsgi
+web: gunicorn --chdir ./src/HPRT HPRT.wsgi
