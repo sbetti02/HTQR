@@ -41,6 +41,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [ngrok_host,
                  '127.0.0.1',
+                 'htqr.herokuapp.com',
 ]
 
 
