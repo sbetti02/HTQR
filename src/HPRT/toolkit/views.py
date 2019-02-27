@@ -133,13 +133,37 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
     
     def get_context_data(self, **kwargs):
         kwargs = super(ScreeningsListView, self).get_context_data(**kwargs)
+        DSMV_records = DSMV.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
+        TH_records = TortureHistory.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
+        HP1_records = HopkinsPart1.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
+        HP2_records = HopkinsPart2.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
+        GH_records = GeneralHealth.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
+
+        DSMV_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), DSMV_records))
+        DSMV_y = list(map(lambda x: float(x.score), DSMV_records))
+        HP1_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP1_records))
+        HP1_y = list(map(lambda x: float(x.score), HP1_records))
+        HP2_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP2_records))
+        HP2_y = list(map(lambda x: float(x.score), HP2_records))
+        GH_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), GH_records))
+        GH_y = list(map(lambda x: float(x.score), GH_records))
+
+
         kwargs.update({
             'patient': self.kwargs['pk'],
-            'dsmv_list': DSMV.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0]).order_by('-date'),
-            'th_list': TortureHistory.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0]).order_by('-date'),
-            'hp1_list': HopkinsPart1.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0]).order_by('-date'),
-            'hp2_list': HopkinsPart2.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0]).order_by('-date'),
-            'gh_list': GeneralHealth.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0]).order_by('-date'),
+            'dsmv_list': DSMV_records.order_by('-date'),
+            'th_list': TH_records.order_by('-date'),
+            'hp1_list': HP1_records.order_by('-date'),
+            'hp2_list': HP2_records.order_by('-date'),
+            'gh_list': GH_records.order_by('-date'),
+            'DSMV_x' : DSMV_x,
+            'DSMV_y' : DSMV_y,
+            'HP1_x' : HP1_x,
+            'HP1_y' : HP1_y,
+            'HP2_x' : HP2_x,
+            'HP2_y' : HP2_y,
+            'GH_x' : GH_x,
+            'GH_y' : GH_y
         })
         return kwargs
 
