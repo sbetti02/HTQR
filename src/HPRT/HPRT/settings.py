@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import sys
+import dj_database_url
+import psycopg2
 
 try:
     secret_key = os.environ['secret_key']
@@ -19,6 +21,7 @@ try:
     twilio_auth_token = os.environ['twilio_auth_token']
     ngrok_host = os.environ['ngrok_host']
     twilio_authy_key = os.environ['twilio_authy_key']
+    DATABASE_URL = os.environ['DATABASE_URL']
 except KeyError:
     print("Make sure your environment vars are set for all of the following:")
     env_vars = ['secret_key','twilio_sid','twilio_auth_token','ngrok_host','twilio_authy_key']
@@ -96,17 +99,21 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-db_name = 'HTQR' if not os.environ.get('db_name') else os.environ['db_name']
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': db_name,
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+# db_name = 'HTQR' if not os.environ.get('db_name') else os.environ['db_name']
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': db_name,
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
