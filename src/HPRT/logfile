@@ -1,0 +1,44 @@
+2019-02-24 13:28:56.114 EST [83413] LOG:  listening on IPv6 address "::1", port 5432
+2019-02-24 13:28:56.114 EST [83413] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-02-24 13:28:56.116 EST [83413] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-02-24 13:28:56.127 EST [83414] LOG:  database system was shut down at 2019-02-24 13:28:34 EST
+2019-02-24 13:28:56.130 EST [83413] LOG:  database system is ready to accept connections
+2019-02-24 13:30:02.224 EST [83440] FATAL:  database "HTQR14" does not exist
+2019-02-25 20:12:30.902 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:31.638 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:31.638 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:32.343 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:32.347 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:33.034 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:33.034 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:33.709 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:33.709 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:34.406 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:34.406 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:35.085 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:35.085 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:35.770 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:35.770 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:36.446 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:36.447 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:37.115 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:37.115 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:37.774 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-25 20:12:37.774 EST [83419] LOG:  could not open temporary statistics file "pg_stat_tmp/global.tmp": No space left on device
+2019-02-26 22:47:57.935 EST [89079] FATAL:  database "akarukappadath" does not exist
+2019-02-26 22:48:16.454 EST [89081] ERROR:  syntax error at or near "show" at character 10
+2019-02-26 22:48:16.454 EST [89081] STATEMENT:  select *
+	show tables;
+2019-02-26 22:51:05.188 EST [89081] ERROR:  syntax error at or near "SELECT" at character 28
+2019-02-26 22:51:05.188 EST [89081] STATEMENT:  SELECT * from toolkit_dsmv
+	SELECT
+	 *
+	FROM
+	 pg_catalog.pg_tables
+	;
+2019-02-26 22:53:36.435 EST [89081] ERROR:  syntax error at or near "table" at character 37
+2019-02-26 22:53:36.435 EST [89081] STATEMENT:  delete FROM toolkit_dsmv where d1=1
+	table toolkit_dsmv;
+2019-02-26 22:54:10.947 EST [89081] ERROR:  syntax error at or near "*" at character 8
+2019-02-26 22:54:10.947 EST [89081] STATEMENT:  delete * from toolkit_dsmv where d1 = 1
+	select * from toolkit_dsmv;

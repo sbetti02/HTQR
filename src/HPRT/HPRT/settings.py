@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HTQR14',
+        'NAME': 'testDB',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
