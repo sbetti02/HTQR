@@ -99,22 +99,27 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+# Expected environments: ['Heroku', 'Local']
+if os.environ.get('HTQR_ENVIRON'):
+    HTQR_ENVIRON = os.environ.get('HTQR_ENVIRON')
+else:
+    HTQR_ENVIRON = 'Local'
 
-# db_name = 'HTQR' if not os.environ.get('db_name') else os.environ['db_name']
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': db_name,
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
-
+if HTQR_ENVIRON == 'Heroku':
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+elif HTQR_ENVIRON == 'Local':
+    db_name = os.environ['db_name'] if os.environ.get('db_name') else 'HTQR'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': db_name,
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
