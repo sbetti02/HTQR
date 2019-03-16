@@ -120,6 +120,12 @@ elif HTQR_ENVIRON == 'Local':
             'PORT': '',
         }
     }
+else:
+    print("Make sure your HTQR_ENVIRON variable is set to one of the following: {}".format(['Heroku', 'Local']))
+    sys.exit(1)
+
+print("DATABASES: {}".format(DATABASES))
+print("HTQR_ENVIRON: {}".format(HTQR_ENVIRON))
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
