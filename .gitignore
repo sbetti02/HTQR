@@ -1,2 +1,3 @@
 *.pyc
 src/HPRT/HPRT/secrets.py
+src/HPRT/HPRT/logfile
