@@ -71,7 +71,9 @@
                 <h5>No current records.</h5>
                 {% endif %}
                 <div id="DSMV"></div>
-                <script>makePlot("DSMV", {{DSMV_x|safe}}, {{DSMV_y|safe}})</script>
+                <script>
+                    makePlot("DSMV", ["DSMV"], [{{DSMV_x|safe}}], [{{DSMV_y|safe}}])
+                </script>
             </div>
         </div>
     </div>
@@ -136,7 +138,9 @@
                 <h5>No current records.</h5>
                 {% endif %}
                 <div id="HP1"></div>
-                <script>makePlot("HP1", {{HP1_x|safe}}, {{HP1_y|safe}})</script>
+                <script>
+                    makePlot("HP1", ["HP1"], [{{HP1_x|safe}}], [{{HP1_y|safe}}])
+                </script>
             </div>
         </div>
     </div>
@@ -170,7 +174,9 @@
                 <h5>No current records.</h5>
                 {% endif %}
                 <div id="HP2"></div>
-                <script>makePlot("HP2", {{HP2_x|safe}}, {{HP2_y|safe}})</script>
+                <script>
+                    makePlot("HP2", ["HP2"], [{{HP2_x|safe}}], [{{HP2_y|safe}}])
+                </script>
             </div>
         </div>
     </div>
@@ -204,7 +210,9 @@
                 <h5>No current records.</h5>
                 {% endif %}
                 <div id="GH"></div>
-                <script>makePlot("GH", {{GH_x|safe}}, {{GH_y|safe}})</script>
+                <script>
+                    makePlot("GH", ["GH"], [{{GH_x|safe}}], [{{GH_y|safe}}])
+                </script>
             </div>
         </div>
     </div>

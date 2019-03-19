@@ -35,29 +35,32 @@
 		</style>
 
 		<script>
-			function makePlot(id, x_axis, y_axis) {
-				if (x_axis.length > 1) {
-					var data = [
-						{
-							x: x_axis,
-							y: y_axis,
-							type: 'scatter'
-						}
-					];
-					var layout = {
-						xaxis: {
-							title: 'Date Taken',
-							automargin: true,
-							titlefont: { size:20 },
-						 },
-						 yaxis: {
-							title: 'Score',
-							automargin: true,
-							titlefont: { size:20 },
-						 }
-					};
-					Plotly.newPlot(id, data, layout, {responsive: true});
+			/* inputs:
+				id: the div id
+				names: labels for each of the datasets
+				x_axes: an array of arrays that represent the x axes of the datasets
+				y_axes: an array of arrays that represent the y axes of the datasets
+			output:
+				a graph with various datasets on the same plot. name[i] is the name of the dataset described by [x_axes[i], y_axes[i]] */
+
+			function makePlot(id, names, x_axes, y_axes) {
+				var traces = [];
+				for (var i = 0; i < names.length; i++) {
+					traces.push({x: x_axes[i], y: y_axes[i], mode: 'lines+markers', name: names[i], type: 'scatter'});
 				}
+				var layout = {
+					xaxis: {
+						title: 'Date Taken',
+						automargin: true,
+						titlefont: { size:20 },
+					},
+					yaxis: {
+						title: 'Score',
+						automargin: true,
+						titlefont: { size:20 },
+					}
+				};
+				Plotly.newPlot(id, traces, layout, {responsive: true});
 			}
 		</script>
 
