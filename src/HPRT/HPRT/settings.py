@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import sys
+import dj_database_url
+import psycopg2
 
 try:
     secret_key = os.environ['secret_key']
@@ -19,6 +21,7 @@ try:
     twilio_auth_token = os.environ['twilio_auth_token']
     ngrok_host = os.environ['ngrok_host']
     twilio_authy_key = os.environ['twilio_authy_key']
+    DATABASE_URL = os.environ['DATABASE_URL']
 except KeyError:
     print("Make sure your environment vars are set for all of the following:")
     env_vars = ['secret_key','twilio_sid','twilio_auth_token','ngrok_host','twilio_authy_key']
@@ -63,6 +66,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.Doctor'
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,18 +100,30 @@ WSGI_APPLICATION = 'HPRT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-db_name = 'HTQR' if not os.environ.get('db_name') else os.environ['db_name']
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': db_name,
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+# Expected environments: ['Heroku', 'Local']
+if os.environ.get('HTQR_ENVIRON'):
+    HTQR_ENVIRON = os.environ.get('HTQR_ENVIRON')
+else:
+    HTQR_ENVIRON = 'Local'
 
+DATABASES = {}
+if HTQR_ENVIRON == 'Heroku':
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+elif HTQR_ENVIRON == 'Local':
+    db_name = os.environ['db_name'] if os.environ.get('db_name') else 'HTQR'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': db_name,
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
+    }
+else:
+    print("Make sure your HTQR_ENVIRON variable is set to one of the following: {}".format(['Heroku', 'Local']))
+    sys.exit(1)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -147,7 +163,9 @@ TWILIO_AUTH_TOKEN = twilio_auth_token
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = 'HTQR/src/HPRT/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
