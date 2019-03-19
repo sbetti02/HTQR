@@ -139,16 +139,6 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
         HP2_records = HopkinsPart2.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
         GH_records = GeneralHealth.objects.filter(patient = Patient.objects.filter(pk = self.kwargs['pk'])[0])
 
-        DSMV_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), DSMV_records))
-        DSMV_y = list(map(lambda x: float(x.score), DSMV_records))
-        HP1_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP1_records))
-        HP1_y = list(map(lambda x: float(x.score), HP1_records))
-        HP2_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP2_records))
-        HP2_y = list(map(lambda x: float(x.score), HP2_records))
-        GH_x = list(map(lambda x: x.date.strftime("%Y-%m-%d"), GH_records))
-        GH_y = list(map(lambda x: float(x.score), GH_records))
-
-
         kwargs.update({
             'patient': self.kwargs['pk'],
             'dsmv_list': DSMV_records.order_by('-date'),
@@ -156,14 +146,14 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
             'hp1_list': HP1_records.order_by('-date'),
             'hp2_list': HP2_records.order_by('-date'),
             'gh_list': GH_records.order_by('-date'),
-            'DSMV_x' : DSMV_x,
-            'DSMV_y' : DSMV_y,
-            'HP1_x' : HP1_x,
-            'HP1_y' : HP1_y,
-            'HP2_x' : HP2_x,
-            'HP2_y' : HP2_y,
-            'GH_x' : GH_x,
-            'GH_y' : GH_y
+            'DSMV_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), DSMV_records)),
+            'DSMV_y' : list(map(lambda x: float(x.score), DSMV_records)),
+            'HP1_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP1_records)),
+            'HP1_y' : list(map(lambda x: float(x.score), HP1_records)),
+            'HP2_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP2_records)),
+            'HP2_y' : list(map(lambda x: float(x.score), HP2_records)),
+            'GH_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), GH_records)),
+            'GH_y' : list(map(lambda x: float(x.score), GH_records))
         })
         return kwargs
 

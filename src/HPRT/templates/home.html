@@ -2,6 +2,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4" align="center">
+			<br>
+			<h5>Welcome, Dr. {{user.last_name}}!</h5>
+			<br>
+		</div>
+	</div>
 	<div class="row" style="margin-left: 5px;">
 		<h2 style="margin-right: 5px;"> Patient List </h2>
 		<a href="{%url 'analytics_home' %}" class="btn btn-light btn-lg border" style="color:#007bff">Perform Analytics</a>

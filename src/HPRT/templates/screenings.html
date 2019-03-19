@@ -71,6 +71,7 @@
                 <h5>No current records.</h5>
                 {% endif %}
                 <div id="DSMV"></div>
+                <!-- note: the safe keyword makes it such that Django doesn't preprocess the variables here -->
                 <script>makePlot("DSMV", {{DSMV_x|safe}}, {{DSMV_y|safe}})</script>
             </div>
         </div>
