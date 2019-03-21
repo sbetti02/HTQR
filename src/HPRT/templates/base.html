@@ -74,8 +74,8 @@
 					<a href="{% url 'patient_new' %}" class="btn btn-light border" style="color:#007bff">+ New Patient</a>
 					
 					{% if user.user_type == 'A' or user.is_superuser %}
-					<a href="{% url 'signup' %}" class="btn btn-light border" style="color:#007bff">+ New User</a>
-					<a href="{% url 'site_new' %}" class="btn btn-light border" style="color:#007bff">+ New Site</a>
+						<a href="{% url 'signup' %}" class="btn btn-light border" style="color:#007bff">+ New User</a>
+						<a href="{% url 'site_new' %}" class="btn btn-light border" style="color:#007bff">+ New Site</a>
 					{% endif %}
 				</div>
 
