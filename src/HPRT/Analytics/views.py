@@ -99,12 +99,6 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
                     g1_query += site
                     first_site = False
 
-        g1_HTQs = HTQ.objects.filter(patient__in=g1_patients)
-        g1_DSMVs = DSMV.objects.filter(patient__in=g1_patients)
-        g1_THs = TortureHistory.objects.filter(patient__in=g1_patients)
-        g1_HP1s = HopkinsPart1.objects.filter(patient__in=g1_patients)
-        g1_HP2s = HopkinsPart2.objects.filter(patient__in=g1_patients)
-
         g2_patients = Patient.objects.all()
         g2_query = ""
         if ("Group_2_Min_Age" in self.request.session['temp_data'] and
@@ -126,58 +120,76 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
                     g2_query += site
                     first_site = False
 
-        g2_HTQs = HTQ.objects.filter(patient__in=g2_patients)
-        g2_DSMVs = DSMV.objects.filter(patient__in=g2_patients)
-        g2_THs = TortureHistory.objects.filter(patient__in=g2_patients)
-        g2_HP1s = HopkinsPart1.objects.filter(patient__in=g2_patients)
-        g2_HP2s = HopkinsPart2.objects.filter(patient__in=g2_patients)
-
-        # TODO generalize groups and columns
-
-        columns = [
+        table_col_headers = [
             GROUP_DEMOGRAPHIC,
-            PATIENT_COUNT,
-            HTQ_COUNT,
-            DSMV_COUNT,
-            DSMV_AVG_SCORE,
-            TORTURE_HISTORY_CT,
-            HOPKINS_P1_COUNT,
-            HOPKINS_P1_AVG,
-            HOPKINS_P2_COUNT,
-            HOPKINS_P2_AVG
+            PATIENT_COUNT
         ]
 
-        # Parallel array with columns :)
-
-        rows = [
+        table_rows = [
             [
                 g1_query,
-                g1_patients.count(),
-                g1_HTQs.count(),
-                g1_DSMVs.count(),
-                g1_DSMVs.aggregate(Avg('score'))['score__avg'],
-                g1_THs.count(),
-                g1_HP1s.count(),
-                g1_HP1s.aggregate(Avg('score'))['score__avg'],
-                g1_HP2s.count(),
-                g1_HP2s.aggregate(Avg('score'))['score__avg'],
+                g1_patients.count()
             ],
             [
                 g2_query,
-                g2_patients.count(),
-                g2_HTQs.count(),
-                g2_DSMVs.count(),
-                g2_DSMVs.aggregate(Avg('score'))['score__avg'],
-                g2_THs.count(),
-                g2_HP1s.count(),
-                g2_HP1s.aggregate(Avg('score'))['score__avg'],
-                g2_HP2s.count(),
-                g2_HP2s.aggregate(Avg('score'))['score__avg'],
+                g2_patients.count()
             ]
         ]
 
+        htq_count = self.request.session['temp_data']['htq_count']
+        dsmv_count = self.request.session['temp_data']['dsmv_count']
+        dsmv_avg_score = self.request.session['temp_data']['dsmv_avg_score']
+        th_count = self.request.session['temp_data']['torture_history_count']
+        hp1_count = self.request.session['temp_data']['hopkins_pt_1_count']
+        hp2_count = self.request.session['temp_data']['hopkins_pt_2_count']
+        hp2_avg_score = self.request.session['temp_data']['hopkins_pt_2_avg_score']
+
+        ### TODO: We NEed to delete this as soon as the demo is over
+        if htq_count:
+            table_col_headers.append(HTQ_COUNT)
+            g1_HTQs = HTQ.objects.filter(patient__in=g1_patients)
+            g2_HTQs = HTQ.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_HTQs.count())
+            table_rows[1].append(g2_HTQs.count())
+        if dsmv_count:
+            table_col_headers.append(DSMV_COUNT)
+            g1_DSMVs = DSMV.objects.filter(patient__in=g1_patients)
+            g2_DSMVs = DSMV.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_DSMVs.count())
+            table_rows[1].append(g2_DSMVs.count())
+        if dsmv_avg_score:
+            table_col_headers.append(DSMV_AVG_SCORE)
+            g1_DSMVs = DSMV.objects.filter(patient__in=g1_patients)
+            g2_DSMVs = DSMV.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_DSMVs.aggregate(Avg('score'))['score__avg'])
+            table_rows[1].append(g2_DSMVs.aggregate(Avg('score'))['score__avg'])
+        if th_count:
+            table_col_headers.append(TORTURE_HISTORY_CT)
+            g1_THs = TortureHistory.objects.filter(patient__in=g1_patients)
+            g2_THs = TortureHistory.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_THs.count())
+            table_rows[1].append(g2_THs.count())
+        if hp1_count:
+            table_col_headers.append(HOPKINS_P1_COUNT)
+            g1_HP1s = HopkinsPart1.objects.filter(patient__in=g1_patients)
+            g2_HP1s = HopkinsPart1.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_HP1s.count())
+            table_rows[1].append(g2_HP1s.count())
+        if hp2_count:
+            table_col_headers.append(HOPKINS_P2_COUNT)
+            g1_HP2s = HopkinsPart2.objects.filter(patient__in=g1_patients)
+            g2_HP2s = HopkinsPart2.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_HP2s.count())
+            table_rows[1].append(g2_HP2s.count())
+        if hp2_avg_score:
+            table_col_headers.append(HOPKINS_P2_AVG)
+            g1_HP2s = HopkinsPart2.objects.filter(patient__in=g1_patients)
+            g2_HP2s = HopkinsPart2.objects.filter(patient__in=g2_patients)
+            table_rows[0].append(g1_HP2s.aggregate(Avg('score'))['score__avg'])
+            table_rows[1].append(g2_HP2s.aggregate(Avg('score'))['score__avg'])
+
         kwargs.update({
-            "columns": columns,
-            "rows": rows
+            "columns": table_col_headers,
+            "rows": table_rows
         })
         return kwargs
