@@ -3,62 +3,22 @@
 
 
 {% block content %}
-    <h3>{{ Group_1_Query }}</h3>
     <table class="table table-bordered table-striped" style="border:2px solid lightgray; ">
         <thead>
             <tr>
-                <th style="border-right: 2px solid lightgray">Patient Count</th>
-                <th>HTQ Count</th>
-                <th>DSMV Count</th>
-                <th>DSMV Avg Score</th>
-                <th>Torture History Count</th>
-                <th>Hopkins Part 1 Count</th>
-                <th>Hopkins Part 1 Avg Score</th>
-                <th>Hopkins Part 2 Count</th>
-                <th>Hopkins Part 2 Avg Score</th>
+                {% for columnName in columns %}
+                    <th>{{ columnName }}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody style="border-top: 3px solid lightgray">
+        {% for row in rows %}
             <tr>
-                <td>{{ Group_1_P_Count }}</td>
-                <td>{{ Group_1_HTQ_Count }}</td>
-                <td>{{ Group_1_DSMV_Count }}</td>
-                <td>{{ Group_1_DSMV_Avg_Score }}</td>
-                <td>{{ Group_1_TH_Count }}</td>
-                <td>{{ Group_1_HP1_Count }}</td>
-                <td>{{ Group_1_HP1_Avg_Score }}</td>
-                <td>{{ Group_1_HP2_Count }}</td>
-                <td>{{ Group_1_HP2_Avg_Score }}</td>
-
+                {% for value in row %}
+                    <td>{{ value }}</td>
+                {%  endfor %}
             </tr>
-    </table>
-    <h3>{{ Group_2_Query }}</h3>
-    <table class="table table-bordered table-striped" style="border:2px solid lightgray; ">
-        <thead>
-            <tr>
-                <th style="border-right: 2px solid lightgray">Patient Count</th>
-                <th>HTQ Count</th>
-                <th>DSMV Count</th>
-                <th>DSMV Avg Score</th>
-                <th>Torture History Count</th>
-                <th>Hopkins Part 1 Count</th>
-                <th>Hopkins Part 1 Avg Score</th>
-                <th>Hopkins Part 2 Count</th>
-                <th>Hopkins Part 2 Avg Score</th>
-
-            </tr>
-        </thead>
-        <tbody style="border-top: 3px solid lightgray">
-            <tr>
-                <td>{{ Group_2_P_Count }}</td>
-                <td>{{ Group_2_HTQ_Count }}</td>
-                <td>{{ Group_2_DSMV_Count }}</td>
-                <td>{{ Group_2_DSMV_Avg_Score }}</td>
-                <td>{{ Group_2_TH_Count }}</td>
-                <td>{{ Group_2_HP1_Count }}</td>
-                <td>{{ Group_2_HP1_Avg_Score }}</td>
-                <td>{{ Group_2_HP2_Count }}</td>
-                <td>{{ Group_2_HP2_Avg_Score }}</td>
-            </tr>
+        {%  endfor %}
+        </tbody>
     </table>
 {% endblock content %}
