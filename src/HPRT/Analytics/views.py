@@ -53,23 +53,22 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
     model = Patient
 
     @staticmethod
-    def get_patient_data(patient):
+    def get_patient_data(data_list):
         scores = []
-        DSMV_list = list(DSMV.objects.filter(patient=patient.id))
-        DSMV_list.sort(key=lambda x: x.date)
+        data_list.sort(key=lambda x: x.date)
         time_delta = datetime.timedelta(weeks=6)
-        desired_date = DSMV_list[0].date
+        desired_date = data_list[0].date
         i = 0
-        while i < (len(DSMV_list)-1):
-            if DSMV_list[i].date == desired_date:
-                scores.append(DSMV_list[i].score)
+        while i < (len(data_list)-1):
+            if data_list[i].date == desired_date:
+                scores.append(data_list[i].score)
                 desired_date += time_delta
-            elif DSMV_list[i].date < desired_date < DSMV_list[i+1].date:
-                run = (DSMV_list[i+1].date - DSMV_list[i].date).days
-                x = (desired_date - DSMV_list[i].date).days
-                rise = DSMV_list[i+1].score - DSMV_list[i].score
+            elif data_list[i].date < desired_date < data_list[i+1].date:
+                run = (data_list[i+1].date - data_list[i].date).days
+                x = (desired_date - data_list[i].date).days
+                rise = data_list[i+1].score - data_list[i].score
                 m = rise/run
-                score = m * x + DSMV_list[i].score
+                score = m * x + data_list[i].score
                 scores.append(score)
                 desired_date += time_delta
             else:
@@ -161,10 +160,14 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
         g2_HP1s = HopkinsPart1.objects.filter(patient__in=g2_patients)
         g2_HP2s = HopkinsPart2.objects.filter(patient__in=g2_patients)
 
-        g1_avg_data = self.find_avg_scores(list(map(self.get_patient_data, list(g1_patients))))
-        g2_avg_data = self.find_avg_scores(list(map(self.get_patient_data, list(g2_patients))))
-        g1_x_axis = [i * 6 for i in (list(range(0, len(g1_avg_data))))]
-        g2_x_axis = [i * 6 for i in (list(range(0, len(g2_avg_data))))]
+        #g1_DSMV_avg = map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g1_patients))
+
+        g1_DSMV_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_DSMV_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_x_axis = [i * 6 for i in (list(range(0, len(g1_DSMV_avg))))]
+        g2_x_axis = [i * 6 for i in (list(range(0, len(g2_DSMV_avg))))]
+
+
 
         kwargs.update({
             'Group_1_Query': g1_query,
