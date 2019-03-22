@@ -12,7 +12,9 @@
 	</div>
 	<div class="row" style="margin-left: 5px;">
 		<h2 style="margin-right: 5px;"> Patient List </h2>
-		<a href="{%url 'analytics_home' %}" class="btn btn-light btn-lg border" style="color:#007bff">Perform Analytics</a>
+		{% if user.user_type == 'A' or user.is_superuser %}
+			<a href="{%url 'analytics_home' %}" class="btn btn-light btn-lg border" style="color:#007bff">Perform Analytics</a>
+		{% endif %}
 
 	</div>
 	<br>
