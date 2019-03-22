@@ -7,7 +7,7 @@ from Analytics.forms import AnalyticsQueryForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from PatientPortal.models import Patient
-from toolkit.models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
+from toolkit.models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2, GeneralHealth
 from datetime import date  
 from django.db.models import Avg
 
@@ -72,6 +72,8 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
     @staticmethod
     def get_patient_data(data_list):
+        if len(data_list) == 0:
+            return []
         scores = []
         data_list.sort(key=lambda x: x.date)
         time_delta = datetime.timedelta(weeks=6)
@@ -106,7 +108,7 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
                 if inner_list_i < len(data[outer_list_i]):
                     sum += data[outer_list_i][inner_list_i]
                     n += 1
-            avg_score = sum/n
+            avg_score = float(sum/n)
             avg_scores.append(avg_score)
 
         return avg_scores
@@ -183,9 +185,23 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
         g1_DSMV_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g1_patients)))))
         g2_DSMV_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g2_patients)))))
-        g1_x_axis = [i * 6 for i in (list(range(0, len(g1_DSMV_avg))))]
-        g2_x_axis = [i * 6 for i in (list(range(0, len(g2_DSMV_avg))))]
+        g1_DSMV_x = [i * 6 for i in (list(range(0, len(g1_DSMV_avg))))]
+        g2_DSMV_x = [i * 6 for i in (list(range(0, len(g2_DSMV_avg))))]
 
+        g1_HP1_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_HP1_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_HP1_x = [i * 6 for i in (list(range(0, len(g1_HP1_avg))))]
+        g2_HP1_x = [i * 6 for i in (list(range(0, len(g2_HP1_avg))))]
+
+        g1_HP2_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_HP2_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_HP2_x = [i * 6 for i in (list(range(0, len(g1_HP2_avg))))]
+        g2_HP2_x = [i * 6 for i in (list(range(0, len(g2_HP2_avg))))]
+
+        g1_GH_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_GH_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_GH_x = [i * 6 for i in (list(range(0, len(g1_GH_avg))))]
+        g2_GH_x = [i * 6 for i in (list(range(0, len(g2_GH_avg))))]
 
         htq_count = self.request.session['temp_data']['htq_count']
         dsmv_count = self.request.session['temp_data']['dsmv_count']
@@ -241,6 +257,14 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
         kwargs.update({
             "columns": table_col_headers,
-            "rows": table_rows
+            "rows": table_rows,
+            "DSMV_x_axes": [g1_DSMV_x, g2_DSMV_x],
+            "DSMV_y_axes": [g1_DSMV_avg, g2_DSMV_avg],
+            "HP1_x_axes": [g1_HP1_x, g2_HP1_x],
+            "HP1_y_axes": [g1_HP1_avg, g2_HP1_avg],
+            "HP2_x_axes": [g1_HP2_x, g2_HP2_x],
+            "HP2_y_axes": [g1_HP2_avg, g2_HP2_avg],
+            "GH_x_axes": [g1_GH_x, g2_GH_x],
+            "GH_y_axes": [g1_GH_avg, g2_GH_avg]
         })
         return kwargs

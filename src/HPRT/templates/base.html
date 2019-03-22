@@ -42,14 +42,15 @@
 			output:
 				a graph with various datasets on the same plot. name[i] is the name of the dataset described by [x_axes[i], y_axes[i]] */
 
-			function makePlot(id, names, x_axes, y_axes) {
+			function makePlot(id, names, x_axes, y_axes, x_axis_title, plot_name) {
 				var traces = [];
 				for (var i = 0; i < names.length; i++) {
 					traces.push({x: x_axes[i], y: y_axes[i], mode: 'lines+markers', name: names[i], type: 'scatter'});
 				}
 				var layout = {
+					title: plot_name,
 					xaxis: {
-						title: 'Date Taken',
+						title: x_axis_title,
 						automargin: true,
 						titlefont: { size:20 },
 					},
