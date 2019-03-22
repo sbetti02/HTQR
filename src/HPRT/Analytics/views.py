@@ -11,7 +11,7 @@ from toolkit.models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
 from datetime import date  
 from django.db.models import Avg
 
-
+import datetime
 
 
 
@@ -53,6 +53,48 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
     model = Patient
 
     @staticmethod
+    def get_patient_data(patient):
+        scores = []
+        DSMV_list = list(DSMV.objects.filter(patient=patient.id))
+        DSMV_list.sort(key=lambda x: x.date)
+        time_delta = datetime.timedelta(weeks=6)
+        desired_date = DSMV_list[0].date
+        i = 0
+        while i < (len(DSMV_list)-1):
+            if DSMV_list[i].date == desired_date:
+                scores.append(DSMV_list[i].score)
+                desired_date += time_delta
+            elif DSMV_list[i].date < desired_date < DSMV_list[i+1].date:
+                run = (DSMV_list[i+1].date - DSMV_list[i].date).days
+                x = (desired_date - DSMV_list[i].date).days
+                rise = DSMV_list[i+1].score - DSMV_list[i].score
+                m = rise/run
+                score = m * x + DSMV_list[i].score
+                scores.append(score)
+                desired_date += time_delta
+            else:
+                i+=1
+        return scores
+
+    @staticmethod
+    def find_avg_scores(data):
+        if len(data) == 0:
+            return []
+        data.sort(key=len, reverse=True)
+        avg_scores = []
+        for inner_list_i in range(0, len(data[0])):
+            sum = 0
+            n = 0
+            for outer_list_i in range(0, len(data)):
+                if inner_list_i < len(data[outer_list_i]):
+                    sum += data[outer_list_i][inner_list_i]
+                    n += 1
+            avg_score = sum/n
+            avg_scores.append(avg_score)
+
+        return avg_scores
+
+    @staticmethod
     def subtractYears(d, years):
         try:
             return d.replace(year = d.year - years)
@@ -80,7 +122,7 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
             first_site = True
             for site in g1_sites:
                 if not first_site:
-                    g1_query += ", " + site
+                    g1_query += ", " + sit
                 else:
                     g1_query += site
                     first_site = False
@@ -119,6 +161,10 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
         g2_HP1s = HopkinsPart1.objects.filter(patient__in=g2_patients)
         g2_HP2s = HopkinsPart2.objects.filter(patient__in=g2_patients)
 
+        g1_avg_data = self.find_avg_scores(list(map(self.get_patient_data, list(g1_patients))))
+        g2_avg_data = self.find_avg_scores(list(map(self.get_patient_data, list(g2_patients))))
+        g1_x_axis = [i * 6 for i in (list(range(0, len(g1_avg_data))))]
+        g2_x_axis = [i * 6 for i in (list(range(0, len(g2_avg_data))))]
 
         kwargs.update({
             'Group_1_Query': g1_query,
@@ -145,3 +191,5 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
         })
         return kwargs
+
+
