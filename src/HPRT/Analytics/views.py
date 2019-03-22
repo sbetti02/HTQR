@@ -7,9 +7,13 @@ from Analytics.forms import AnalyticsQueryForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from PatientPortal.models import Patient
-from toolkit.models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2
+from toolkit.models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2, GeneralHealth
 from datetime import date  
 from django.db.models import Avg
+
+import datetime
+
+
 
 
 GROUP_DEMOGRAPHIC="Group Demographic"
@@ -65,6 +69,51 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
     model = Patient
+
+    # given a list of questionnaire objects and a number of weeks, extrapolates scores for the patient at the specified intervals
+    @staticmethod
+    def get_patient_data(data_list, num_weeks):
+        if len(data_list) == 0:
+            return []
+        scores = []
+        data_list.sort(key=lambda x: x.date)
+        time_delta = datetime.timedelta(weeks=num_weeks)
+        desired_date = data_list[0].date
+        i = 0
+        while i < (len(data_list)-1):
+            if data_list[i].date == desired_date:
+                scores.append(data_list[i].score)
+                desired_date += time_delta
+            elif data_list[i].date < desired_date < data_list[i+1].date:
+                run = (data_list[i+1].date - data_list[i].date).days
+                x = (desired_date - data_list[i].date).days
+                rise = data_list[i+1].score - data_list[i].score
+                m = rise/run
+                score = m * x + data_list[i].score
+                scores.append(score)
+                desired_date += time_delta
+            else:
+                i+=1
+        return scores
+
+    # given a list of lists, each describing a patient's scores, returns a list containing the average scores
+    @staticmethod
+    def find_avg_scores(data):
+        if len(data) == 0:
+            return []
+        data.sort(key=len, reverse=True)
+        avg_scores = []
+        for inner_list_i in range(0, len(data[0])):
+            sum = 0
+            n = 0
+            for outer_list_i in range(0, len(data)):
+                if inner_list_i < len(data[outer_list_i]):
+                    sum += data[outer_list_i][inner_list_i]
+                    n += 1
+            avg_score = float(sum/n)
+            avg_scores.append(avg_score)
+
+        return avg_scores
 
     @staticmethod
     def subtractYears(d, years):
@@ -136,6 +185,28 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
             ]
         ]
 
+        num_weeks = 6
+
+        g1_DSMV_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_DSMV_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_DSMV_x = [i * num_weeks for i in (list(range(0, len(g1_DSMV_avg))))]
+        g2_DSMV_x = [i * num_weeks for i in (list(range(0, len(g2_DSMV_avg))))]
+
+        g1_HP1_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_HP1_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_HP1_x = [i * num_weeks for i in (list(range(0, len(g1_HP1_avg))))]
+        g2_HP1_x = [i * num_weeks for i in (list(range(0, len(g2_HP1_avg))))]
+
+        g1_HP2_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_HP2_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_HP2_x = [i * num_weeks for i in (list(range(0, len(g1_HP2_avg))))]
+        g2_HP2_x = [i * num_weeks for i in (list(range(0, len(g2_HP2_avg))))]
+
+        g1_GH_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_GH_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_GH_x = [i * num_weeks6 for i in (list(range(0, len(g1_GH_avg))))]
+        g2_GH_x = [i * num_weeks for i in (list(range(0, len(g2_GH_avg))))]
+
         htq_count = self.request.session['temp_data']['htq_count']
         dsmv_count = self.request.session['temp_data']['dsmv_count']
         dsmv_avg_score = self.request.session['temp_data']['dsmv_avg_score']
@@ -190,6 +261,14 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
         kwargs.update({
             "columns": table_col_headers,
-            "rows": table_rows
+            "rows": table_rows,
+            "DSMV_x_axes": [g1_DSMV_x, g2_DSMV_x],
+            "DSMV_y_axes": [g1_DSMV_avg, g2_DSMV_avg],
+            "HP1_x_axes": [g1_HP1_x, g2_HP1_x],
+            "HP1_y_axes": [g1_HP1_avg, g2_HP1_avg],
+            "HP2_x_axes": [g1_HP2_x, g2_HP2_x],
+            "HP2_y_axes": [g1_HP2_avg, g2_HP2_avg],
+            "GH_x_axes": [g1_GH_x, g2_GH_x],
+            "GH_y_axes": [g1_GH_avg, g2_GH_avg]
         })
         return kwargs

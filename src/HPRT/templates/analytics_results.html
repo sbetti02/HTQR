@@ -21,4 +21,23 @@
         {%  endfor %}
         </tbody>
     </table>
+    <div id="Analytics_DSMV"></div>
+    <script>
+        makePlot("Analytics_DSMV", ["Group 1", "Group 2"], {{DSMV_x_axes|safe}}, {{DSMV_y_axes|safe}}, "Weeks", "Average DSMV Scores")
+    </script>
+    <br>
+    <div id="Analytics_HP1"></div>
+    <script>
+        makePlot("Analytics_HP1", ["Group 1", "Group 2"], {{HP1_x_axes|safe}}, {{HP1_y_axes|safe}}, "Weeks", "Average Hopkins Part 1 Scores")
+    </script>
+    <br>
+    <div id="Analytics_HP2"></div>
+    <script>
+        makePlot("Analytics_HP2", ["Group 1", "Group 2"], {{HP2_x_axes|safe}}, {{HP2_y_axes|safe}}, "Weeks", "Average Hopkins Part 2 Scores")
+    </script>
+    <br>
+    <div id="Analytics_GH"></div>
+    <script>
+        makePlot("Analytics_GH", ["Group 1", "Group 2"], {{GH_x_axes|safe}}, {{GH_y_axes|safe}}, "Weeks", "Average General Health Scores")
+    </script>
 {% endblock content %}
