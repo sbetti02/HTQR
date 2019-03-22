@@ -70,13 +70,14 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
     redirect_field_name = 'redirect_to'
     model = Patient
 
+    # given a list of questionnaire objects and a number of weeks, extrapolates scores for the patient at the specified intervals
     @staticmethod
-    def get_patient_data(data_list):
+    def get_patient_data(data_list, num_weeks):
         if len(data_list) == 0:
             return []
         scores = []
         data_list.sort(key=lambda x: x.date)
-        time_delta = datetime.timedelta(weeks=6)
+        time_delta = datetime.timedelta(weeks=num_weeks)
         desired_date = data_list[0].date
         i = 0
         while i < (len(data_list)-1):
@@ -95,6 +96,7 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
                 i+=1
         return scores
 
+    # given a list of lists, each describing a patient's scores, returns a list containing the average scores
     @staticmethod
     def find_avg_scores(data):
         if len(data) == 0:
@@ -183,25 +185,27 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
             ]
         ]
 
-        g1_DSMV_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g1_patients)))))
-        g2_DSMV_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g2_patients)))))
-        g1_DSMV_x = [i * 6 for i in (list(range(0, len(g1_DSMV_avg))))]
-        g2_DSMV_x = [i * 6 for i in (list(range(0, len(g2_DSMV_avg))))]
+        num_weeks = 6
 
-        g1_HP1_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g1_patients)))))
-        g2_HP1_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g2_patients)))))
-        g1_HP1_x = [i * 6 for i in (list(range(0, len(g1_HP1_avg))))]
-        g2_HP1_x = [i * 6 for i in (list(range(0, len(g2_HP1_avg))))]
+        g1_DSMV_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_DSMV_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(DSMV.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_DSMV_x = [i * num_weeks for i in (list(range(0, len(g1_DSMV_avg))))]
+        g2_DSMV_x = [i * num_weeks for i in (list(range(0, len(g2_DSMV_avg))))]
 
-        g1_HP2_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g1_patients)))))
-        g2_HP2_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g2_patients)))))
-        g1_HP2_x = [i * 6 for i in (list(range(0, len(g1_HP2_avg))))]
-        g2_HP2_x = [i * 6 for i in (list(range(0, len(g2_HP2_avg))))]
+        g1_HP1_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_HP1_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart1.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_HP1_x = [i * num_weeks for i in (list(range(0, len(g1_HP1_avg))))]
+        g2_HP1_x = [i * num_weeks for i in (list(range(0, len(g2_HP1_avg))))]
 
-        g1_GH_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g1_patients)))))
-        g2_GH_avg = self.find_avg_scores(list(map(self.get_patient_data, map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g2_patients)))))
-        g1_GH_x = [i * 6 for i in (list(range(0, len(g1_GH_avg))))]
-        g2_GH_x = [i * 6 for i in (list(range(0, len(g2_GH_avg))))]
+        g1_HP2_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_HP2_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(HopkinsPart2.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_HP2_x = [i * num_weeks for i in (list(range(0, len(g1_HP2_avg))))]
+        g2_HP2_x = [i * num_weeks for i in (list(range(0, len(g2_HP2_avg))))]
+
+        g1_GH_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g1_patients)))))
+        g2_GH_avg = self.find_avg_scores(list(map(lambda x: self.get_patient_data(x, num_weeks), map(lambda x: list(GeneralHealth.objects.filter(patient=x.id)), list(g2_patients)))))
+        g1_GH_x = [i * num_weeks6 for i in (list(range(0, len(g1_GH_avg))))]
+        g2_GH_x = [i * num_weeks for i in (list(range(0, len(g2_GH_avg))))]
 
         htq_count = self.request.session['temp_data']['htq_count']
         dsmv_count = self.request.session['temp_data']['dsmv_count']
