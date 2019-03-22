@@ -69,39 +69,38 @@
 					<h1> <a href = "/"> HPRT </a> </h1>
 				</div>
 				{% if user.is_authenticated %}
-				<div class = "col-sm-10" align="right">
-					<br>
-					<a href="{% url 'patient_add_existing' %}" class="btn btn-light border" style="color:#007bff">+ Add Existing Patient</a>
-					<a href="{% url 'patient_new' %}" class="btn btn-light border" style="color:#007bff">+ New Patient</a>
+					<div class = "col-sm-10" align="right">
+						<br>
+						<a href="{% url 'patient_add_existing' %}" class="btn btn-light border" style="color:#007bff">+ Add Existing Patient</a>
+						<a href="{% url 'patient_new' %}" class="btn btn-light border" style="color:#007bff">+ New Patient</a>
 
-					{% if user.user_type == 'A' or user.is_superuser %}
-					<a href="{% url 'signup' %}" class="btn btn-light border" style="color:#007bff">+ New User</a>
-					<a href="{% url 'site_new' %}" class="btn btn-light border" style="color:#007bff">+ New Site</a>
-					{% endif %}
-				</div>
+						{% if user.user_type == 'A' or user.is_superuser %}
+						<a href="{% url 'signup' %}" class="btn btn-light border" style="color:#007bff">+ New User</a>
+						<a href="{% url 'site_new' %}" class="btn btn-light border" style="color:#007bff">+ New Site</a>
+						{% endif %}
+					</div>
 				{% endif %}
-
 			</div>
 			<div class="row" style="border-bottom:1px solid gray">
 				{% if user.is_authenticated %}
-				<div class = "col-sm-12" align="right">
-					<form id="searchform" action="{% url 'search_list' %}" method="get" accept-charset="utf-8">
-			     		<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
-			     		<button class="searchbutton" type="submit">
-			        	<i class="fa fa-search"></i>
-			     		</button>
-			    	</form>
-		    	</div>
+					<div class = "col-sm-12" align="right">
+						<form id="searchform" action="{% url 'search_list' %}" method="get" accept-charset="utf-8">
+							<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+							<button class="searchbutton" type="submit">
+							<i class="fa fa-search"></i>
+							</button>
+						</form>
+					</div>
 				{% endif %}
 			</div>
 
 			{% if user.is_authenticated %}
-			<div class="row">
-				<div class="col-12" align="right">
-					<a href="{% url 'home' %}" class="btn btn-light border" style="color:#007bff">Home</a>
-					<a href="{% url 'logout' %}" class="btn btn-light border" style="color:#007bff">Logout</a>
+				<div class="row">
+					<div class="col-12" align="right">
+						<a href="{% url 'home' %}" class="btn btn-light border" style="color:#007bff">Home</a>
+						<a href="{% url 'logout' %}" class="btn btn-light border" style="color:#007bff">Logout</a>
+					</div>
 				</div>
-			</div>
 			{% endif %}
 
 			<div class = "format" style="width: 80%; margin-left: 10%">
