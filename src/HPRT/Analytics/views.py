@@ -38,6 +38,13 @@ class AnalyticQueryView(LoginRequiredMixin, FormView):
         session_form["Group_2_Max_Age"] = form.cleaned_data["Group_2_Max_Age"]
         session_form["Group_1_Sites"] = list(form.cleaned_data["Group_1_Sites"].values_list('name', flat=True))
         session_form["Group_2_Sites"] = list(form.cleaned_data["Group_2_Sites"].values_list('name', flat=True))
+        session_form["htq_count"] = form.cleaned_data["htq_count"]
+        session_form["dsmv_count"] = form.cleaned_data["dsmv_count"]
+        session_form["dsmv_avg_score"] = form.cleaned_data["dsmv_avg_score"]
+        session_form["torture_history_count"] = form.cleaned_data["torture_history_count"]
+        session_form["hopkins_pt_1_count"] = form.cleaned_data["hopkins_pt_1_count"]
+        session_form["hopkins_pt_2_count"] = form.cleaned_data["hopkins_pt_2_count"]
+        session_form["hopkins_pt_2_avg_score"] = form.cleaned_data["hopkins_pt_2_avg_score"]
 
         self.request.session['temp_data'] = session_form
         return super().form_valid(form)
