@@ -72,46 +72,41 @@
 					<br>
 					<h1> <a href = "/"> HPRT </a> </h1>
 				</div>
-				<div class = "col-sm-10" align="right">
-					<br>
-					<a href="{% url 'patient_add_existing' %}" class="btn btn-light border" style="color:#007bff">+ Add Existing Patient</a>
-					<a href="{% url 'patient_new' %}" class="btn btn-light border" style="color:#007bff">+ New Patient</a>
-					
-					{% if user.user_type == 'A' or user.is_superuser %}
+				{% if user.is_authenticated %}
+					<div class = "col-sm-10" align="right">
+						<br>
+						<a href="{% url 'patient_add_existing' %}" class="btn btn-light border" style="color:#007bff">+ Add Existing Patient</a>
+						<a href="{% url 'patient_new' %}" class="btn btn-light border" style="color:#007bff">+ New Patient</a>
+
+						{% if user.user_type == 'A' or user.is_superuser %}
 						<a href="{% url 'signup' %}" class="btn btn-light border" style="color:#007bff">+ New User</a>
 						<a href="{% url 'site_new' %}" class="btn btn-light border" style="color:#007bff">+ New Site</a>
-					{% endif %}
-				</div>
-
+						{% endif %}
+					</div>
+				{% endif %}
 			</div>
 			<div class="row" style="border-bottom:1px solid gray">
-				<div class = "col-sm-12" align="right">
-					<form id="searchform" action="{% url 'search_list' %}" method="get" accept-charset="utf-8">
-			     		<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
-			     		<button class="searchbutton" type="submit">
-			        	<i class="fa fa-search"></i>
-			     		</button>
-			    	</form>
-		    	</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-4"></div>
-				<div class="col-4" align="center">
-				<br>
 				{% if user.is_authenticated %}
-						<h5>Welcome, Dr. {{user.last_name}}!</h5>
-						<br>
-				</div>
-				<div class="col-4" align="right">
-					<a href="{% url 'home' %}" class="btn btn-light border" style="color:#007bff">Home</a>
-					<a href="{% url 'logout' %}" class="btn btn-light border" style="color:#007bff">Logout</a>
-				{% else %}
-				<p></p>
-						
+					<div class = "col-sm-12" align="right">
+						<form id="searchform" action="{% url 'search_list' %}" method="get" accept-charset="utf-8">
+							<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+							<button class="searchbutton" type="submit">
+							<i class="fa fa-search"></i>
+							</button>
+						</form>
+					</div>
 				{% endif %}
-				</div>
 			</div>
+
+			{% if user.is_authenticated %}
+				<div class="row">
+					<div class="col-12" align="right">
+						<a href="{% url 'home' %}" class="btn btn-light border" style="color:#007bff">Home</a>
+						<a href="{% url 'logout' %}" class="btn btn-light border" style="color:#007bff">Logout</a>
+					</div>
+				</div>
+			{% endif %}
+
 			<div class = "format" style="width: 80%; margin-left: 10%">
 				{% block content %}
 				{% endblock content %}
