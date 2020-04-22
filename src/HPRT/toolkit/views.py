@@ -146,14 +146,14 @@ class ScreeningsListView(LoginRequiredMixin, ListView):
             'hp1_list': HP1_records.order_by('-date'),
             'hp2_list': HP2_records.order_by('-date'),
             'gh_list': GH_records.order_by('-date'),
-            'DSMV_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), DSMV_records)),
-            'DSMV_y' : list(map(lambda x: float(x.score), DSMV_records)),
-            'HP1_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP1_records)),
-            'HP1_y' : list(map(lambda x: float(x.score), HP1_records)),
-            'HP2_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), HP2_records)),
-            'HP2_y' : list(map(lambda x: float(x.score), HP2_records)),
-            'GH_x' : list(map(lambda x: x.date.strftime("%Y-%m-%d"), GH_records)),
-            'GH_y' : list(map(lambda x: float(x.score), GH_records))
+            'DSMV_x' : list([x.date.strftime("%Y-%m-%d") for x in DSMV_records]),
+            'DSMV_y' : list([float(x.score) for x in DSMV_records]),
+            'HP1_x' : list([x.date.strftime("%Y-%m-%d") for x in HP1_records]),
+            'HP1_y' : list([float(x.score) for x in HP1_records]),
+            'HP2_x' : list([x.date.strftime("%Y-%m-%d") for x in HP2_records]),
+            'HP2_y' : list([float(x.score) for x in HP2_records]),
+            'GH_x' : list([x.date.strftime("%Y-%m-%d") for x in GH_records]),
+            'GH_y' : list([float(x.score) for x in GH_records])
         })
         return kwargs
 

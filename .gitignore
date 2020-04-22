@@ -2,3 +2,4 @@
 src/HPRT/HPRT/secrets.py
 src/HPRT/HPRT/logfile
 src/HPRT/ngrok
+**/venv
