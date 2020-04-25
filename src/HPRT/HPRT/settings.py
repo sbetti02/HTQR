@@ -123,7 +123,7 @@ elif HTQR_ENVIRON == 'Local':
         }
     }
 else:
-    print("Make sure your HTQR_ENVIRON variable is set to one of the following: {}".format(['Heroku', 'Local']))
+    print(("Make sure your HTQR_ENVIRON variable is set to one of the following: {}".format(['Heroku', 'Local'])))
     sys.exit(1)
 
 # Password validation

@@ -11,9 +11,9 @@ from twilio.twiml.messaging_response import MessagingResponse
 
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from twilio.rest import Client
+# from twilio.rest import Client
 
-from django_twilio.decorators import twilio_view
+# from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
 from . models import Patient, DocPat, Site, Doctor, Appointment, Story
 
@@ -56,7 +56,7 @@ class PatientListView(LoginRequiredMixin, ListView):
             else:
                 filtered_next_appts.append(None)
             filtered_story_existance.append(patient_stories.exists)
-        context['zipped_row_information'] = zip(filtered_patients, filtered_next_appts, filtered_story_existance)
+        context['zipped_row_information'] = list(zip(filtered_patients, filtered_next_appts, filtered_story_existance))
         return context
 
 class PatientDetailView(LoginRequiredMixin, DetailView):
@@ -131,7 +131,7 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
         # print(self.object.phone_number)
         # client = Client(twilio_sid, twilio_auth_token)
 
-        # t = Thread(target=twilio_validate_and_confirm, 
+        # t = Thread(target=twilio_validate_and_confirm,
         #            args=(twilio_client, self.object.name, self.object.phone_number))
         # t.start()
 
@@ -211,7 +211,7 @@ class searchListView(LoginRequiredMixin, ListView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class smsResponse(View):
-    @method_decorator(twilio_view)
+    # @method_decorator(twilio_view)
 
     def post(self, request):
         body = QueryDict(request.body)['Body']
@@ -230,7 +230,7 @@ class smsResponse(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class askStory(View):
     model = Patient
-    @method_decorator(twilio_view)
+    # @method_decorator(twilio_view)
 
     def post(self, request, *args, **kwargs):
         client = Client(twilio_sid, twilio_auth_token)
@@ -261,9 +261,9 @@ class askStory(View):
 #                                   to= "+1" + phone_number
 #                               )
 
-@twilio_view
+# @twilio_view
 def phone_number_confirmation(request):
-    """ 
+    """
     Callback function to confirm/deny phone number validation.
     Only expected request type is POST (from Twilio server)
     """
