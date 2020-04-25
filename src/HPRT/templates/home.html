@@ -22,15 +22,13 @@
 		<thead>
 			<tr>
 				<th style="width: 50%" style="border-right: 2px solid lightgray">Patient Name</th>
-				<th style="width:33.33%">Next Appointment</th>
-				<th style="width: 16.66%">Trauma Story</th>
+				<th style="width: 50%">Trauma Story</th>
 			</tr>
 		</thead>
 		<tbody style="border-top: 3px solid lightgray">
-			{% for patient, appt, story_existance in zipped_row_information %}
+			{% for patient, story_existance in zipped_row_information %}
 			<tr>
 				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
-				<td>{{appt.appt_time}}</td>
 				<td style="text-align: center">
 					{% if story_existance %}
 						<img src="/static/img/star.png" alt="Ask Story" height = "20">
