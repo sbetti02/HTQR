@@ -16,7 +16,7 @@ Jinja2==2.10
 MarkupSafe==1.1.0
 phonenumberslite==8.9.8
 psycopg2==2.8.5
-Pillow==2.1.0
+Pillow==6.2.2
 PyJWT==1.6.4
 PySocks==1.6.8
 pytz==2018.4
