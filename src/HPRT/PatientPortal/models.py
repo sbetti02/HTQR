@@ -49,7 +49,7 @@ class Patient(models.Model):
     current_medications = models.TextField(default='', blank = True, null = True)
     phone_number = models.CharField(max_length = 10)
     email = models.EmailField()
-    #picture = models.ImageField(upload_to="PatientPortal/profiles.py", 
+    #picture = models.ImageField(upload_to="PatientPortal/profiles.py",
     #                                     height_field=500, width_field=500, null=True)
     # TODO: fingerprints, picture
 
@@ -66,22 +66,6 @@ class Story(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     comments = models.TextField(default='')
     date = models.DateField()
-
-
-"""
-appt_id | patient_id | appt_time 
-        |            |           
-        |            |           
-        |            |           
-"""
-
-class Appointment(models.Model):
-    class Meta:
-        unique_together = (('patient', 'appt_time'),) # TODO: Just make patient, appt_time the PK
-
-    patient = models.ForeignKey(Patient, on_delete = models.CASCADE)
-    appt_time = models.DateTimeField()
-    # TODO: Maintain list of all patients' next appointment
 
 class DocPat(models.Model):
     class Meta:
@@ -114,7 +98,7 @@ class DocPat(models.Model):
 #     prevent_burnout = models.BooleanField(default=answer_default)
 
 
-# TODO: Does this still implicitly create an ID column? I don't want it to 
+# TODO: Does this still implicitly create an ID column? I don't want it to
 class RelativeRelationships(models.Model):
     relationship_num = models.PositiveSmallIntegerField(primary_key=True)
     relationship_type = models.CharField(max_length=30, unique=True)

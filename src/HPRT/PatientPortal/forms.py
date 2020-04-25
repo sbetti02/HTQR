@@ -1,6 +1,6 @@
 # PatientPortal/forms.py
 from django import forms
-from . models import Patient, DocPat, Doctor, Site, Appointment
+from . models import Patient, DocPat, Doctor, Site
 
 
 class AddExistingPatientForm(forms.ModelForm):
@@ -34,12 +34,3 @@ class CreateNewPatientForm(forms.ModelForm):
         self.fields['height'].widget.attrs['placeholder'] = 'Enter in cm'
         self.fields['weight'].widget.attrs['placeholder'] = 'Enter in kg'
         self.fields['DOB'].label = "Date of Birth (mm/dd/yyyy)"
-
-class AppointmentForm(forms.ModelForm):
-
-    class Meta:
-        model = Appointment
-        fields = ['appt_time']
-
-    def __init__(self, *args, **kwargs):
-        super(AppointmentForm, self).__init__(*args, **kwargs)

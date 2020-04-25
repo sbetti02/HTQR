@@ -15,12 +15,12 @@ from django.utils.decorators import method_decorator
 
 # from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
-from . models import Patient, DocPat, Site, Doctor, Appointment, Story
+from . models import Patient, DocPat, Site, Doctor, Story
 
 from toolkit.models import Toolkit
 
 from django.http import QueryDict
-from . forms import AddExistingPatientForm, CreateNewPatientForm, AppointmentForm
+from . forms import AddExistingPatientForm, CreateNewPatientForm
 
 import threading
 import time
@@ -46,17 +46,11 @@ class PatientListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PatientListView, self).get_context_data(**kwargs)
         filtered_patients = Patient.objects.filter(docpat__doctor__pk = self.request.user.pk)
-        filtered_next_appts = []
         filtered_story_existance = []
         for patient in filtered_patients:
-            all_appts = Appointment.objects.filter(patient__pk=patient.pk)
             patient_stories = Story.objects.filter(patient__pk=patient.pk)
-            if all_appts.exists:
-                filtered_next_appts.append(all_appts.last()) # Grab most recent one
-            else:
-                filtered_next_appts.append(None)
             filtered_story_existance.append(patient_stories.exists)
-        context['zipped_row_information'] = list(zip(filtered_patients, filtered_next_appts, filtered_story_existance))
+        context['zipped_row_information'] = list(zip(filtered_patients, filtered_story_existance))
         return context
 
 class PatientDetailView(LoginRequiredMixin, DetailView):
@@ -99,26 +93,6 @@ class PatientAddExistingView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.doctor = self.request.user
         return super(PatientAddExistingView, self).form_valid(form)
-
-class CreateApptView(LoginRequiredMixin, CreateView):
-    login_url = 'login'
-    redirect_field_name = 'redirect_to'
-    model = Appointment
-    template_name = 'new_appt.html'
-    form_class = AppointmentForm
-
-    def get_context_data(self, **kwargs):
-        context = super(CreateApptView, self).get_context_data(**kwargs)
-        context['patient'] = Patient.objects.get(pk=self.kwargs['pk'])
-        return context
-
-    def form_valid(self, form):
-        form.instance.patient = Patient.objects.get(pk=self.kwargs['pk'])
-        return super(CreateApptView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('patient_detail', kwargs={'pk' : self.object.patient.pk})
-        # return HttpResponseRedirect(reverse_lazy('ask_story', kwargs={'pk' : self.object.patient.pk}))
 
 class PatientCreateView(LoginRequiredMixin, CreateView):
     login_url = 'login'
