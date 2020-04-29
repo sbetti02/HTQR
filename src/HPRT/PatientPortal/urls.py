@@ -18,5 +18,4 @@ urlpatterns = [
     path('patient/remove/<int:pk>/', views.patientRemove.as_view(), name = 'patient_remove'),
     path('patient/add/<int:pk>/', views.patientAdd.as_view(), name = 'patient_add'),
     path('search/results/', views.searchListView.as_view(), name = 'search_list'),
-    # path('phone_verification/', views.phone_number_confirmation, name='phone_confirmation'),
 ]

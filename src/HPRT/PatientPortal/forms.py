@@ -26,11 +26,9 @@ class CreateNewPatientForm(forms.ModelForm):
     class Meta:
         model = Patient
         exclude = ['ask_story']
-        # widgets = {'DOB': forms.DateInput(attrs={'id': 'datetimepicker12'})}
 
     def __init__(self, *args, **kwargs):
         super(CreateNewPatientForm, self).__init__(*args, **kwargs)
-        # self.fields['DOB'].widget.attrs['class'] = 'datepicker'
         self.fields['height'].widget.attrs['placeholder'] = 'Enter in cm'
         self.fields['weight'].widget.attrs['placeholder'] = 'Enter in kg'
         self.fields['DOB'].label = "Date of Birth (mm/dd/yyyy)"

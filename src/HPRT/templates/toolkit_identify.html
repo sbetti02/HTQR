@@ -4,7 +4,7 @@
 {% block content %}
 		<h1>IDENTIFY concrete physical or mental effects</h1>
 
-		<p>Is the patient complaining of any physical symptoms? 
+		<p>Is the patient complaining of any physical symptoms?
 		<ul>
   		<li>Headaches?</li>
   		<li>Stomach upset?</li>
@@ -23,7 +23,7 @@
 		<form action ="" method ="post">{% csrf_token %}
 				{{ form.as_p }}
 		<input type ="submit" value = "Update" />
-		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p> 
+		<p> <a href = "{% url 'toolkit_detail' toolkit.pk %}">Back</a></p>
 
 </form>
 {% endblock %}
