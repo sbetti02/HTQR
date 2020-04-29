@@ -100,6 +100,5 @@ class GeneralHealthForm(forms.ModelForm):
         json_data = open(os.path.join('static', "questions.json"), 'r')
         gh_list = json.load(json_data)[9]['questions']
         for i, index in enumerate(gh_list, start=1):
-            # widgets[index['id']] = forms.RadioSelect() ### for use with Selection Grid format if preferred
             labels[index['id']] = str(i) + '. ' + index['body']
         json_data.close()

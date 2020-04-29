@@ -102,19 +102,6 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     form_class = CreateNewPatientForm
 
     def get_success_url(self):
-        # print(self.object.phone_number)
-        # client = Client(twilio_sid, twilio_auth_token)
-
-        # t = Thread(target=twilio_validate_and_confirm,
-        #            args=(twilio_client, self.object.name, self.object.phone_number))
-        # t.start()
-
-        # validation_request = client.validation_requests.create(
-        #                               friendly_name=self.object.name,
-        #                               phone_number=self.object.phone_number,
-        #                               status_callback='http://'+ngrok_host+'/phone_verification'
-        #                               )
-
         temp = DocPat(doctor = self.request.user, patient = self.object)
         temp.save()
         tk = Toolkit(docpat = temp)
@@ -218,45 +205,4 @@ class askStory(View):
 
                                   )
         return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
-
-
-# def twilio_validate_and_confirm(twilio_client, name, phone_number):
-#     validation_request = None
-#     validation_request = twilio_client.validation_requests.create(
-#                                   friendly_name=name,
-#                                   phone_number=phone_number
-#                                   )
-#     while not validation_request:
-#         time.sleep(1)
-
-#     message = twilio_client.messages.create(
-#                                   body="Hi " + name + ", welcome to HPRT!",
-#                                   from_= "+17743261027",
-#                                   to= "+1" + phone_number
-#                               )
-
-# @twilio_view
-def phone_number_confirmation(request):
-    """
-    Callback function to confirm/deny phone number validation.
-    Only expected request type is POST (from Twilio server)
-    """
-    print("\n\n\najafdkj\n\n")
-    if request.method == 'POST':
-        if request.VerificationStatus == 'success':
-            message = twilio_client.messages.create(
-                                  body="Hi " + name + ", welcome to HPRT!",
-                                  from_= "+17743261027",
-                                  to= "+1" + phone_number
-                              )
-        else:
-            print("Failed to verify phone number.") # TODO: Update so appears as alert statement in GUI
-
-    else:
-        print("here")
-
-    return HttpResponse("This is a simple response !")
-
-
-
 
