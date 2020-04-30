@@ -8,9 +8,6 @@
             <a href="{% url 'toolkit_detail' toolkit.pk %}" class="btn btn-light btn-lg border" style="color:#007bff">Open Patient Toolkit</a>
             </div>
             <div>
-              <form action= "{% url 'ask_story' patient.pk %}" method="POST">
-                  <input type="submit" value="Ask for Trauma Story" id="toggle1" />
-              </form>
             <br>
             </div>
         {% endif %}

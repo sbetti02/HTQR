@@ -7,13 +7,9 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 
 
-from twilio.twiml.messaging_response import MessagingResponse
-
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-# from twilio.rest import Client
 
-# from django_twilio.decorators import twilio_view
 from django.views.decorators.csrf import csrf_exempt
 from . models import Patient, DocPat, Site, Doctor, Story
 
@@ -25,7 +21,6 @@ from . forms import AddExistingPatientForm, CreateNewPatientForm
 import threading
 import time
 import datetime
-from HPRT.settings import twilio_sid, twilio_auth_token
 
 
 def update_patients(request):
@@ -169,40 +164,3 @@ class searchListView(LoginRequiredMixin, ListView):
             for q in query_list:
                 result = result.union(all_patients.filter(name__contains = q))
         return result
-
-@method_decorator(csrf_exempt, name='dispatch')
-class smsResponse(View):
-    # @method_decorator(twilio_view)
-
-    def post(self, request):
-        body = QueryDict(request.body)['Body']
-        number = QueryDict(request.body)['From'][2:]
-        r = MessagingResponse()
-        patient = Patient.objects.filter(phone_number=number)[0]
-        story = Story()
-        story.patient = patient
-        story.comments = body
-        story.date = datetime.date.today()
-        story.save()
-        r.message('Thank you for your submission.  Please feel free to message this number again if you would like to send more comments to your doctor before your next appointment.')
-        return r
-
-
-@method_decorator(csrf_exempt, name='dispatch')
-class askStory(View):
-    model = Patient
-    # @method_decorator(twilio_view)
-
-    def post(self, request, *args, **kwargs):
-        client = Client(twilio_sid, twilio_auth_token)
-
-        patient = Patient.objects.filter(pk=kwargs['pk'])[0]
-
-        message = client.messages.create(
-                                      body="Hi " + patient.name + ", you have an appointment coming up soon. If there is anything in particular you would like to speak with your doctor about before your next appointment, you can send comments to your doctor by responding to this text.",
-                                      from_= "+17743261027",
-                                      to= "+1" + patient.phone_number
-
-                                  )
-        return HttpResponseRedirect(reverse_lazy('patient_detail', kwargs={'pk' : kwargs['pk']}))
-
