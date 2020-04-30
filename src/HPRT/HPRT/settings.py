@@ -19,12 +19,11 @@ try:
     secret_key = os.environ['secret_key']
     twilio_sid = os.environ['twilio_sid']
     twilio_auth_token = os.environ['twilio_auth_token']
-    ngrok_host = os.environ['ngrok_host']
     twilio_authy_key = os.environ['twilio_authy_key']
     DATABASE_URL = os.environ['DATABASE_URL']
 except KeyError:
     print("Make sure your environment vars are set for all of the following:")
-    env_vars = ['secret_key','twilio_sid','twilio_auth_token','ngrok_host','twilio_authy_key']
+    env_vars = ['secret_key','twilio_sid','twilio_auth_token','twilio_authy_key']
     for env_var in env_vars:
         print(env_var)
     sys.exit(1)
@@ -42,8 +41,7 @@ SECRET_KEY = secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ngrok_host,
-                 '127.0.0.1',
+ALLOWED_HOSTS = ['127.0.0.1',
                  'htqr.herokuapp.com',
                  'htqr-dev.herokuapp.com',
 ]
