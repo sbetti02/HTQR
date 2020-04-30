@@ -17,13 +17,10 @@ import psycopg2
 
 try:
     secret_key = os.environ['secret_key']
-    twilio_sid = os.environ['twilio_sid']
-    twilio_auth_token = os.environ['twilio_auth_token']
-    twilio_authy_key = os.environ['twilio_authy_key']
     DATABASE_URL = os.environ['DATABASE_URL']
 except KeyError:
     print("Make sure your environment vars are set for all of the following:")
-    env_vars = ['secret_key','twilio_sid','twilio_auth_token','twilio_authy_key']
+    env_vars = ['secret_key']
     for env_var in env_vars:
         print(env_var)
     sys.exit(1)
@@ -59,7 +56,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'toolkit',
-    'django_twilio',
 ]
 
 AUTH_USER_MODEL = 'users.Doctor'
@@ -155,9 +151,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-TWILIO_ACCOUNT_SID = twilio_sid
-TWILIO_AUTH_TOKEN = twilio_auth_token
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

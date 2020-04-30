@@ -2,15 +2,15 @@
 
 __Implemented__
 
-An electronic version of a set of diagnostic tools used to train/guide doctors on how to communicate with and diagnose patients, refugees, suffering from trauma. Doctors can keep an a checklist (the 11-Point Toolkit) on a patient's progress. Doctors can create patient profiles which consist of some basic info (i.e. name, DOB, height, blood type, allergies, medication, phone number) and most importantly the 11-Point Toolkit. When a doctor sees a patient's profile, he/she can access the 11-Point Toolkit specific to that doctor-patient relationship. One of the most important elements of the toolkit is the screening tools found under "Diagnose" which aid in communicating a patient's circumstances and overall improving the care a doctor can provide to the patient. Any doctor can keep track of his/her progress with a patient, and in any new doctor-patient relationship, the doctor must go through all the steps in the 11-Point Toolkit. This ensure doctors ar guided throught the process every time in order to get a better understanding of each patient's circumstances. There is also a feature which allows a doctor to ask for a patient's trauma story through text once the patient's number is verified. Patient's are able to share their trauma story if they wish and add it to their patient profile. 
+An electronic version of a set of diagnostic tools used to train/guide doctors on how to communicate with and diagnose patients, refugees, suffering from trauma. Doctors can keep an a checklist (the 11-Point Toolkit) on a patient's progress. Doctors can create patient profiles which consist of some basic info (i.e. name, DOB, height, blood type, allergies, medication, phone number) and most importantly the 11-Point Toolkit. When a doctor sees a patient's profile, he/she can access the 11-Point Toolkit specific to that doctor-patient relationship. One of the most important elements of the toolkit is the screening tools found under "Diagnose" which aid in communicating a patient's circumstances and overall improving the care a doctor can provide to the patient. Any doctor can keep track of his/her progress with a patient, and in any new doctor-patient relationship, the doctor must go through all the steps in the 11-Point Toolkit. This ensure doctors ar guided throught the process every time in order to get a better understanding of each patient's circumstances. There is also a feature which allows a doctor to ask for a patient's trauma story through text once the patient's number is verified. Patient's are able to share their trauma story if they wish and add it to their patient profile.
 
-Sofware Requirements: django 2, Python 3, Bootstrap 4, postgresql, twilio
+Sofware Requirements: django 3, Python 3, Bootstrap 4, postgresql
 
 To run:
 
 Clone the repository to a local machine
 
-Obtain the secrets.py file from one of the other contributors if you already don't have it 
+Obtain the secrets.py file from one of the other contributors if you already don't have it
   (will be updated in the future to remove this requirement)
 
 
@@ -24,9 +24,9 @@ Then run
 
 __Future Work__
 
-In the future, we hope to have a completed analytics component which will allow a user to query the database of patients in order to observe any underlying trends among the patients. We also have plans to take our system and use it in refugee camps. 
+In the future, we hope to have a completed analytics component which will allow a user to query the database of patients in order to observe any underlying trends among the patients. We also have plans to take our system and use it in refugee camps.
 
-We are working to create a way for doctors to store and retrieve patient information on refugees in refugee camps with limited access to the internet. Limited access to internet makes it harder for doctors to retrieve and share patient information. We've devised a local area network using Raspberry Pi's to retrieve and update info when internet connection is available and store, edit and share info when internet connection isn't available. We hope to implement and test such a system in the future. 
+We are working to create a way for doctors to store and retrieve patient information on refugees in refugee camps with limited access to the internet. Limited access to internet makes it harder for doctors to retrieve and share patient information. We've devised a local area network using Raspberry Pi's to retrieve and update info when internet connection is available and store, edit and share info when internet connection isn't available. We hope to implement and test such a system in the future.
 
 With this local area network in place, if a refugee were to move from one camp to another, we hope that patient information can be shared automatically between doctors in refugee camps.  This way, the refugees would not have to repeatedly give their personal health information and potentially details on traumatizing events in their lives.
 
