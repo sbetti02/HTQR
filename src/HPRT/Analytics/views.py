@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from PatientPortal.models import Patient
 from toolkit.models import HTQ, DSMV, TortureHistory, HopkinsPart1, HopkinsPart2, GeneralHealth
-from datetime import date  
+from datetime import date
 from django.db.models import Avg
 
 import datetime
@@ -129,7 +129,7 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
         g1_patients = Patient.objects.all()
         g1_query = ""
-        if ("Group_1_Min_Age" in self.request.session['temp_data'] and 
+        if ("Group_1_Min_Age" in self.request.session['temp_data'] and
            "Group_1_Max_Age" in self.request.session['temp_data']):
             g1_min = self.request.session['temp_data']["Group_1_Min_Age"]
             g1_max = self.request.session['temp_data']["Group_1_Max_Age"]
@@ -204,7 +204,7 @@ class AnalyticResultsView(LoginRequiredMixin, ListView):
 
         g1_GH_avg = self.find_avg_scores(list([self.get_patient_data(x, num_weeks) for x in [list(GeneralHealth.objects.filter(patient=x.id)) for x in list(g1_patients)]]))
         g2_GH_avg = self.find_avg_scores(list([self.get_patient_data(x, num_weeks) for x in [list(GeneralHealth.objects.filter(patient=x.id)) for x in list(g2_patients)]]))
-        g1_GH_x = [i * num_weeks6 for i in (list(range(0, len(g1_GH_avg))))]
+        g1_GH_x = [i * num_weeks for i in (list(range(0, len(g1_GH_avg))))]
         g2_GH_x = [i * num_weeks for i in (list(range(0, len(g2_GH_avg))))]
 
         htq_count = self.request.session['temp_data']['htq_count']
