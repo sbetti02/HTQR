@@ -88,9 +88,9 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     form_class = CreateNewPatientForm
 
     def get_success_url(self):
-        temp = DocPat(doctor = self.request.user, patient = self.object)
+        temp = DocPat(doctor=self.request.user, patient=self.object)
         temp.save()
-        tk = Toolkit(docpat = temp)
+        tk = Toolkit(docpat=temp)
         tk.save()
         return reverse_lazy('patient_detail', kwargs={'pk' : self.object.pk})
 
