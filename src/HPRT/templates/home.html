@@ -10,36 +10,31 @@
 			<br>
 		</div>
 	</div>
-	<div class="row" style="margin-left: 5px;">
-		<h2 style="margin-right: 5px;"> Patient List </h2>
-		{% if user.user_type == 'A' or user.is_superuser %}
-			<a href="{%url 'analytics_home' %}" class="btn btn-light btn-lg border" style="color:#007bff">Perform Analytics</a>
-		{% endif %}
+	<div class="container" style="width: 65%">
+		<div class="row" style="margin-left: 5px;">
+			<h2 style="margin-right: 5px;"> Patient List </h2>
+			{% if user.user_type == 'A' or user.is_superuser %}
+				<a href="{%url 'analytics_home' %}" class="btn btn-light btn-lg border" style="color:#007bff">Perform Analytics</a>
+			{% endif %}
 
+		</div>
+		<br>
+		<table class="table table-bordered table-striped" style="border:2px solid lightgray;" align="center">
+			<thead>
+				<tr>
+					<th style="width: 100%; border-right: 2px solid lightgray; text-align: center">Patient Name</th>
+				</tr>
+			</thead>
+			<tbody style="border-top: 3px solid lightgray">
+				{% for patient in patients %}
+				<tr>
+					<td style="border-right: 2px solid lightgray; text-align: center"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
+				</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
 	</div>
-	<br>
-	<table class="table table-bordered table-striped" style="border:2px solid lightgray; ">
-		<thead>
-			<tr>
-				<th style="width: 50%" style="border-right: 2px solid lightgray">Patient Name</th>
-				<th style="width: 50%">Trauma Story</th>
-			</tr>
-		</thead>
-		<tbody style="border-top: 3px solid lightgray">
-			{% for patient, story_existance in zipped_row_information %}
-			<tr>
-				<td style="border-right: 2px solid lightgray"><a href = "{% url 'patient_detail' patient.pk %}">{{ patient.name }}</a></td>
-				<td style="text-align: center">
-					{% if story_existance %}
-						<img src="/static/img/star.png" alt="Ask Story" height = "20">
-					{% endif %}
-				</td>
-
-			</tr>
-			{% endfor %}
-
-		</tbody>
-	</table>
 
 
 {% endblock content %}

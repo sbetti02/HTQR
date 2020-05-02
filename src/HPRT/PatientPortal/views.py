@@ -11,7 +11,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 
 from django.views.decorators.csrf import csrf_exempt
-from . models import Patient, DocPat, Site, Doctor, Story
+from . models import Patient, DocPat, Site, Doctor
 
 from toolkit.models import Toolkit
 
@@ -36,16 +36,12 @@ class PatientListView(LoginRequiredMixin, ListView):
     template_name = 'home.html'
 
     def get_queryset(self):
-        return Patient.objects.filter(docpat__doctor__pk = self.request.user.pk)
+        return Patient.objects.filter(docpat__doctor__pk=self.request.user.pk)
 
     def get_context_data(self, **kwargs):
         context = super(PatientListView, self).get_context_data(**kwargs)
-        filtered_patients = Patient.objects.filter(docpat__doctor__pk = self.request.user.pk)
-        filtered_story_existance = []
-        for patient in filtered_patients:
-            patient_stories = Story.objects.filter(patient__pk=patient.pk)
-            filtered_story_existance.append(patient_stories.exists)
-        context['zipped_row_information'] = list(zip(filtered_patients, filtered_story_existance))
+        filtered_patients = Patient.objects.filter(docpat__doctor__pk=self.request.user.pk)
+        context['patients'] = list(filtered_patients)
         return context
 
 class PatientDetailView(LoginRequiredMixin, DetailView):
@@ -56,16 +52,11 @@ class PatientDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
-        docpats = DocPat.objects.filter(doctor = self.request.user, patient = self.object)
-        stories = Story.objects.filter(patient=self.object) # TODO: Filter since last appt
+        docpats = DocPat.objects.filter(doctor=self.request.user, patient=self.object)
         if docpats.count() > 0:
             context['toolkit'] = Toolkit.objects.get(docpat = docpats[0])
         else:
             context['toolkit'] = None
-        if stories.exists:
-            context['stories'] = stories
-        else:
-            context['stories'] = None
         return context
 
 class PatientAddExistingView(LoginRequiredMixin, CreateView):
