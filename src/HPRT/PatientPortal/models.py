@@ -36,11 +36,6 @@ class Patient(models.Model):
         today = date.today()
         return today.year - self.DOB.year - ((today.month, today.day) < (self.DOB.month, self.DOB.day))
 
-class Story(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    comments = models.TextField(default='')
-    date = models.DateField()
-
 class DocPat(models.Model):
     class Meta:
         unique_together = (('doctor', 'patient'),) # TODO: Just make doctor, patient the PK of DocPat

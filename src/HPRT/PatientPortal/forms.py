@@ -25,7 +25,7 @@ class CreateNewPatientForm(forms.ModelForm):
 
     class Meta:
         model = Patient
-        exclude = ['ask_story']
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(CreateNewPatientForm, self).__init__(*args, **kwargs)
