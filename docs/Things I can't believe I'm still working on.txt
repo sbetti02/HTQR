@@ -1,0 +1,52 @@
+Feature changes/additions
+-------------------------
+
+1. Take out unneeded fields on:
+	- Patient: Anything identifying (Maybe just leave with site (gender and DOB maybe [maybe just DOB year? Unclear]))
+	- Doctors: Do we need to remove any PII for them as well?
+2. Assign each patient a random ID
+	- Have that ID displayed in the main patient list
+	- On creation, tell the doctor/admin what the ID is for the newly created patient and tell them to write it down
+3. Figure out what to do with analytics
+	- Just take out for now? Determine if they want this for the initial release
+	- If leaving in, rework it since we won't be able to split by the same demographics we had before
+
+
+Infrastructure upgrades for release
+-----------------------------------
+
+1. Move to a better tier on Heroku
+	- Currently on the free tier, which is only really sufficient for testing
+	- Get Mollica to pay for this instead of us
+
+
+Misc
+----
+
+1. Confirm that the product we're building is actually legal if we're not holding PII,
+   since we're still holding medical data
+
+
+Technical debt
+--------------
+
+1. Build with Docker for making local development easier
+2. Remove HTQ and co detail pages that are unused
+
+
+Nice to haves
+-------------
+1. Set up google analytics
+2. Use some sort of logging/visualizaiton set up
+3. Add new tests for:
+	a. Editing/deleting a patient
+	b. Adding a patient to a new doctor list
+	c. Removing a patient from a doctor's list
+	d. Creating new diagnostic screenings
+	e. Accessing the screenings via pdf
+4. Migrate to AWS
+5. Update Readme
+6. Move JS code to the pages it's needed for (not needed/wanted in base.html)
+
+
+
